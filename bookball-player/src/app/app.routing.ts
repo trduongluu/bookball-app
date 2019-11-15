@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 const routes: Routes = [
   { path: '', loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule) },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
-  { path: '**', redirectTo: '' }
+  { path: '', redirectTo: '', pathMatch: 'full' }
 ];
 
 export const AppRoutes = RouterModule.forRoot(routes);
