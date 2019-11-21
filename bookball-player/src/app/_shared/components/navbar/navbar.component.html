@@ -1,6 +1,8 @@
 <header>
-  <a href="#default" class="logo">CompanyLogo</a>
-  <div class="header-right">
+  <a [routerLink]="['']" routerLinkActive="active" class="row ml-4">
+    <div class="rounded-circle exam-logo"></div> CompanyLogo
+  </a>
+  <div class="header-right mr-md-5">
     <a class="active nav-link" [routerLink]="['']" routerLinkActive="active">Sân</a>
     <a class="nav-link" [routerLink]="['/temp']" routerLinkActive="">Đội</a>
     <a class="nav-link" [routerLink]="['/temp']" routerLinkActive="">Kick-Off</a>

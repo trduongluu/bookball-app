@@ -1,11 +1,6 @@
 // @import '../../../../assets/scss/base';
 @import '_base';
 
-%theme-active {
-  background-color: white;
-  color: $primeColor;
-}
-
 header {
   overflow: hidden;
   background-color: $primeColor;
@@ -30,8 +25,11 @@ header {
       @extend %theme-active;
     }
 
-    .logo {
-      font-size: 25px;
+    .exam-logo {
+      @include square();
+      background-color: coral;
+      display: inline-block;
+      margin-right: 7px;
     }
   }
 }

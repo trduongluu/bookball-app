@@ -1,1 +1,11 @@
 $primeColor: #025E01;
+
+@mixin square($w: 25px, $h: 25px) {
+  width: $w;
+  height: $h;
+}
+
+%theme-active {
+  background-color: white;
+  color: $primeColor;
+}

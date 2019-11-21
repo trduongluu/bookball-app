@@ -1,33 +1,36 @@
 @import '_base';
 
-.footer {
+.exam-logo {
+  @include square();
+  background-color: coral;
+  display: inline-block;
+  margin-right: 7px;
+}
+
+footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
-}
-
-section {
-  padding: 60px 0;
-
-  .section-title {
-    text-align: center;
-    color: $primeColor;
-    margin-bottom: 50px;
-    text-transform: uppercase;
-  }
-}
-
-#footer {
   background: $primeColor !important;
+  padding: 60px 0;
 
   h5 {
     padding-left: 10px;
-    border-left: 3px solid #eeeeee;
     padding-bottom: 6px;
     margin-bottom: 20px;
     color: #ffffff;
+
+    a {
+      border-radius: 25px;
+      font-weight: bold;
+      padding: 12px;
+
+      &:hover {
+        @extend %theme-active;
+      }
+    }
   }
 
   a {
@@ -99,7 +102,7 @@ section {
 }
 
 @media (max-width:767px) {
-  #footer {
+  footer {
     h5 {
       padding-left: 0;
       border-left: transparent;
