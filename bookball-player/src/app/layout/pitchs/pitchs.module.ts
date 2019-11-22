@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { PitchsComponent } from './pitchs.component';
 import { PitchsRoutes } from './pitchs.routing';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     PitchsRoutes,
-    NgZorroAntdModule
+    NgZorroAntdModule,
+    FormsModule
   ],
   declarations: [PitchsComponent]
 })

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PitchsComponent implements OnInit {
 
+  loading = false;
+
   constructor() { }
 
   ngOnInit() {

@@ -1,13 +1,11 @@
-#wrapper {
-  display: flex;
-  flex-direction: column;
+.content {
+  min-height: 80vh;
+  padding-bottom: 4vh;
+}
 
-  .content {
-    flex: 1 0 auto;
-  }
-
-  app-footer {
-    flex-shrink: 0;
-    margin-top: 4vh;
-  }
+app-footer {
+  // flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
