@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class PitchsComponent implements OnInit {
 
   loading = false;
+  selectedValue = null;
 
   constructor() { }
 

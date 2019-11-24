@@ -1,43 +1,50 @@
-<!-- <nz-card style="width:300px;" [nzCover]="coverTemplate" [nzActions]="[actionSetting, actionEdit, actionEllipsis]">
-  <nz-card-meta nzTitle="Card title" nzDescription="This is the description" [nzAvatar]="avatarTemplate"></nz-card-meta>
-</nz-card>
-<ng-template #avatarTemplate>
-  <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-</ng-template>
-<ng-template #coverTemplate>
-  <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-</ng-template>
-<ng-template #actionSetting>
-  <i nz-icon nzType="setting"></i>
-</ng-template>
-<ng-template #actionEdit>
-  <i nz-icon nzType="edit"></i>
-</ng-template>
-<ng-template #actionEllipsis>
-  <i nz-icon nzType="ellipsis"></i>
-</ng-template> -->
+<div class="row col-md-12 mt-md-4">
+  <h3>Các sân bóng thành phố Hà Nội</h3>
+  <div class="col-md-4">
+    <nz-select class="custom-control" nzShowSearch nzAllowClear nzPlaceHolder="Select a District"
+      [(ngModel)]="selectedValue">
+      <nz-option nzLabel="Hai Ba Trung" nzValue="1"></nz-option>
+      <nz-option nzLabel="Ba Dinh" nzValue="2"></nz-option>
+      <nz-option nzLabel="Dong Da" nzValue="3"></nz-option>
+    </nz-select>
+  </div>
+</div>
 
+<!-- <nz-switch [(ngModel)]="loading"></nz-switch> -->
 
-<nz-switch [(ngModel)]="loading"></nz-switch>
-<nz-card style="width: 300px;margin-top: 16px" [nzActions]="[actionSetting, actionEdit, actionEllipsis]"
-  [nzCover]="loading ? null : coverTemplate">
-  <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-    <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Card title" nzDescription="This is the description">
-    </nz-card-meta>
-  </nz-skeleton>
-</nz-card>
-<ng-template #avatarTemplate>
-  <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-</ng-template>
-<ng-template #coverTemplate>
-  <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-</ng-template>
-<ng-template #actionSetting>
-  <i nz-icon nzType="setting"></i>
-</ng-template>
-<ng-template #actionEdit>
-  <i nz-icon nzType="edit"></i>
-</ng-template>
-<ng-template #actionEllipsis>
-  <i nz-icon nzType="ellipsis"></i>
-</ng-template>
+<main class="row col-md-12" *ngFor="let item of [1,2,3,4]">
+  <nz-card style="width: 300px;margin-top: 16px" [nzActions]="[actionBooking, actionOpenMap, actionProfile]"
+    [nzCover]="loading ? null : coverTemplate">
+    <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
+      <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Sân An Dương" nzDescription="">
+      </nz-card-meta>
+    </nz-skeleton>
+  </nz-card>
+  <ng-template #avatarTemplate>
+    <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+  </ng-template>
+  <ng-template #coverTemplate>
+    <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+  </ng-template>
+  <ng-template #actionBooking>
+    <a class="list-icons-item" href="javascript:">
+      <span nz-tooltip nzTitle="Đặt sân">
+        <i class="orange" nz-icon nzType="file-done" nzTheme="outline"></i>
+      </span>
+    </a>
+  </ng-template>
+  <ng-template #actionOpenMap>
+    <a class="list-icons-item" href="javascript:">
+      <span nz-tooltip nzTitle="Xem vị trí trên map">
+        <i class="navy" nz-icon nzType="environment" nzTheme="fill"></i>
+      </span>
+    </a>
+  </ng-template>
+  <ng-template #actionProfile>
+    <a class="list-icons-item" href="javascript:">
+      <span nz-tooltip nzTitle="Profile sân">
+        <i class="maroon" nz-icon nzType="eye" nzTheme="fill"></i>
+      </span>
+    </a>
+  </ng-template>
+</main>
