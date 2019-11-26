@@ -1,8 +1,8 @@
-<div class="row col-md-12 mt-md-4">
+<div class="col-md-12 mt-md-4 form-inline">
   <h3>Các sân bóng thành phố Hà Nội</h3>
-  <div class="col-md-4">
-    <nz-select class="custom-control" nzShowSearch nzAllowClear nzPlaceHolder="Select a District"
-      [(ngModel)]="selectedValue">
+  <div class="col-md-4 form-group">
+    <label class="col-form-label">Chọn Quận</label>
+    <nz-select class="col-md-4" nzShowSearch nzAllowClear nzPlaceHolder="Select a District" [(ngModel)]="selectedValue">
       <nz-option nzLabel="Hai Ba Trung" nzValue="1"></nz-option>
       <nz-option nzLabel="Ba Dinh" nzValue="2"></nz-option>
       <nz-option nzLabel="Dong Da" nzValue="3"></nz-option>
@@ -16,7 +16,8 @@
   <nz-card style="width: 300px;margin-top: 16px" [nzActions]="[actionBooking, actionOpenMap, actionProfile]"
     [nzCover]="loading ? null : coverTemplate">
     <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-      <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Sân An Dương" nzDescription="">
+      <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Sân An Dương"
+        nzDescription="Sân khu vực Ba Đình, có 7 sân cỏ nhân tạo đá đội 7 và 1 sân 12">
       </nz-card-meta>
     </nz-skeleton>
   </nz-card>
