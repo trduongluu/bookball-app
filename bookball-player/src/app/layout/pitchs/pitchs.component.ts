@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PitchService } from '@trduong/_shared/services/pitch.service';
 
 @Component({
   selector: 'app-pitchs',
@@ -8,11 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class PitchsComponent implements OnInit {
 
   loading = false;
-  selectedValue = null;
+  selectedCity = null;
+  selectedDistrict = null;
+  public listPitch: any[];
 
-  constructor() { }
+  constructor(
+    private pitchService: PitchService
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    const res = await this.pitchService.get({});
+    if (res.ok) {
+      this.listPitch = res.result.data;
+    }
+    console.log('data is here', res);
   }
 
 }

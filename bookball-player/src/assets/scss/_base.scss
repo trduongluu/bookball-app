@@ -1,4 +1,6 @@
 $primeColor: #025E01;
+$input-padding-x: 1.5rem;
+$input-padding-y: .75rem;
 
 @mixin square($w: 25px, $h: 25px) {
   width: $w;

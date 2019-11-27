@@ -1,19 +1,19 @@
-<div class="flex-row col-md-12 mt-md-4 form-inline">
+<div class="flex-row col-md-12 mt-md-4 form-inline mb-2">
   <h3 class="text-center">Các sân bóng thành phố Hà Nội</h3>
   <div class="col-md-8 form-group justify-content-end">
     <div class="flex-column w-50">
       <div class="row w-100">
-        <label class="col-form-label col-md-4">Chọn Thành Phố</label>
-        <nz-select class="col-md-8" nzShowSearch nzAllowClear nzPlaceHolder="Select a City" [(ngModel)]="selectedValue">
+        <label class="col-md-4">Chọn Thành Phố</label>
+        <nz-select class="col-md-6" nzShowSearch nzAllowClear nzPlaceHolder="Select a City" [(ngModel)]="selectedCity">
           <nz-option nzLabel="Hà Nội" nzValue="1"></nz-option>
           <nz-option nzLabel="Hồ Chí Minh" nzValue="2"></nz-option>
           <nz-option nzLabel="Đà Nẵng" nzValue="3"></nz-option>
         </nz-select>
       </div>
-      <div class="row w-100">
-        <label class="col-form-label col-md-4">Chọn Quận</label>
-        <nz-select class="col-md-8" nzShowSearch nzAllowClear nzPlaceHolder="Select a District"
-          [(ngModel)]="selectedValue">
+      <div class="row w-100 mt-3">
+        <label class="col-md-4">Chọn Quận</label>
+        <nz-select class="col-md-6" nzShowSearch nzAllowClear nzPlaceHolder="Select a District"
+          [(ngModel)]="selectedDistrict">
           <nz-option nzLabel="Hai Bà Trưng" nzValue="1"></nz-option>
           <nz-option nzLabel="Ba Đình" nzValue="2"></nz-option>
           <nz-option nzLabel="Đống Đa" nzValue="3"></nz-option>
@@ -25,40 +25,43 @@
 
 <!-- <nz-switch [(ngModel)]="loading"></nz-switch> -->
 
-<main class="row col-md-12" *ngFor="let item of [1,2,3,4]">
-  <nz-card style="width: 300px;margin-top: 16px" [nzActions]="[actionBooking, actionOpenMap, actionProfile]"
-    [nzCover]="loading ? null : coverTemplate">
-    <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-      <nz-card-meta [nzAvatar]="avatarTemplate" nzTitle="Sân An Dương"
-        nzDescription="Sân khu vực Ba Đình, có 7 sân cỏ nhân tạo đá đội 7 và 1 sân 12">
-      </nz-card-meta>
-    </nz-skeleton>
-  </nz-card>
-  <ng-template #avatarTemplate>
-    <nz-avatar nzSrc="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-  </ng-template>
-  <ng-template #coverTemplate>
-    <img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-  </ng-template>
-  <ng-template #actionBooking>
-    <a class="list-icons-item" href="javascript:">
-      <span nz-tooltip nzTitle="Đặt sân">
-        <i class="orange" nz-icon nzType="file-done" nzTheme="outline"></i>
-      </span>
-    </a>
-  </ng-template>
-  <ng-template #actionOpenMap>
-    <a class="list-icons-item" href="javascript:">
-      <span nz-tooltip nzTitle="Xem vị trí trên map">
-        <i class="navy" nz-icon nzType="environment" nzTheme="fill"></i>
-      </span>
-    </a>
-  </ng-template>
-  <ng-template #actionProfile>
-    <a class="list-icons-item" href="javascript:">
-      <span nz-tooltip nzTitle="Profile sân">
-        <i class="maroon" nz-icon nzType="eye" nzTheme="fill"></i>
-      </span>
-    </a>
-  </ng-template>
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let item of listPitch">
+      <nz-card class="pitch-card" [nzActions]="[actionBooking, actionOpenMap, actionProfile]"
+        [nzCover]="loading ? null : coverTemplate">
+        <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
+          <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="item.name" [nzDescription]="item.description">
+          </nz-card-meta>
+        </nz-skeleton>
+      </nz-card>
+      <ng-template #avatarTemplate>
+        <nz-avatar [nzSrc]="item.ava"></nz-avatar>
+      </ng-template>
+      <ng-template #coverTemplate>
+        <img alt="example" [src]="item.cover" />
+      </ng-template>
+      <ng-template #actionBooking>
+        <a class="list-icons-item" href="javascript:">
+          <span nz-tooltip nzTitle="Đặt sân">
+            <i class="orange" nz-icon nzType="file-done" nzTheme="outline"></i>
+          </span>
+        </a>
+      </ng-template>
+      <ng-template #actionOpenMap>
+        <a class="list-icons-item" href="javascript:">
+          <span nz-tooltip nzTitle="Xem vị trí trên map">
+            <i class="navy" nz-icon nzType="environment" nzTheme="fill"></i>
+          </span>
+        </a>
+      </ng-template>
+      <ng-template #actionProfile>
+        <a class="list-icons-item" href="javascript:">
+          <span nz-tooltip nzTitle="Profile sân">
+            <i class="maroon" nz-icon nzType="eye" nzTheme="fill"></i>
+          </span>
+        </a>
+      </ng-template>
+    </div>
+  </div>
 </main>
