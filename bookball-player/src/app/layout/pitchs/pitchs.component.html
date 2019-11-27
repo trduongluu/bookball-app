@@ -1,12 +1,25 @@
-<div class="col-md-12 mt-md-4 form-inline">
-  <h3>Các sân bóng thành phố Hà Nội</h3>
-  <div class="col-md-4 form-group">
-    <label class="col-form-label">Chọn Quận</label>
-    <nz-select class="col-md-4" nzShowSearch nzAllowClear nzPlaceHolder="Select a District" [(ngModel)]="selectedValue">
-      <nz-option nzLabel="Hai Ba Trung" nzValue="1"></nz-option>
-      <nz-option nzLabel="Ba Dinh" nzValue="2"></nz-option>
-      <nz-option nzLabel="Dong Da" nzValue="3"></nz-option>
-    </nz-select>
+<div class="flex-row col-md-12 mt-md-4 form-inline">
+  <h3 class="text-center">Các sân bóng thành phố Hà Nội</h3>
+  <div class="col-md-8 form-group justify-content-end">
+    <div class="flex-column w-50">
+      <div class="row w-100">
+        <label class="col-form-label col-md-4">Chọn Thành Phố</label>
+        <nz-select class="col-md-8" nzShowSearch nzAllowClear nzPlaceHolder="Select a City" [(ngModel)]="selectedValue">
+          <nz-option nzLabel="Hà Nội" nzValue="1"></nz-option>
+          <nz-option nzLabel="Hồ Chí Minh" nzValue="2"></nz-option>
+          <nz-option nzLabel="Đà Nẵng" nzValue="3"></nz-option>
+        </nz-select>
+      </div>
+      <div class="row w-100">
+        <label class="col-form-label col-md-4">Chọn Quận</label>
+        <nz-select class="col-md-8" nzShowSearch nzAllowClear nzPlaceHolder="Select a District"
+          [(ngModel)]="selectedValue">
+          <nz-option nzLabel="Hai Bà Trưng" nzValue="1"></nz-option>
+          <nz-option nzLabel="Ba Đình" nzValue="2"></nz-option>
+          <nz-option nzLabel="Đống Đa" nzValue="3"></nz-option>
+        </nz-select>
+      </div>
+    </div>
   </div>
 </div>
 
