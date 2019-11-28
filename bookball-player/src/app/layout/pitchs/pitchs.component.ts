@@ -19,7 +19,7 @@ export class PitchsComponent implements OnInit {
 
   async ngOnInit() {
     const res = await this.pitchService.get({});
-    if (res.ok) {
+    if (res.success) {
       this.listPitch = res.result.data;
     }
     console.log('data is here', res);

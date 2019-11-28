@@ -6,14 +6,9 @@ namespace bookballAPI.Models
 {
     public partial class bookballContext : DbContext
     {
-        public bookballContext()
-        {
-        }
+        public bookballContext() { }
 
-        public bookballContext(DbContextOptions<bookballContext> options)
-            : base(options)
-        {
-        }
+        public bookballContext(DbContextOptions<bookballContext> options) : base(options) { }
 
         public virtual DbSet<Booking> Booking { get; set; }
         public virtual DbSet<Pitch> Pitch { get; set; }
@@ -22,11 +17,10 @@ namespace bookballAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=bookball;Username=postgres;Password=1234");
-            }
+            //             if (!optionsBuilder.IsConfigured) {
+            // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+            //                 optionsBuilder.UseNpgsql (ConfigurationManager.ConnectionStrings["bookballDatabase"].ConnectionString);
+            //             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

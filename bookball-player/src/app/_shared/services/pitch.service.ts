@@ -14,7 +14,6 @@ export class PitchService extends BaseCrudService<any> {
   ) {
     super(http, bindDataExtensionService);
     this.baseUrl = 'pitch';
-    console.log('api', this.baseUrl);
   }
 
 }

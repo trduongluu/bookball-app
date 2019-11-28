@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "E:\\MyData\\SourceCode\\bookballAPI\\bookballAPI.csproj": {}
+    "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {}
   },
   "projects": {
-    "E:\\MyData\\SourceCode\\bookballAPI\\bookballAPI.csproj": {
+    "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\MyData\\SourceCode\\bookballAPI\\bookballAPI.csproj",
+        "projectUniqueName": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
         "projectName": "bookballAPI",
-        "projectPath": "E:\\MyData\\SourceCode\\bookballAPI\\bookballAPI.csproj",
-        "packagesPath": "C:\\Users\\trduong\\.nuget\\packages\\",
-        "outputPath": "E:\\MyData\\SourceCode\\bookballAPI\\obj\\",
+        "projectPath": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
+        "packagesPath": "C:\\Users\\duong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\trduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\duong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -53,6 +52,10 @@
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[3.0.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[5.0.0-rc4, )"
             }
           },
           "imports": [
@@ -73,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

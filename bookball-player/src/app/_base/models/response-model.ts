@@ -3,7 +3,7 @@ export class ResponseModel<T = any> {
     result: T;
     error?: ErrorModel;
 
-    public get ok(): boolean {
+    public get success(): boolean {
         return !this.error;
     }
 
