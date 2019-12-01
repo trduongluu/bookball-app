@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace bookballAPI.Models
 {
@@ -15,6 +16,7 @@ namespace bookballAPI.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Booking> Booking { get; set; }
     }
 }

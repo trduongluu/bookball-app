@@ -2,7 +2,7 @@
 
 // dotnet cli
 // PostgreSQL
-dotnet ef dbcontext scaffold "host=localhost;server=localhost;port=5432;database=bookball;username=postgres;password=1234;Trusted_Connection=True;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models -f
+dotnet ef dbcontext scaffold "host=localhost;username=postgres;password=1234;database=bookball;Integrated Security=true;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models -f
 
 dotnet ef dbcontext scaffold "User ID=postgres;Password=admin;Server=112.213.88.161;Port=5432;Database=tcispa;Integrated Security=true;Pooling=true;" Npgsql.EntityFrameworkCore.PostgreSQL -o Models -f
 

@@ -6,9 +6,14 @@ namespace bookballAPI.Models
 {
     public partial class bookballContext : DbContext
     {
-        public bookballContext() { }
+        public bookballContext()
+        {
+        }
 
-        public bookballContext(DbContextOptions<bookballContext> options) : base(options) { }
+        public bookballContext(DbContextOptions<bookballContext> options)
+            : base(options)
+        {
+        }
 
         public virtual DbSet<Booking> Booking { get; set; }
         public virtual DbSet<Pitch> Pitch { get; set; }
@@ -17,10 +22,11 @@ namespace bookballAPI.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //             if (!optionsBuilder.IsConfigured) {
-            // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            //                 optionsBuilder.UseNpgsql (ConfigurationManager.ConnectionStrings["bookballDatabase"].ConnectionString);
-            //             }
+            if (!optionsBuilder.IsConfigured)
+            {
+                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                //                 optionsBuilder.UseNpgsql("");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,9 +35,7 @@ namespace bookballAPI.Models
             {
                 entity.ToTable("booking");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Checkin)
                     .HasColumnName("checkin")
@@ -55,20 +59,26 @@ namespace bookballAPI.Models
                     .HasColumnName("price")
                     .HasColumnType("numeric(10,2)");
 
-                entity.Property(e => e.Timeslot)
-                    .HasColumnName("timeslot")
-                    .HasColumnType("time without time zone");
+                entity.Property(e => e.TimeslotId).HasColumnName("timeslotId");
 
                 entity.Property(e => e.UserId).HasColumnName("userId");
 
                 entity.HasOne(d => d.Pitch)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.PitchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Pitch");
+
+                entity.HasOne(d => d.Timeslot)
+                    .WithMany(p => p.Booking)
+                    .HasForeignKey(d => d.TimeslotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Timeslot");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Booking)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_User");
             });
 
@@ -76,9 +86,7 @@ namespace bookballAPI.Models
             {
                 entity.ToTable("pitch");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Address)
                     .IsRequired()
@@ -100,14 +108,12 @@ namespace bookballAPI.Models
             {
                 entity.ToTable("timeslot");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.PitchId).HasColumnName("pitchId");
 
-                entity.Property(e => e.Timeslot1)
-                    .HasColumnName("timeslot")
+                entity.Property(e => e.Timeframe)
+                    .HasColumnName("timeframe")
                     .HasColumnType("time without time zone");
 
                 entity.HasOne(d => d.Pitch)
@@ -120,9 +126,7 @@ namespace bookballAPI.Models
             {
                 entity.ToTable("user");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Email)
                     .HasColumnName("email")

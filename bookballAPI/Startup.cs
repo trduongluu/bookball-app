@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace bookballAPI
 {
@@ -29,28 +30,35 @@ namespace bookballAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-            .ConfigureApiBehaviorOptions(options =>
+            services.AddControllers().AddNewtonsoftJson(options =>
             {
-                options.SuppressMapClientErrors = true;
-                options.InvalidModelStateResponseFactory = context =>
-                {
-                    return new BadRequestObjectResult(new SerializableError(context.ModelState));
-                };
-
-                options.ClientErrorMapping[404].Link =
-                    "https://httpstatuses.com/404";
+                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                // options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             })
-            .AddNewtonsoftJson(options =>
-            {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            });
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            // .ConfigureApiBehaviorOptions(options =>
+            // {
+            //     options.SuppressMapClientErrors = true;
+            //     options.InvalidModelStateResponseFactory = context =>
+            //     {
+            //         return new BadRequestObjectResult(new SerializableError(context.ModelState));
+            //     };
+
+            //     options.ClientErrorMapping[404].Link =
+            //         "https://httpstatuses.com/404";
+            // })
+            // .AddNewtonsoftJson(options =>
+            // {
+            //     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            // });
             services.AddDbContext<bookballContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+            // services.AddMvcCore().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

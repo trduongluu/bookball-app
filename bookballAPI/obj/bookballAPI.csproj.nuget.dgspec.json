@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {}
+    "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {
+    "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
+        "projectUniqueName": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj",
         "projectName": "bookballAPI",
-        "projectPath": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
-        "packagesPath": "C:\\Users\\duong\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\obj\\",
+        "projectPath": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj",
+        "packagesPath": "C:\\Users\\trduong\\.nuget\\packages\\",
+        "outputPath": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\duong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\trduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -41,6 +43,10 @@
       "frameworks": {
         "netcoreapp3.0": {
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[3.0.0, )"
