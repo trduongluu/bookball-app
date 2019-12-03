@@ -58,6 +58,17 @@ namespace bookballAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy",
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+            services.AddMvc();
             // services.AddMvcCore().AddNewtonsoftJson();
         }
 
@@ -77,8 +88,12 @@ namespace bookballAPI
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            app.UseRouting();
+            app.UseStaticFiles();
 
+            app.UseRouting();
+            app.UseCors("MyPolicy");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
