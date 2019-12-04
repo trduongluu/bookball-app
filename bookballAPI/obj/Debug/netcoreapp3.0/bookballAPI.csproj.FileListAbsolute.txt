@@ -95,3 +95,6 @@ E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\b
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\bookballAPI.csproj.CopyComplete
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\staticwebassets\bookballAPI.StaticWebAssets.Manifest.cache
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\staticwebassets\bookballAPI.StaticWebAssets.xml
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll

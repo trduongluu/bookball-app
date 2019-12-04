@@ -6,6 +6,7 @@ using bookballAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +54,19 @@ namespace bookballAPI
             //     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             //     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             // });
+            services.AddMvc();
             services.AddDbContext<bookballContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
+            services.AddDbContext<AuthenticationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
+            services.AddIdentityCore<ApplicationUser>().AddEntityFrameworkStores<AuthenticationContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -68,7 +81,6 @@ namespace bookballAPI
                     .AllowAnyMethod();
                 });
             });
-            services.AddMvc();
             // services.AddMvcCore().AddNewtonsoftJson();
         }
 

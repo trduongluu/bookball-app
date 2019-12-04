@@ -5,7 +5,7 @@ namespace bookballAPI.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Column(TypeName = "nvarchar(150)")]
-        public string Name { get; set; }
+        [Column(TypeName = "character varying(150)")]
+        public string FullName { get; set; }
     }
 }
