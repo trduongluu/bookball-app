@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {}
+    "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj": {}
   },
   "projects": {
-    "c:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj": {
+    "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
+        "projectUniqueName": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj",
         "projectName": "bookballAPI",
-        "projectPath": "c:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\bookballAPI.csproj",
-        "packagesPath": "C:\\Users\\duong\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\duong\\Documents\\GitHub\\bookball-app\\bookballAPI\\obj\\",
+        "projectPath": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\bookballAPI.csproj",
+        "packagesPath": "C:\\Users\\trduong\\.nuget\\packages\\",
+        "outputPath": "E:\\MyData\\SourceCode\\Incubate\\bookball-app\\bookballAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\duong\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\trduong\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
