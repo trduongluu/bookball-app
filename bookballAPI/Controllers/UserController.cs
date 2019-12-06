@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using bookballAPI.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
+using bookballAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace bookballAPI.Controllers
 {
@@ -14,9 +16,31 @@ namespace bookballAPI.Controllers
     public class UserController : ControllerBase
     {
         private readonly bookballContext _context;
-        public UserController(bookballContext context)
+        private IUserService _userService;
+        public UserController(bookballContext context, IUserService userService)
         {
             _context = context;
+            _userService = userService;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] AuthenticateModel model)
+        {
+            var user = _userService.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "Username or password is incorrect" });
+            }
+            return Ok(user);
+        }
+
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            var users = _userService.GetAll();
+            return Ok(users);
         }
 
         // GET api/user
