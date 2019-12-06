@@ -25,13 +25,12 @@ namespace bookballAPI.Controllers
         [HttpPost]
         [Route("Register")]
         //POST : /api/ApplicationUser/Register
-        public async Task<Object> PostApplicationUser(ApplicationUserModel model)
+        public async Task<Object> PostApplicationUser(UserInputModel model)
         {
             var applicationUser = new ApplicationUser()
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                FullName = model.FullName
             };
 
             try

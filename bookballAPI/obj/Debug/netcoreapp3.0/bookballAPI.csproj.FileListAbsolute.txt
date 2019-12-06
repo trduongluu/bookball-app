@@ -108,3 +108,10 @@ E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\M
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.IdentityModel.Tokens.Jwt.dll
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.Security.Cryptography.Pkcs.dll
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\runtimes\win\lib\netcoreapp2.1\System.Security.Cryptography.Pkcs.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.IdentityModel.Tokens.Jwt.dll

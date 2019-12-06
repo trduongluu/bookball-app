@@ -13,13 +13,13 @@ namespace bookballAPI.Services
 {
     public interface IUserService
     {
-        User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
+        ApplicationUser Authenticate(string username, string password);
+        IEnumerable<ApplicationUser> GetAll();
     }
     public class UserService : IUserService
     {
-        private List<User> _users = new List<User>{
-            new User { Id = 1, Username = "Test", Password = "test" }
+        private List<ApplicationUser> _users = new List<ApplicationUser>{
+            new ApplicationUser { Id = "1", Username = "Test", Password = "test" }
         };
 
         private readonly AppSettings _appSettings;
@@ -29,7 +29,7 @@ namespace bookballAPI.Services
             _appSettings = appSettings.Value;
         }
 
-        public User Authenticate(string username, string password)
+        public ApplicationUser Authenticate(string username, string password)
         {
             var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
 
@@ -52,7 +52,7 @@ namespace bookballAPI.Services
             return user.WithoutPassword();
         }
 
-        public IEnumerable<User> GetAll()
+        public IEnumerable<ApplicationUser> GetAll()
         {
             return _users.WithoutPasswords();
         }
