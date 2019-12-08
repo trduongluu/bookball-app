@@ -1,24 +1,22 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
-namespace bookballAPI.Models
+namespace bookballAPI.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
-        public ApplicationUser()
+        public User()
         {
             Booking = new HashSet<Booking>();
         }
-
-        public override string Id { get; set; }
+        // public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Username { get; set; }
-        // public string Email { get; set; }
-        public string Password { get; set; }
+        // public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         public string Token { get; set; }
 
         [JsonIgnore]

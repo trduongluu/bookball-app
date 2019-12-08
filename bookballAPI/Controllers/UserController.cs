@@ -3,11 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using bookballAPI.Models;
+// using bookballAPI.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
 using bookballAPI.Services;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using bookballAPI.Helpers;
+using Microsoft.Extensions.Options;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using bookballAPI.Entities;
+using bookballAPI.Models;
+using bookballAPI.Models.Users;
+using bookballAPI.Contexts;
 
 namespace bookballAPI.Controllers
 {
@@ -18,30 +29,83 @@ namespace bookballAPI.Controllers
     {
         private readonly bookballContext _context;
         private IUserService _userService;
-        public UserController(bookballContext context, IUserService userService)
+        private IMapper _mapper;
+        private readonly AppSettings _appSettings;
+        public UserController(
+            bookballContext context,
+            IUserService userService,
+            IMapper mapper,
+            IOptions<AppSettings> appSettings
+            )
         {
             _context = context;
             _userService = userService;
+            _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
+
             var user = _userService.Authenticate(model.Username, model.Password);
 
             if (user == null)
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
-            return Ok(user);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return Ok(new
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Token = tokenString
+            });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody]RegisterModel model)
+        {
+            // map model to entity
+            var user = _mapper.Map<Entities.User>(model);
+
+            try
+            {
+                // create user
+                _userService.Create(user, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var users = _userService.GetAll();
-            return Ok(users);
+            var model = _mapper.Map<IList<UserModel>>(users);
+            return Ok(model);
         }
 
         // GET api/user
@@ -72,66 +136,59 @@ namespace bookballAPI.Controllers
 
         // GET api/user/5
         [HttpGet("{id}")]
-        public ActionResult<User> GetById(int id)
+        public IActionResult GetById(string id)
         {
-            if (id <= 0)
-            {
-                return NotFound("User id must be higher than zero");
-            }
-            User user = _context.User.FirstOrDefault(p => p.Id == id);
-
+            var user = _userService.GetById(id);
             if (user == null)
             {
                 return NotFound("User not found");
             }
-            return Ok(user);
+            var model = _mapper.Map<UserModel>(user);
+            return Ok(model);
         }
 
         // POST api/user
-        [HttpPost("")]
-        public async Task<ActionResult<User>> Post([FromBody] User user)
-        {
-            if (user == null)
-            {
-                return NotFound("User data is not supplied");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await _context.User.AddAsync(user);
-            await _context.SaveChangesAsync();
-            // return CreatedAtAction(nameof(Getuser), new { id = user.Id }, user);
-            return Ok(user);
-        }
+        // [HttpPost("")]
+        // public async Task<ActionResult<User>> Post([FromBody] User user)
+        // {
+        //     if (user == null)
+        //     {
+        //         return NotFound("User data is not supplied");
+        //     }
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+        //     await _context.User.AddAsync(user);
+        //     await _context.SaveChangesAsync();
+        //     // return CreatedAtAction(nameof(Getuser), new { id = user.Id }, user);
+        //     return Ok(user);
+        // }
 
         // PUT api/user/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromBody] User user)
+        public IActionResult Update(string id, [FromBody]UpdateModel model)
         {
-            if (user == null)
+            // map model to entity and set id
+            var user = _mapper.Map<Entities.User>(model);
+            user.Id = id;
+
+            try
             {
-                return NotFound("User data is not supplied");
+                // update user 
+                _userService.Update(user, model.Password);
+                return Ok();
             }
-            if (!ModelState.IsValid)
+            catch (AppException ex)
             {
-                return BadRequest(ModelState);
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
             }
-            User selectedUser = _context.User.FirstOrDefault(p => p.Id == user.Id);
-            if (selectedUser == null)
-            {
-                return NotFound("User does not exist in the database");
-            }
-            selectedUser.Username = user.Username;
-            selectedUser.Password = user.Password;
-            _context.Attach(selectedUser).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
-            return Ok(selectedUser);
         }
 
         // DELETE api/user/5
         [HttpDelete("{id}")]
-        public async Task<JObject> Delete(int id)
+        public JObject Delete(string id)
         {
             if (id.Equals(null))
             {
@@ -140,16 +197,7 @@ namespace bookballAPI.Controllers
                     new JProperty("message", "No id supplied")
                 };
             }
-            User user = _context.User.FirstOrDefault(p => p.Id == id);
-            if (user == null)
-            {
-                return new JObject {
-                    new JProperty("success", false),
-                    new JProperty("message", "User does not exist in the database")
-                };
-            }
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
+            _userService.Delete(id);
             return new JObject {
                 new JProperty("success", true),
                 new JProperty("message", "User does not exist in the database")

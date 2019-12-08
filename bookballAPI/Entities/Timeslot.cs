@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace bookballAPI.Models
+namespace bookballAPI.Entities
 {
-    public partial class User
+    public partial class Timeslot
     {
-        public User()
+        public Timeslot()
         {
             Booking = new HashSet<Booking>();
         }
 
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Token { get; set; }
+        public int? PitchId { get; set; }
+        public TimeSpan? Timeframe { get; set; }
 
+        [JsonIgnore]
+        public virtual Pitch Pitch { get; set; }
         [JsonIgnore]
         public virtual ICollection<Booking> Booking { get; set; }
     }

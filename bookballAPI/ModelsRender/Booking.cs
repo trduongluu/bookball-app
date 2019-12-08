@@ -14,6 +14,7 @@ namespace bookballAPI.ModelsRender
         public DateTime? Checkin { get; set; }
         public DateTime? Checkout { get; set; }
         public int TimeslotId { get; set; }
+        public short? Status { get; set; }
 
         public virtual Pitch Pitch { get; set; }
         public virtual Timeslot Timeslot { get; set; }

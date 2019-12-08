@@ -115,3 +115,5 @@ C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.IdentityModel.Tokens.Jwt.dll
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.dll
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

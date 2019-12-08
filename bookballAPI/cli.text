@@ -15,7 +15,7 @@ Scaffold-DbContext "Host=localhost;Database=mydatabase;Username=myuser;Password=
 // Code First
 -Add a migration (or Remove)
 dotnet ef migrations add MyFirstMigration
-dotnet ef migrations add InitialCreate --context MyDbContext --output-dir Migrations/SqlServerMigrations
+dotnet ef migrations add IdentityCreate --context bookballContext --output-dir Migrations/IdentityPostgres
 add-migration MyFirstMigration
 
 -Create/update database

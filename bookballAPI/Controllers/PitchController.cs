@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using bookballAPI.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
+using bookballAPI.Contexts;
+using bookballAPI.Entities;
 
 namespace bookballAPI.Controllers
 {
@@ -148,7 +150,7 @@ namespace bookballAPI.Controllers
             await _context.SaveChangesAsync();
             return new JObject {
                 new JProperty("success", true),
-                new JProperty("message", "Pitch does not exist in the database")
+                new JProperty("message", "Pitch deleted successfully in the database")
             };
         }
     }

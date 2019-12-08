@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using bookballAPI.Contexts;
+using bookballAPI.Entities;
 using bookballAPI.Helpers;
 using bookballAPI.Models;
 using bookballAPI.Services;
@@ -53,12 +56,19 @@ namespace bookballAPI
 
             //     options.ClientErrorMapping[404].Link =
             //         "https://httpstatuses.com/404";
-            // })
-            // .AddNewtonsoftJson(options =>
-            // {
-            //     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            //     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
             // });
+            services.AddMvcCore();
+            services.AddDbContext<bookballContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
+            services.AddIdentityCore<User>().AddEntityFrameworkStores<bookballContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 4;
+            });
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             // configure strongly typed settings objects
             var appSettingSection = Configuration.GetSection("AppSettings");
@@ -73,6 +83,21 @@ namespace bookballAPI
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
+                        var userId = Convert.ToString(context.Principal.Identity.Name);
+                        var user = userService.GetById(userId);
+                        if (user == null)
+                        {
+                            // return unauthorized if user no longer exists
+                            context.Fail("Unauthorized");
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
@@ -82,19 +107,6 @@ namespace bookballAPI
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            });
-
-            services.AddMvcCore();
-            services.AddDbContext<bookballContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
-            services.AddDbContext<AuthenticationContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
-            services.AddIdentityCore<ApplicationUser>().AddEntityFrameworkStores<AuthenticationContext>();
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 4;
             });
 
             // configure DI for application services

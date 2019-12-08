@@ -1,17 +1,19 @@
 ﻿using System;
+using bookballAPI.Entities;
+using bookballAPI.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace bookballAPI.ModelsRender
+namespace bookballAPI.Contexts
 {
-    public partial class bookballContext : DbContext
+    public partial class bookballContext : IdentityDbContext<User>
     {
         public bookballContext()
         {
         }
 
-        public bookballContext(DbContextOptions<bookballContext> options)
-            : base(options)
+        public bookballContext(DbContextOptions<bookballContext> options) : base(options)
         {
         }
 
@@ -22,15 +24,16 @@ namespace bookballAPI.ModelsRender
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //             if (!optionsBuilder.IsConfigured)
-            //             {
-            // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-            //                 optionsBuilder.UseNpgsql("");
-            //             }
+            if (!optionsBuilder.IsConfigured)
+            {
+                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                // optionsBuilder.UseNpgsql("");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.ToTable("booking");
@@ -53,11 +56,13 @@ namespace bookballAPI.ModelsRender
                     .HasColumnName("paid")
                     .HasColumnType("numeric");
 
-                entity.Property(e => e.PitchId).HasColumnName("pitchId");
-
                 entity.Property(e => e.Price)
                     .HasColumnName("price")
                     .HasColumnType("numeric(10,2)");
+
+                entity.Property(e => e.Status).HasColumnName("status");
+
+                entity.Property(e => e.PitchId).HasColumnName("pitchId");
 
                 entity.Property(e => e.TimeslotId).HasColumnName("timeslotId");
 
@@ -122,28 +127,28 @@ namespace bookballAPI.ModelsRender
                     .HasConstraintName("FK_Pitch");
             });
 
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("user");
+            // modelBuilder.Entity<User>(entity =>
+            // {
+            //     entity.ToTable("user");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+            //     entity.Property(e => e.customId).HasColumnName("customId");
 
-                entity.Property(e => e.Email)
-                    .HasColumnName("email")
-                    .HasMaxLength(255);
+            //     // entity.Property(e => e.Email)
+            //     //     .HasColumnName("email")
+            //     //     .HasMaxLength(255);
 
-                entity.Property(e => e.Password)
-                    .HasColumnName("password")
-                    .HasMaxLength(255);
+            //     // entity.Property(e => e.Password)
+            //     //     .HasColumnName("password")
+            //     //     .HasMaxLength(255);
 
-                entity.Property(e => e.Username)
-                    .HasColumnName("username")
-                    .HasMaxLength(255);
-            });
+            //     entity.Property(e => e.Username)
+            //         .HasColumnName("username")
+            //         .HasMaxLength(255);
+            // });
 
-            OnModelCreatingPartial(modelBuilder);
+            // OnModelCreatingPartial(modelBuilder);
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        // partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

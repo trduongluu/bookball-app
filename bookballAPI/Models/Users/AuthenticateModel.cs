@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace bookballAPI.Models
+namespace bookballAPI.Models.Users
 {
     public class AuthenticateModel
     {

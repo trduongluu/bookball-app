@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using bookballAPI.Models;
 using Newtonsoft.Json.Linq;
 using Microsoft.EntityFrameworkCore;
+using bookballAPI.Contexts;
+using bookballAPI.Entities;
 
 namespace bookballAPI.Controllers
 {

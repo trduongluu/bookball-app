@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using bookballAPI.Models;
+using bookballAPI.Models.Users;
+using bookballAPI.Entities;
 
 namespace bookballAPI.Controllers
 {
@@ -13,10 +15,10 @@ namespace bookballAPI.Controllers
     [ApiController]
     public class ApplicationUserController : ControllerBase
     {
-        private UserManager<ApplicationUser> _userManager;
-        private SignInManager<ApplicationUser> _singInManager;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _singInManager;
 
-        public ApplicationUserController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public ApplicationUserController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _singInManager = signInManager;
@@ -25,11 +27,11 @@ namespace bookballAPI.Controllers
         [HttpPost]
         [Route("Register")]
         //POST : /api/ApplicationUser/Register
-        public async Task<Object> PostApplicationUser(UserInputModel model)
+        public async Task<Object> PostApplicationUser(RegisterModel model)
         {
-            var applicationUser = new ApplicationUser()
+            var applicationUser = new User()
             {
-                UserName = model.UserName,
+                Username = model.Username,
                 Email = model.Email,
             };
 

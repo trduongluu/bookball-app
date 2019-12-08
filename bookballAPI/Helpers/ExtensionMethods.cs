@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
-using bookballAPI.Models;
+using bookballAPI.Entities;
+// using bookballAPI.Models;
 
 namespace bookballAPI.Helpers
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<ApplicationUser> WithoutPasswords(this IEnumerable<ApplicationUser> users)
+        public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users)
         {
             return users.Select(x => x.WithoutPassword());
         }
 
-        public static ApplicationUser WithoutPassword(this ApplicationUser user)
+        public static User WithoutPassword(this User user)
         {
-            user.Password = null;
+            user.PasswordHash = null;
             return user;
         }
     }
