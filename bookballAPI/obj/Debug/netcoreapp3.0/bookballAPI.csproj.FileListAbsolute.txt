@@ -117,3 +117,9 @@ C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\System.IdentityModel.Tokens.Jwt.dll
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.dll
 E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\bookballAPI.StaticWebAssets.xml
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V3.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.dll

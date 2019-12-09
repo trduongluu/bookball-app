@@ -13,12 +13,12 @@ namespace bookballAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApplicationUserController : ControllerBase
+    public class TempUserController : ControllerBase
     {
         private UserManager<User> _userManager;
         private SignInManager<User> _singInManager;
 
-        public ApplicationUserController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public TempUserController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _singInManager = signInManager;

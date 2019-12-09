@@ -39,13 +39,15 @@ namespace bookballAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            // .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            });
             // .ConfigureApiBehaviorOptions(options =>
             // {
             //     options.SuppressMapClientErrors = true;
@@ -57,9 +59,11 @@ namespace bookballAPI
             //     options.ClientErrorMapping[404].Link =
             //         "https://httpstatuses.com/404";
             // });
-            services.AddMvcCore();
+
             services.AddDbContext<bookballContext>(options => options.UseNpgsql(Configuration.GetConnectionString("bookballDatabase")));
-            services.AddIdentityCore<User>().AddEntityFrameworkStores<bookballContext>();
+
+            services.AddDefaultIdentity<User>().AddEntityFrameworkStores<bookballContext>();
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -76,11 +80,12 @@ namespace bookballAPI
 
             // configure jwt authentication
             var appSettings = appSettingSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(appSettings.JWT_Secret);
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(x =>
             {
                 x.Events = new JwtBearerEvents
@@ -105,7 +110,8 @@ namespace bookballAPI
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
@@ -153,7 +159,7 @@ namespace bookballAPI
                 options.AddPolicy("MyPolicy",
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins(appSettings.Client_URL)
                     .AllowAnyHeader()
                     .AllowAnyMethod();
                 });

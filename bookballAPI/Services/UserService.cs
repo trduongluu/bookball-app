@@ -7,6 +7,7 @@ using System.Text;
 using bookballAPI.Contexts;
 using bookballAPI.Entities;
 using bookballAPI.Helpers;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -40,7 +41,7 @@ namespace bookballAPI.Services
             if (user == null) return null;
 
             // check if password is correct
-            var passHash = System.Text.Encoding.UTF8.GetBytes(user.PasswordHash);
+            var passHash = Convert.FromBase64String(user.PasswordHash);
             if (!VerifyPasswordHash(password, passHash, user.PasswordSalt))
                 return null;
 
@@ -65,12 +66,12 @@ namespace bookballAPI.Services
                 throw new AppException("Password is required");
 
             if (_context.User.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+                throw new AppException("Username " + user.Username + " is already taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
 
-            user.PasswordHash = passwordHash.ToString();
+            user.PasswordHash = Convert.ToBase64String(passwordHash);
             user.PasswordSalt = passwordSalt;
 
             _context.User.Add(user);

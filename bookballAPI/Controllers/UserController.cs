@@ -19,6 +19,7 @@ using bookballAPI.Entities;
 using bookballAPI.Models;
 using bookballAPI.Models.Users;
 using bookballAPI.Contexts;
+using Microsoft.AspNetCore.Identity;
 
 namespace bookballAPI.Controllers
 {
@@ -31,17 +32,22 @@ namespace bookballAPI.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private UserManager<User> _userManager;
+        private SignInManager<User> _singInManager;
         public UserController(
             bookballContext context,
             IUserService userService,
             IMapper mapper,
-            IOptions<AppSettings> appSettings
+            IOptions<AppSettings> appSettings,
+            UserManager<User> userManager, SignInManager<User> signInManager
             )
         {
             _context = context;
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _userManager = userManager;
+            _singInManager = signInManager;
         }
 
         [AllowAnonymous]
@@ -57,7 +63,7 @@ namespace bookballAPI.Controllers
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_appSettings.JWT_Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -74,29 +80,93 @@ namespace bookballAPI.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
                 Token = tokenString
             });
         }
 
         [AllowAnonymous]
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
+        {
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+            {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.JWT_Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                return Ok(new
+                {
+                    Id = user.Id,
+                    Username = user.Username,
+                    Token = tokenString
+                });
+            }
+            else
+                return BadRequest(new { message = "Username or password is incorrect." });
+        }
+
+        [AllowAnonymous]
         [HttpPost("register")]
-        public IActionResult Register([FromBody]RegisterModel model)
+        public IActionResult RegisterAsync([FromBody]RegisterModel model)
         {
             // map model to entity
-            var user = _mapper.Map<Entities.User>(model);
+            var user = _mapper.Map<User>(model);
 
             try
             {
                 // create user
-                _userService.Create(user, model.Password);
-                return Ok();
+                var createdUser = _userService.Create(user, model.Password);
+                // var result = await _userManager.CreateAsync(user, model.Password);
+                return Ok(new
+                {
+                    Id = createdUser.Id,
+                    Username = createdUser.Username,
+                    FirstName = createdUser.FirstName,
+                    LastName = createdUser.LastName,
+                    Email = createdUser.Email,
+                });
             }
             catch (AppException ex)
             {
                 // return error message if there was an exception
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("RegisterASP")]
+        public async Task<Object> PostApplicationUser([FromBody]RegisterModel model)
+        {
+            var user = new User()
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            try
+            {
+                var result = await _userManager.CreateAsync(user, model.Password);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 
@@ -147,36 +217,38 @@ namespace bookballAPI.Controllers
             return Ok(model);
         }
 
-        // POST api/user
-        // [HttpPost("")]
-        // public async Task<ActionResult<User>> Post([FromBody] User user)
-        // {
-        //     if (user == null)
-        //     {
-        //         return NotFound("User data is not supplied");
-        //     }
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-        //     await _context.User.AddAsync(user);
-        //     await _context.SaveChangesAsync();
-        //     // return CreatedAtAction(nameof(Getuser), new { id = user.Id }, user);
-        //     return Ok(user);
-        // }
-
         // PUT api/user/5
         [HttpPut("{id}")]
         public IActionResult Update(string id, [FromBody]UpdateModel model)
         {
             // map model to entity and set id
-            var user = _mapper.Map<Entities.User>(model);
+            var user = _mapper.Map<User>(model);
             user.Id = id;
 
             try
             {
                 // update user 
                 _userService.Update(user, model.Password);
+                return Ok();
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateIdentityAsync(string id, [FromBody]UpdateModel model)
+        {
+            // map model to entity and set id
+            var user = _mapper.Map<User>(model);
+            user.Id = id;
+
+            try
+            {
+                // update user 
+                await _userManager.UpdateAsync(user);
                 return Ok();
             }
             catch (AppException ex)

@@ -1,6 +1,7 @@
 ﻿using System;
 using bookballAPI.Entities;
 using bookballAPI.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -9,13 +10,9 @@ namespace bookballAPI.Contexts
 {
     public partial class bookballContext : IdentityDbContext<User>
     {
-        public bookballContext()
-        {
-        }
+        public bookballContext() { }
 
-        public bookballContext(DbContextOptions<bookballContext> options) : base(options)
-        {
-        }
+        public bookballContext(DbContextOptions<bookballContext> options) : base(options) { }
 
         public virtual DbSet<Booking> Booking { get; set; }
         public virtual DbSet<Pitch> Pitch { get; set; }
@@ -34,6 +31,7 @@ namespace bookballAPI.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.ToTable("booking");
@@ -125,6 +123,50 @@ namespace bookballAPI.Contexts
                     .WithMany(p => p.Timeslot)
                     .HasForeignKey(d => d.PitchId)
                     .HasConstraintName("FK_Pitch");
+            });
+
+
+            // TODO: customize the asp.net identity model
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable(name: "Users");
+            });
+
+            modelBuilder.Entity<IdentityRole>(entity =>
+            {
+                entity.ToTable(name: "Roles");
+            });
+            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.ToTable("UserRoles");
+                //in case you chagned the TKey type
+                //  entity.HasKey(key => new { key.UserId, key.RoleId });
+            });
+
+            modelBuilder.Entity<IdentityUserClaim<string>>(entity =>
+            {
+                entity.ToTable("UserClaims");
+            });
+
+            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.ToTable("UserLogins");
+                //in case you chagned the TKey type
+                //  entity.HasKey(key => new { key.ProviderKey, key.LoginProvider });       
+            });
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>(entity =>
+            {
+                entity.ToTable("RoleClaims");
+
+            });
+
+            modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.ToTable("UserTokens");
+                //in case you chagned the TKey type
+                // entity.HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
+
             });
 
             // modelBuilder.Entity<User>(entity =>
