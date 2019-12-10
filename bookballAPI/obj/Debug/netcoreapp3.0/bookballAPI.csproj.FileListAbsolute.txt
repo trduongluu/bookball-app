@@ -123,3 +123,5 @@ C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V3.dll
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\bookballAPI.xml
+C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\bookballAPI.xml

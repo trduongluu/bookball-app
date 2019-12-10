@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bookballAPI</name>
+    </assembly>
+    <members>
+        <member name="M:bookballAPI.Controllers.UserController.Authenticate(bookballAPI.Models.Users.AuthenticateModel)">
+            <summary>
+            Custom authentication login JWT
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:bookballAPI.Controllers.UserController.Login(bookballAPI.Models.Users.AuthenticateModel)">
+            <summary>
+            Authentication login with identity asp.net core manager
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:bookballAPI.Controllers.UserController.RegisterAsync(bookballAPI.Models.Users.RegisterModel)">
+            <summary>
+            Custom register with user service class
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:bookballAPI.Controllers.UserController.PostApplicationUser(bookballAPI.Models.Users.RegisterModel)">
+            <summary>
+            Register using identity asp.net core manager
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

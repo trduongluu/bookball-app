@@ -50,6 +50,11 @@ namespace bookballAPI.Controllers
             _singInManager = signInManager;
         }
 
+        /// <summary>
+        /// Custom authentication login JWT
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
@@ -84,9 +89,13 @@ namespace bookballAPI.Controllers
             });
         }
 
+        /// <summary>
+        /// Authentication login with identity asp.net core manager
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
-        [HttpPost]
-        [Route("Login")]
+        [HttpPost("login-identity")]
         public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -117,6 +126,11 @@ namespace bookballAPI.Controllers
                 return BadRequest(new { message = "Username or password is incorrect." });
         }
 
+        /// <summary>
+        /// Custom register with user service class
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("register")]
         public IActionResult RegisterAsync([FromBody]RegisterModel model)
@@ -145,9 +159,13 @@ namespace bookballAPI.Controllers
             }
         }
 
+        /// <summary>
+        /// Register using identity asp.net core manager
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
-        [HttpPost]
-        [Route("RegisterASP")]
+        [HttpPost("register-identity")]
         public async Task<Object> PostApplicationUser([FromBody]RegisterModel model)
         {
             var user = new User()
@@ -238,7 +256,7 @@ namespace bookballAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("/update-identity/{id}")]
         public async Task<IActionResult> UpdateIdentityAsync(string id, [FromBody]UpdateModel model)
         {
             // map model to entity and set id
