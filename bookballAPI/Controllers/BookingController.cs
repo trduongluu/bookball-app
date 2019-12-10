@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using bookballAPI.Contexts;
 using bookballAPI.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace bookballAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookingController : ControllerBase
