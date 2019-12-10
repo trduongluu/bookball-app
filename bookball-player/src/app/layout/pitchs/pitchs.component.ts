@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PitchService } from '@trduong/_shared/services/pitch.service';
+import { PitchService } from '@trduong/shared/services/pitch.service';
 
 @Component({
   selector: 'app-pitchs',

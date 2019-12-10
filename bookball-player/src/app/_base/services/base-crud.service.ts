@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BindDataExtensionService } from '@trduong/_shared/extensions/bind-data-extension.service';
+import { BindDataExtensionService } from '@trduong/shared/extensions/bind-data-extension.service';
 import { PagedListModel } from '../models/response-model';
 
 // const apiUrl = `${environment.apiUrl}/api`;
