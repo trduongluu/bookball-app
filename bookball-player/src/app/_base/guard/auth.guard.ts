@@ -3,7 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 
 declare var $;
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AuthGuard implements CanActivate {
 
     constructor(private router: Router) { }
@@ -27,7 +29,7 @@ export class AuthGuard implements CanActivate {
         if (localStorage.getItem('token') != null) {
             return true;
         } else {
-            this.router.navigate(['/auth/login']);
+            this.router.navigate(['auth/login']);
             return false;
         }
     }
