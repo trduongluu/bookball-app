@@ -1,3 +1,81 @@
-<p>
-  register works!
-</p>
+<div class="wrapper h-100">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Register</h5>
+
+            <form class="form-register" [formGroup]="formModel" autocomplete="off" (submit)="onSubmit()">
+              <div class="form-label-group required">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
+                  formControlName="email" required autofocus>
+                <label for="inputEmail">Email address</label>
+                <label class="text-danger"
+                  *ngIf="formModel.get('email').touched && formModel.get('email').errors">Invalid
+                  email address.</label>
+              </div>
+
+              <div class="form-label-group required">
+                <input type="text" id="inputUsername" class="form-control" placeholder="Username"
+                  formControlName="username" required autofocus>
+                <label for="inputUsername">Username</label>
+                <label class="text-danger"
+                  *ngIf="formModel.get('username').touched && formModel.get('username').errors">This
+                  field is mandatory.</label>
+              </div>
+
+              <div class="form-label-group required">
+                <input type="text" id="inputFirstName" class="form-control" placeholder="First Name"
+                  formControlName="firstName" required autofocus>
+                <label for="inputFirstName">First Name</label>
+              </div>
+
+              <div class="form-label-group required">
+                <input type="text" id="inputLastName" class="form-control" placeholder="Last Name"
+                  formControlName="lastName" required autofocus>
+                <label for="inputLastName">Last Name</label>
+              </div>
+
+              <div formGroupName="passwords">
+                <div class="form-label-group required">
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                    formControlName="password" required>
+                  <label for="inputPassword">Password</label>
+                  <label class="text-danger"
+                    *ngIf="formModel.get('passwords.password').touched && formModel.get('passwords.password').errors">This
+                    field is mandatory.</label>
+                  <!-- <label class="text-danger" *ngIf="formModel.get('passwords.password').touched && formModel.get('passwords.password').errors?.minlength">Minimum
+                      4 characters required.</label> -->
+                </div>
+                <div class="form-label-group required">
+                  <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                    formControlName="confirmPassword" required>
+                  <label for="inputPassword">Confirm Password</label>
+                  <label class="text-danger"
+                    *ngIf="formModel.get('passwords.confirmPassword').touched && formModel.get('passwords.confirmPassword').errors">This
+                    field is mandatory.</label>
+                  <!-- <label class="text-danger" *ngIf="formModel.get('passwords.confirmPassword').touched && formModel.get('passwords.confirmPassword').errors?.passwordMismatch">Confirm
+                      Password does not match.</label> -->
+                </div>
+              </div>
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+
+              <button class="btn btn-lg bg-prime btn-block text-uppercase" type="submit">Register</button>
+              <hr class="my-4">
+              <button class="btn btn-lg btn-google btn-block text-uppercase"><i class="fa fa-google mr-2"></i> Sign in
+                with Google</button>
+              <button class="btn btn-lg btn-facebook btn-block text-uppercase"><i class="fa fa-facebook-f mr-2"></i>
+                Sign in with Facebook</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

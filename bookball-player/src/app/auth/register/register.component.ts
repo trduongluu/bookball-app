@@ -1,27 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseUserService } from '@trduong/_base/services/base-user.service';
 import { ToastrService } from 'ngx-toastr';
+import { FormBuilder } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends BaseUserService implements OnInit {
 
   constructor(
-    public userService: BaseUserService,
+    // public userService: BaseUserService,
+    formBuilder: FormBuilder,
+    http: HttpClient,
     private toastr: ToastrService
-  ) { }
+  ) {
+    super(formBuilder, http);
+  }
 
   ngOnInit() {
-    this.userService.formModel.reset();
+    this.formModel.reset();
   }
 
   onSubmit() {
-    this.userService.register().subscribe((res: any) => {
+    this.register().subscribe((res: any) => {
       if (res.succeeded) {
-        this.userService.formModel.reset();
+        this.formModel.reset();
         this.toastr.success('New user created!', 'Registration successful.');
       } else {
         res.errors.forEach(element => {
