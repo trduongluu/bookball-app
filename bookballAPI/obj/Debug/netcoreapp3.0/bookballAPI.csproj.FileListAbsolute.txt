@@ -125,3 +125,9 @@ C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\bookballAPI.xml
 C:\Users\duong\Documents\GitHub\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\bookballAPI.xml
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\bookballAPI.StaticWebAssets.xml
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\bookballAPI.xml
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V3.dll
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.Views.V4.dll
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\bin\Debug\netcoreapp3.0\Microsoft.AspNetCore.Identity.UI.dll
+E:\MyData\SourceCode\Incubate\bookball-app\bookballAPI\obj\Debug\netcoreapp3.0\bookballAPI.xml

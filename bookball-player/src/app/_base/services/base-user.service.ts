@@ -10,25 +10,26 @@ const apiUrl = `${environment.apiUrl}/api`;
 })
 export class BaseUserService {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(protected formBuilder: FormBuilder, protected http: HttpClient) { }
   private readonly baseUrl = `${apiUrl}/user`;
 
   public formModel = this.formBuilder.group({
-    Username: ['', Validators.required],
-    Email: ['', Validators.email],
-    FullName: [''],
-    Passwords: this.formBuilder.group({
-      Password: ['', [Validators.required, Validators.minLength(4)]],
-      ConfirmPassword: ['', Validators.required]
+    username: ['', Validators.required],
+    email: ['', Validators.email],
+    firstName: [''],
+    lastName: [''],
+    passwords: this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(4)]],
+      confirmPassword: ['', Validators.required]
     }, { validator: this.comparePasswords })
   });
 
   comparePasswords(fgroup: FormGroup) {
-    const confirmPwCtrl = fgroup.get('ConfirmPassword');
+    const confirmPwCtrl = fgroup.get('confirmPassword');
     // passwordMismatch
     // confirmPswrdCtrl.errors={passwordMismatch:true}
     if (confirmPwCtrl.errors == null || 'passwordMismatch' in confirmPwCtrl.errors) {
-      if (fgroup.get('Password').value !== confirmPwCtrl.value) {
+      if (fgroup.get('password').value !== confirmPwCtrl.value) {
         confirmPwCtrl.setErrors({ passwordMismatch: true });
       } else {
         confirmPwCtrl.setErrors(null);
@@ -38,10 +39,11 @@ export class BaseUserService {
 
   register() {
     const body = {
-      UserName: this.formModel.value.Username,
-      Email: this.formModel.value.Email,
-      FullName: this.formModel.value.FullName,
-      Password: this.formModel.value.Passwords.Password
+      username: this.formModel.value.username,
+      email: this.formModel.value.email,
+      firstName: this.formModel.value.firstName,
+      lastName: this.formModel.value.lastName,
+      password: this.formModel.value.passwords.password
     };
     return this.http.post(`${this.baseUrl}/register-identity`, body);
   }
