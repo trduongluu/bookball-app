@@ -40,6 +40,15 @@
     padding: 1rem;
     transition: all 0.2s;
   }
+
+  span {
+    font-size: 14px;
+    font-style: italic;
+
+    a {
+      color: $primeColor;
+    }
+  }
 }
 
 .form-label-group {

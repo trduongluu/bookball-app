@@ -1,40 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseUserService } from '@trduong/_base/services/base-user.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BaseUserService implements OnInit {
 
+  formModel = {
+    username: '',
+    password: ''
+  };
   constructor(
-    private userService: BaseUserService,
+    formBuilder: FormBuilder,
+    http: HttpClient,
     private router: Router,
-    private toastr: ToastrService
-  ) { }
+    private message: NzMessageService
+  ) {
+    super(formBuilder, http);
+  }
 
   ngOnInit() {
     if (localStorage.getItem('token')) {
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/page/pitch');
     }
   }
 
   onSubmit(form: NgForm) {
-    this.userService.login(form.value).subscribe((res: any) => {
+    console.log(form.value);
+    this.login(form.value).subscribe((res: any) => {
       localStorage.setItem('token', res.token);
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/page/pitch');
     }, err => {
       if (err.status === 400) {
-        this.toastr.error('Incorrect username or password.', 'Authentication failed.');
+        this.message.error('Incorrect username or password.');
       } else {
         console.log(err);
       }
     }
     );
   }
-
 }

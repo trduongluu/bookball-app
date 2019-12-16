@@ -25,8 +25,7 @@ registerLocaleData(en);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    ToastrModule.forRoot({ progressBar: true })
+    ReactiveFormsModule
   ],
   providers: [
     {

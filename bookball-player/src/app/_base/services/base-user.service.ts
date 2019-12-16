@@ -10,19 +10,8 @@ const apiUrl = `${environment.apiUrl}/api`;
 })
 export class BaseUserService {
 
-  constructor(protected formBuilder: FormBuilder, protected http: HttpClient) { }
+  constructor(public formBuilder: FormBuilder, protected http: HttpClient) { }
   private readonly baseUrl = `${apiUrl}/user`;
-
-  public formModel = this.formBuilder.group({
-    username: ['', Validators.required],
-    email: ['', Validators.email],
-    firstName: [''],
-    lastName: [''],
-    passwords: this.formBuilder.group({
-      password: ['', [Validators.required, Validators.minLength(4)]],
-      confirmPassword: ['', Validators.required]
-    }, { validator: this.comparePasswords })
-  });
 
   comparePasswords(fgroup: FormGroup) {
     const confirmPwCtrl = fgroup.get('confirmPassword');
@@ -37,18 +26,11 @@ export class BaseUserService {
     }
   }
 
-  register() {
-    const body = {
-      username: this.formModel.value.username,
-      email: this.formModel.value.email,
-      firstName: this.formModel.value.firstName,
-      lastName: this.formModel.value.lastName,
-      password: this.formModel.value.passwords.password
-    };
+  register(body: any) {
     return this.http.post(`${this.baseUrl}/register-identity`, body);
   }
 
-  login(formData) {
+  login(formData: any) {
     return this.http.post(`${this.baseUrl}/login-identity`, formData);
   }
 

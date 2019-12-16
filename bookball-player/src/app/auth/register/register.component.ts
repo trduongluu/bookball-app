@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseUserService } from '@trduong/_base/services/base-user.service';
-import { ToastrService } from 'ngx-toastr';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-register',
@@ -11,33 +11,53 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RegisterComponent extends BaseUserService implements OnInit {
 
+  formModel: FormGroup;
   constructor(
-    // public userService: BaseUserService,
     formBuilder: FormBuilder,
     http: HttpClient,
-    private toastr: ToastrService
+    private message: NzMessageService
   ) {
     super(formBuilder, http);
   }
 
   ngOnInit() {
-    this.formModel.reset();
+    this.createForm();
+  }
+
+  createForm() {
+    this.formModel = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      email: ['', [Validators.email]],
+      firstName: [''],
+      lastName: [''],
+      passwords: this.formBuilder.group({
+        password: ['', [Validators.required, Validators.minLength(4)]],
+        confirmPassword: ['', Validators.required]
+      }, { validator: this.comparePasswords })
+    });
   }
 
   onSubmit() {
-    this.register().subscribe((res: any) => {
+    const body = {
+      username: this.formModel.value.username,
+      email: this.formModel.value.email,
+      firstName: this.formModel.value.firstName,
+      lastName: this.formModel.value.lastName,
+      password: this.formModel.value.passwords.password
+    };
+    this.register(body).subscribe((res: any) => {
       if (res.succeeded) {
         this.formModel.reset();
-        this.toastr.success('New user created!', 'Registration successful.');
+        this.message.success('Registration successful.');
       } else {
         res.errors.forEach(element => {
           switch (element.code) {
             case 'DuplicateUserName':
-              this.toastr.error('Username is already taken', 'Registration failed.');
+              this.message.error('Username is already taken');
               break;
 
             default:
-              this.toastr.error(element.description, 'Registration failed.');
+              this.message.error(element.description);
               break;
           }
         });
