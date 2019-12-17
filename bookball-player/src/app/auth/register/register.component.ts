@@ -62,7 +62,10 @@ export class RegisterComponent extends BaseUserService implements OnInit {
           }
         });
       }
-    }, err => console.log(err));
+    }, err => {
+      this.message.error('There is an error occured');
+      console.log(err);
+    });
   }
 
 }

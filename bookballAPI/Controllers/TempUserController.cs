@@ -31,7 +31,7 @@ namespace bookballAPI.Controllers
         {
             var applicationUser = new User()
             {
-                Username = model.Username,
+                UserName = model.UserName,
                 Email = model.Email,
             };
 

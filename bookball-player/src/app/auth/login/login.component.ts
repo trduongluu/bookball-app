@@ -40,6 +40,7 @@ export class LoginComponent extends BaseUserService implements OnInit {
       if (err.status === 400) {
         this.message.error('Incorrect username or password.');
       } else {
+        this.message.error('There is an error occured.');
         console.log(err);
       }
     }

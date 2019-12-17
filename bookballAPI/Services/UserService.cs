@@ -35,7 +35,7 @@ namespace bookballAPI.Services
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.User.SingleOrDefault(x => x.Username == username);
+            var user = _context.User.SingleOrDefault(x => x.UserName == username);
 
             // check if username exists
             if (user == null) return null;
@@ -65,8 +65,8 @@ namespace bookballAPI.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.User.Any(x => x.Username == user.Username))
-                throw new AppException("Username " + user.Username + " is already taken");
+            if (_context.User.Any(x => x.UserName == user.UserName))
+                throw new AppException("Username " + user.UserName + " is already taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
@@ -88,13 +88,13 @@ namespace bookballAPI.Services
                 throw new AppException("User not found");
 
             // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
+            if (!string.IsNullOrWhiteSpace(userParam.UserName) && userParam.UserName != user.UserName)
             {
                 // throw error if the new username is already taken
-                if (_context.User.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
+                if (_context.User.Any(x => x.UserName == userParam.UserName))
+                    throw new AppException("Username " + userParam.UserName + " is already taken");
 
-                user.Username = userParam.Username;
+                user.UserName = userParam.UserName;
             }
 
             // update user properties if provided

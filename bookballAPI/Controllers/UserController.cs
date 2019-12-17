@@ -60,7 +60,7 @@ namespace bookballAPI.Controllers
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
 
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(model.UserName, model.Password);
 
             if (user == null)
             {
@@ -84,7 +84,7 @@ namespace bookballAPI.Controllers
             return Ok(new
             {
                 Id = user.Id,
-                Username = user.Username,
+                Username = user.UserName,
                 Token = tokenString
             });
         }
@@ -98,7 +98,7 @@ namespace bookballAPI.Controllers
         [HttpPost("login-identity")]
         public async Task<IActionResult> Login([FromBody]AuthenticateModel model)
         {
-            var user = await _userManager.FindByNameAsync(model.Username);
+            var user = await _userManager.FindByNameAsync(model.UserName);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -118,7 +118,7 @@ namespace bookballAPI.Controllers
                 return Ok(new
                 {
                     Id = user.Id,
-                    Username = user.Username,
+                    Username = user.UserName,
                     Token = tokenString
                 });
             }
@@ -146,7 +146,7 @@ namespace bookballAPI.Controllers
                 return Ok(new
                 {
                     Id = createdUser.Id,
-                    Username = createdUser.Username,
+                    Username = createdUser.UserName,
                     FirstName = createdUser.FirstName,
                     LastName = createdUser.LastName,
                     Email = createdUser.Email,
@@ -170,7 +170,7 @@ namespace bookballAPI.Controllers
         {
             var user = new User()
             {
-                UserName = model.Username,
+                UserName = model.UserName,
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName
