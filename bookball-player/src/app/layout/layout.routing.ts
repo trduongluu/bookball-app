@@ -4,7 +4,8 @@ import { LayoutComponent } from './layout.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
-      { path: 'pitch', loadChildren: () => import('./pitchs/pitchs.module').then(m => m.PitchsModule) },
+      { path: 'pitchs', loadChildren: () => import('./pitchs/pitchs.module').then(m => m.PitchsModule) },
+      { path: 'profile', loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule) },
       { path: 'temp', loadChildren: () => import('./temp/temp.module').then(m => m.TempModule) }
     ]
   }

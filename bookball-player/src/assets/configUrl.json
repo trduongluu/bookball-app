@@ -59,7 +59,7 @@
   "paging": {
     "totalPage": 1,
     "count": 8,
-    "order": "[{\"id\": false}]",
+    "order": "",
     "page": 1,
     "size": 10
   }

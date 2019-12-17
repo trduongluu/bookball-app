@@ -35,7 +35,7 @@ export class LoginComponent extends BaseUserService implements OnInit {
     console.log(form.value);
     this.login(form.value).subscribe((res: any) => {
       localStorage.setItem('token', res.token);
-      this.router.navigateByUrl('/page/pitch');
+      this.router.navigateByUrl('/page/pitchs');
     }, err => {
       if (err.status === 400) {
         this.message.error('Incorrect username or password.');

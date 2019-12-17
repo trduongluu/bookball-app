@@ -4,8 +4,7 @@ import { environment } from 'src/environments/environment';
 import { BindDataExtensionService } from '@trduong/shared/extensions/bind-data-extension.service';
 import { PagedListModel } from '../models/response-model';
 
-// const apiUrl = `${environment.apiUrl}/api`;
-const apiUrl = `${environment.apiUrl}`;
+const apiUrl = `${environment.apiUrl}/api`;
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +17,7 @@ export class BaseCrudService<T> {
     return this._baseUrl;
   }
   public set baseUrl(v: string) {
-    // this._baseUrl = `${apiUrl}/${v}`;
-    this._baseUrl = `${apiUrl}`;
+    this._baseUrl = `${apiUrl}/${v}`;
   }
 
   constructor(
