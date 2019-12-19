@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 const apiUrl = `${environment.apiUrl}/api`;
 
@@ -10,8 +11,11 @@ const apiUrl = `${environment.apiUrl}/api`;
 })
 export class BaseUserService {
 
-  constructor(public formBuilder: FormBuilder, protected http: HttpClient) { }
-  private readonly baseUrl = `${apiUrl}/user`;
+  constructor(
+    public formBuilder: FormBuilder,
+    protected http: HttpClient
+  ) { }
+  private readonly baseUrl = `${apiUrl}`;
 
   comparePasswords(fgroup: FormGroup) {
     const confirmPwCtrl = fgroup.get('confirmPassword');
@@ -27,14 +31,18 @@ export class BaseUserService {
   }
 
   register(body: any) {
-    return this.http.post(`${this.baseUrl}/register-identity`, body);
+    return this.http.post(`${this.baseUrl}/user/register-identity`, body);
   }
 
   login(formData: any) {
-    return this.http.post(`${this.baseUrl}/login-identity`, formData);
+    return this.http.post(`${this.baseUrl}/user/login-identity`, formData);
   }
 
   getUserProfile() {
     return this.http.get(`${this.baseUrl}/userprofile`);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
   }
 }

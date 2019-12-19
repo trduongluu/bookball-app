@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using bookballAPI.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -26,7 +27,7 @@ namespace bookballAPI.Controllers
         [HttpGet]
         public async Task<Object> GetUserProfile()
         {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            string userId = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
             var user = await _userManager.FindByIdAsync(userId);
             return new
             {

@@ -36,10 +36,12 @@
         </nz-skeleton>
       </nz-card>
       <ng-template #avatarTemplate>
-        <nz-avatar [nzSrc]="item.ava"></nz-avatar>
+        <nz-avatar [nzSrc]="item.ava ? item.ava : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+        </nz-avatar>
       </ng-template>
       <ng-template #coverTemplate>
-        <img alt="example" [src]="item.cover" />
+        <img alt="example"
+          [src]="item.cover ? item.cover : 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" />
       </ng-template>
       <ng-template #actionBooking>
         <a class="list-icons-item" href="javascript:">

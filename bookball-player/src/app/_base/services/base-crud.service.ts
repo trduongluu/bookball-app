@@ -50,8 +50,8 @@ export class BaseCrudService<T> {
     return this.bindDataExtensionService.bindResponseApi(api);
   }
 
-  public findOneById(id: any) {
-    const api = this.http.get<T>(`${this.baseUrl}/findOneById/${id}`);
+  public getById(id: any) {
+    const api = this.http.get<T>(`${this.baseUrl}/getById/${id}`);
     return this.bindDataExtensionService.bindResponseApi(api);
   }
 

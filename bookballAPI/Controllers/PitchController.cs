@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using bookballAPI.Contexts;
 using bookballAPI.Entities;
 using Microsoft.AspNetCore.Authorization;
+using bookballAPI.Common.Models;
+using bookballAPI.Helpers.Extensions;
 
 namespace bookballAPI.Controllers
 {
@@ -25,32 +27,20 @@ namespace bookballAPI.Controllers
 
         // GET api/pitch
         [HttpGet("")]
-        public async Task<JObject> Get(int? page, int? size)
+        public async Task<IActionResult> Get([FromQuery] SearchModel model)
         {
             var query = _context.Pitch.AsQueryable();
-            dynamic data;
+            var result = query.ToPaging(model);
 
-            var count = await _context.Pitch.LongCountAsync();
-            if (page.HasValue && size.HasValue)
+            return Ok(new ResultModel<dynamic>
             {
-                var expression = (page - 1) * size ?? default(int);
-                data = await query.Skip(expression).Take(Convert.ToInt32(size)).ToListAsync();
-            }
-            else
-            {
-                data = await _context.Pitch.ToListAsync();
-            }
-            Console.Write("Pitchsss {0}", JArray.FromObject(data));
-
-            var res = new JObject {
-                new JProperty("count", count),
-                new JProperty("data", JArray.FromObject(data))
-            };
-            return res;
+                data = result.data,
+                paging = result.paging
+            });
         }
 
         // GET api/pitch/5
-        [HttpGet("{id}")]
+        [HttpGet("GetById/{id}")]
         public ActionResult<Pitch> GetById(int id)
         {
             if (id <= 0)

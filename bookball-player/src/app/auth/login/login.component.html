@@ -24,7 +24,8 @@
                 <label class="custom-control-label" for="customCheck1">Remember password</label>
               </div>
 
-              <button class="btn btn-lg bg-prime btn-block text-uppercase" type="submit">Sign in</button>
+              <button class="btn btn-lg bg-prime btn-block text-uppercase" type="submit"
+                [disabled]="!formModel.username || !formModel.password">Sign in</button>
               <div class="center mb-3 mt-2">
                 <span>Don't have an account yet?
                   <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active">Register.</a>
