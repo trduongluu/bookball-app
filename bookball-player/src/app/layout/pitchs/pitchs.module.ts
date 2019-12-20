@@ -4,6 +4,7 @@ import { PitchsComponent } from './pitchs.component';
 import { PitchsRoutes } from './pitchs.routing';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { FormsModule } from '@angular/forms';
+import { BookingViewComponent } from './booking-view/booking-view.component';
 
 @NgModule({
   imports: [
@@ -12,6 +13,6 @@ import { FormsModule } from '@angular/forms';
     NgZorroAntdModule,
     FormsModule
   ],
-  declarations: [PitchsComponent]
+  declarations: [PitchsComponent, BookingViewComponent]
 })
 export class PitchsModule { }

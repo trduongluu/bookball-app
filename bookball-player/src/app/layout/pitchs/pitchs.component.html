@@ -31,7 +31,7 @@
       <nz-card class="pitch-card" [nzActions]="[actionBooking, actionOpenMap, actionProfile]"
         [nzCover]="loading ? null : coverTemplate">
         <nz-skeleton [nzActive]="true" [nzLoading]="loading" [nzAvatar]="{ size: 'large' }">
-          <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="item.name" [nzDescription]="item.description">
+          <nz-card-meta [nzAvatar]="avatarTemplate" [nzTitle]="'Sân ' + item.name" [nzDescription]="item.description">
           </nz-card-meta>
         </nz-skeleton>
       </nz-card>
@@ -45,7 +45,7 @@
       </ng-template>
       <ng-template #actionBooking>
         <a class="list-icons-item" href="javascript:">
-          <span nz-tooltip nzTitle="Đặt sân">
+          <span nz-tooltip nzTitle="Đặt sân" (click)="showModal()">
             <i class="orange" nz-icon nzType="file-done" nzTheme="outline"></i>
           </span>
         </a>
@@ -67,3 +67,14 @@
     </div>
   </div>
 </main>
+
+<nz-modal [(nzVisible)]="isShowBooking" [nzTitle]="modalTitle" [nzContent]="modalContent" nzClassName="modal-data"
+  (nzOnCancel)="isShowBooking = false" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+  <ng-template #modalTitle>
+    BOOKING
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-booking-view></app-booking-view>
+  </ng-template>
+</nz-modal>

@@ -18,6 +18,9 @@ export class PitchsComponent implements OnInit {
   };
   public listPitch: any[];
 
+  isShowBooking = false;
+  isOkLoading = false;
+
   constructor(
     private pitchService: PitchService
   ) { }
@@ -31,4 +34,15 @@ export class PitchsComponent implements OnInit {
     console.log('pitchs data', res);
   }
 
+  showModal(): void {
+    this.isShowBooking = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.isShowBooking = false;
+      this.isOkLoading = false;
+    }, 1000);
+  }
 }
