@@ -1,7 +1,7 @@
 <div class="flex-row col-md-12 mt-md-4 form-inline mb-2">
-  <h3 class="text-center">Các sân bóng thành phố Hà Nội</h3>
-  <div class="col-md-8 form-group justify-content-end">
-    <div class="flex-column w-50">
+  <h3 class="col-md-6">Các sân bóng thành phố Hà Nội</h3>
+  <div class="col-md-6 form-group justify-content-end">
+    <div class="flex-column w-75">
       <div class="row w-100">
         <label class="col-md-4">Chọn Thành Phố</label>
         <nz-select class="col-md-6" nzShowSearch nzAllowClear nzPlaceHolder="Select a City" [(ngModel)]="selectedCity">
@@ -36,16 +36,17 @@
         </nz-skeleton>
       </nz-card>
       <ng-template #avatarTemplate>
-        <nz-avatar [nzSrc]="item.ava ? item.ava : 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+        <nz-avatar
+          [nzSrc]="item.ava ? item.ava : 'https://www.fcbarcelonanoticias.com/uploads/s1/11/83/40/0/messi-balon-oro-merece.jpeg'">
         </nz-avatar>
       </ng-template>
       <ng-template #coverTemplate>
         <img alt="example"
-          [src]="item.cover ? item.cover : 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png'" />
+          [src]="item.cover ? item.cover : 'https://sukienthethao.vn/uploads/san-bong-da-quan-son-tra-b.jpg'" />
       </ng-template>
       <ng-template #actionBooking>
         <a class="list-icons-item" href="javascript:">
-          <span nz-tooltip nzTitle="Đặt sân" (click)="showModal()">
+          <span nz-tooltip nzTitle="Đặt sân" (click)="showModal(item)">
             <i class="orange" nz-icon nzType="file-done" nzTheme="outline"></i>
           </span>
         </a>
@@ -68,13 +69,13 @@
   </div>
 </main>
 
-<nz-modal [(nzVisible)]="isShowBooking" [nzTitle]="modalTitle" [nzContent]="modalContent" nzClassName="modal-data"
-  (nzOnCancel)="isShowBooking = false" (nzOnOk)="handleOk()" [nzOkLoading]="isOkLoading">
+<nz-modal [(nzVisible)]="isShowBooking" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="null"
+  nzClassName="modal-data" (nzOnCancel)="isShowBooking = false">
   <ng-template #modalTitle>
     BOOKING
   </ng-template>
 
   <ng-template #modalContent>
-    <app-booking-view></app-booking-view>
+    <app-booking-view [pitchId]="pitchId" (bookOnClose)="closeBookingView($event)"></app-booking-view>
   </ng-template>
 </nz-modal>

@@ -5,6 +5,7 @@ import { LayoutRoutes } from './layout.routing';
 import { NavbarComponent } from '@trduong/shared/components/navbar/navbar.component';
 import { MenuComponent } from '@trduong/shared/components/menu/menu.component';
 import { FooterComponent } from '@trduong/shared/components/footer/footer.component';
+import { DateFormatPipe } from '@trduong/shared/pipes/date-format.pipe';
 
 @NgModule({
   imports: [

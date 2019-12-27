@@ -28,4 +28,22 @@ namespace bookballAPI.Common.Enums
     {
 
     }
+
+    public enum BookingStatus
+    {
+        [Display(Name = "Waiting")]
+        Waiting = 1,
+        [Display(Name = "Booked")]
+        Booked,
+        [Display(Name = "Canceled")]
+        Canceled
+    }
+
+    public enum TimeSlotStatus
+    {
+        [Display(Name = "Available")]
+        Available = 1,
+        [Display(Name = "NotAvailable")]
+        NotAvailable
+    }
 }

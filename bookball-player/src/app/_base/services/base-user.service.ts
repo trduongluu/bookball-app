@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { PagingModel } from '../models/response-model';
 
 const apiUrl = `${environment.apiUrl}/api`;
 
@@ -11,11 +12,17 @@ const apiUrl = `${environment.apiUrl}/api`;
 })
 export class BaseUserService {
 
+  private readonly baseUrl = `${apiUrl}`;
+  public paging: PagingModel = {
+    page: 1,
+    size: 100
+  };
+
+
   constructor(
     public formBuilder: FormBuilder,
     protected http: HttpClient
   ) { }
-  private readonly baseUrl = `${apiUrl}`;
 
   comparePasswords(fgroup: FormGroup) {
     const confirmPwCtrl = fgroup.get('confirmPassword');

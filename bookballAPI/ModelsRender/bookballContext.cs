@@ -1,38 +1,43 @@
 ﻿using System;
-using bookballAPI.Entities;
-using bookballAPI.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace bookballAPI.Contexts
+namespace bookballAPI.ModelsRender
 {
-    public partial class bookballContext : IdentityDbContext<User>
+    public partial class bookballContext : DbContext
     {
-        public bookballContext() { }
+        public bookballContext()
+        {
+        }
 
-        public bookballContext(DbContextOptions<bookballContext> options) : base(options) { }
+        public bookballContext(DbContextOptions<bookballContext> options)
+            : base(options)
+        {
+        }
 
         public virtual DbSet<Booking> Booking { get; set; }
         public virtual DbSet<Field> Field { get; set; }
         public virtual DbSet<Pitch> Pitch { get; set; }
+        public virtual DbSet<RoleClaims> RoleClaims { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Timeframe> Timeframe { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserClaims> UserClaims { get; set; }
+        public virtual DbSet<UserLogins> UserLogins { get; set; }
+        public virtual DbSet<UserRoles> UserRoles { get; set; }
+        public virtual DbSet<UserTokens> UserTokens { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                // #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                // optionsBuilder.UseNpgsql("");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseNpgsql("host=localhost;database=bookball;Integrated Security=true;username=postgres;password=1234;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.ToTable("booking");
@@ -131,6 +136,28 @@ namespace bookballAPI.Contexts
                     .HasMaxLength(255);
             });
 
+            modelBuilder.Entity<RoleClaims>(entity =>
+            {
+                entity.HasIndex(e => e.RoleId);
+
+                entity.Property(e => e.RoleId).IsRequired();
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.RoleClaims)
+                    .HasForeignKey(d => d.RoleId);
+            });
+
+            modelBuilder.Entity<Roles>(entity =>
+            {
+                entity.HasIndex(e => e.NormalizedName)
+                    .HasName("RoleNameIndex")
+                    .IsUnique();
+
+                entity.Property(e => e.Name).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
             modelBuilder.Entity<Timeframe>(entity =>
             {
                 entity.ToTable("timeframe");
@@ -146,71 +173,77 @@ namespace bookballAPI.Contexts
                     .HasColumnName("timeGroup");
             });
 
-            // TODO: customize the asp.net identity model
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserClaims>(entity =>
             {
-                entity.ToTable(name: "Users");
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserClaims)
+                    .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<IdentityRole>(entity =>
+            modelBuilder.Entity<UserLogins>(entity =>
             {
-                entity.ToTable(name: "Roles");
-            });
-            modelBuilder.Entity<IdentityUserRole<string>>(entity =>
-            {
-                entity.ToTable("UserRoles");
-                //in case you chagned the TKey type
-                //  entity.HasKey(key => new { key.UserId, key.RoleId });
-            });
+                entity.HasKey(e => new { e.LoginProvider, e.ProviderKey });
 
-            modelBuilder.Entity<IdentityUserClaim<string>>(entity =>
-            {
-                entity.ToTable("UserClaims");
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.UserId).IsRequired();
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserLogins)
+                    .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<IdentityUserLogin<string>>(entity =>
+            modelBuilder.Entity<UserRoles>(entity =>
             {
-                entity.ToTable("UserLogins");
-                //in case you chagned the TKey type
-                //  entity.HasKey(key => new { key.ProviderKey, key.LoginProvider });       
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+
+                entity.HasIndex(e => e.RoleId);
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.RoleId);
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserRoles)
+                    .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<IdentityRoleClaim<string>>(entity =>
+            modelBuilder.Entity<UserTokens>(entity =>
             {
-                entity.ToTable("RoleClaims");
+                entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
 
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UserTokens)
+                    .HasForeignKey(d => d.UserId);
             });
 
-            modelBuilder.Entity<IdentityUserToken<string>>(entity =>
+            modelBuilder.Entity<Users>(entity =>
             {
-                entity.ToTable("UserTokens");
-                //in case you chagned the TKey type
-                // entity.HasKey(key => new { key.UserId, key.LoginProvider, key.Name });
+                entity.HasIndex(e => e.NormalizedEmail)
+                    .HasName("EmailIndex");
 
+                entity.HasIndex(e => e.NormalizedUserName)
+                    .HasName("UserNameIndex")
+                    .IsUnique();
+
+                entity.Property(e => e.Email).HasMaxLength(256);
+
+                entity.Property(e => e.LockoutEnd).HasColumnType("timestamp with time zone");
+
+                entity.Property(e => e.NormalizedEmail).HasMaxLength(256);
+
+                entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
+
+                entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-            // modelBuilder.Entity<User>(entity =>
-            // {
-            //     entity.ToTable("user");
-
-            //     entity.Property(e => e.customId).HasColumnName("customId");
-
-            //     // entity.Property(e => e.Email)
-            //     //     .HasColumnName("email")
-            //     //     .HasMaxLength(255);
-
-            //     // entity.Property(e => e.Password)
-            //     //     .HasColumnName("password")
-            //     //     .HasMaxLength(255);
-
-            //     entity.Property(e => e.Username)
-            //         .HasColumnName("username")
-            //         .HasMaxLength(255);
-            // });
-
-            // OnModelCreatingPartial(modelBuilder);
+            OnModelCreatingPartial(modelBuilder);
         }
 
-        // partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

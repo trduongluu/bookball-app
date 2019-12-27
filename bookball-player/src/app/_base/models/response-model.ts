@@ -1,10 +1,10 @@
 
 export class ResponseModel<T = any> {
     result: T;
-    error?: ErrorModel;
+    errors?: any;
 
     public get success(): boolean {
-        return !this.error;
+        return !this.errors;
     }
 
 }

@@ -10,3 +10,29 @@ body {
 .ant-select-selection {
   border-radius: 20px;
 }
+
+.ant-table-fixed {
+  thead {
+    tr {
+      th {
+        background-color: #550a46 !important;
+        color: white;
+
+        &.stt {
+          width: 63px !important;
+          text-align: center !important;
+        }
+
+        &.action {
+          width: 130px !important;
+          text-align: center;
+        }
+
+        &.status {
+          width: 130px !important;
+          text-align: center !important;
+        }
+      }
+    }
+  }
+}

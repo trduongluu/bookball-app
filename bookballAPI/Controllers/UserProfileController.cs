@@ -31,6 +31,7 @@ namespace bookballAPI.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             return new
             {
+                user.Id,
                 user.FirstName,
                 user.LastName,
                 user.Email,

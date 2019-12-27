@@ -20,9 +20,9 @@ export class BindDataExtensionService {
       .then(value => data.result = value)
       .catch((err: any) => {
         if (err instanceof HttpErrorResponse) {
-          data.error = err.error;
+          data.errors = err.error;
         }
-        data.error = { key: 'NotFound', value: '' };
+        // data.errors = { key: 'NotFound', value: '' };
       });
     return data;
   }

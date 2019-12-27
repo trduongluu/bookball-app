@@ -29,6 +29,7 @@ export class LoginComponent extends BaseUserService implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('token')) {
       this.router.navigateByUrl('/page/pitchs');
+      console.log('login screen token', localStorage.getItem('token'));
     }
   }
 

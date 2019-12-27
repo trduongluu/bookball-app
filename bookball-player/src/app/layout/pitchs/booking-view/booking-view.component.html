@@ -1,38 +1,49 @@
 <main>
   <section class="mb-2">
     <h6>Chọn sân</h6>
-    <div class="pl-2">
-      <nz-tag [nzColor]="fieldColor">Sân 1</nz-tag>
-      <nz-tag [nzColor]="fieldColorPicked">Sân 2</nz-tag>
-      <nz-tag [nzColor]="fieldColor">Sân 3</nz-tag>
+    <div class="row">
+      <div class="w-50 pl-md-4">
+        <div class="row w-100">
+          <nz-select class="col-md-8 mb-md-2" nzShowSearch nzAllowClear nzPlaceHolder="Loại sân"
+            [(ngModel)]="selectedType">
+            <nz-option *ngFor="let item of listFieldType" [nzLabel]="item.name" [nzValue]="item.id"
+              [nzDisabled]="item.disabled"></nz-option>
+          </nz-select>
+        </div>
+        <ng-container *ngFor="let item of listFields">
+          <nz-tag [nzColor]="item.picked ? fieldColorPicked : fieldColor" (click)="pickField(item)">{{item.name}}
+          </nz-tag>
+        </ng-container>
+      </div>
+      <div class="w-50">
+        <img src="http://baobariavungtau.com.vn/dataimages/201909/original/images1556143_lam_son1.jpg" width="95%"
+          alt="">
+      </div>
     </div>
   </section>
 
   <section class="mb-2">
     <h6>Chọn ngày</h6>
     <div class="pl-2">
-      <nz-tag [nzColor]="dayColor">Thứ 2 (23/10)</nz-tag>
-      <nz-tag [nzColor]="dayColor">Thứ 3 (24/10)</nz-tag>
-      <nz-tag [nzColor]="dayColorPicked">Thứ 4 (25/10)</nz-tag>
-      <nz-tag [nzColor]="dayColor">Thứ 5 (26/10)</nz-tag>
-      <nz-tag [nzColor]="dayColor">Thứ 6 (27/10)</nz-tag>
-      <nz-tag [nzColor]="dayColor">Thứ 7 (28/10)</nz-tag>
-      <nz-tag [nzColor]="dayColor">Chủ nhật (29/10)</nz-tag>
+      <ng-container *ngFor="let item of listDays">
+        <nz-tag [nzColor]="item.picked ? dayColorPicked : dayColor" (click)="pickDay(item)">{{item.day}}</nz-tag>
+      </ng-container>
     </div>
   </section>
 
   <section class="mb-2">
     <h6>Chọn khung giờ</h6>
     <div class="pl-2">
-      <nz-tag [nzColor]="timeColor">06:00 - 07:30</nz-tag>
-      <nz-tag [nzColor]="timeColorPicked">07:30 - 09:00</nz-tag>
-      <nz-tag [nzColor]="timeColor">09:00 - 10:30</nz-tag>
-      <nz-tag [nzColor]="timeColor">13:00 - 14:30</nz-tag>
-      <nz-tag [nzColor]="notAvailableColor" nz-tooltip nzTitle="Đã có đội đặt">14:30 - 16:00</nz-tag>
-      <nz-tag [nzColor]="notAvailableColor" nz-tooltip nzTitle="Đã có đội đặt">16:00 - 17:30</nz-tag>
-      <nz-tag [nzColor]="timeColor">17:30 - 19:00</nz-tag>
-      <nz-tag [nzColor]="notAvailableColor" nz-tooltip nzTitle="Đã có đội đặt">19:00 - 20:30</nz-tag>
-      <nz-tag [nzColor]="timeColor">20:30 - 22:00</nz-tag>
+      <ng-container *ngFor="let item of listTimes">
+        <nz-tag [nzColor]="item.picked ? timeColorPicked : item.status == 2 ? notAvailableColor : timeColor" nz-tooltip
+          [nzTitle]="item.status === 2 ? 'Đã có đội đặt' : null" (click)="item.status == 1 ? pickTime(item) : null">
+          {{item.timeslot}}</nz-tag>
+      </ng-container>
     </div>
   </section>
+
+  <footer class="row">
+    <button type="submit" class="btn bg-black m-auto" [disabled]="isLoading" (click)="sendBooking()"><i class="white"
+        nz-icon nzType="plus-circle" nzTheme="outline"></i></button>
+  </footer>
 </main>

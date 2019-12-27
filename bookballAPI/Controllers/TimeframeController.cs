@@ -15,22 +15,22 @@ namespace bookballAPI.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class TimeslotController : ControllerBase
+    public class TimeframeController : ControllerBase
     {
         private readonly bookballContext _context;
-        public TimeslotController(bookballContext context)
+        public TimeframeController(bookballContext context)
         {
             _context = context;
         }
 
-        // GET api/timeslot
+        // GET api/timeframe
         [HttpGet("")]
         public async Task<JObject> Get(int? page, int? size)
         {
-            var query = _context.Timeslot.AsQueryable();
+            var query = _context.Timeframe.AsQueryable();
             dynamic data;
 
-            var count = await _context.Timeslot.LongCountAsync();
+            var count = await _context.Timeframe.LongCountAsync();
             if (page.HasValue && size.HasValue)
             {
                 var expression = (page - 1) * size ?? default(int);
@@ -38,9 +38,9 @@ namespace bookballAPI.Controllers
             }
             else
             {
-                data = await _context.Timeslot.ToListAsync();
+                data = await _context.Timeframe.ToListAsync();
             }
-            Console.Write("Timeslotsss {0}", JArray.FromObject(data));
+            Console.Write("Timeframesss {0}", JArray.FromObject(data));
 
             var res = new JObject {
                 new JProperty("count", count),
@@ -49,65 +49,65 @@ namespace bookballAPI.Controllers
             return res;
         }
 
-        // GET api/timeslot/5
+        // GET api/timeframe/5
         [HttpGet("{id}")]
-        public ActionResult<Timeslot> GetById(int id)
+        public ActionResult<Timeframe> GetById(int id)
         {
             if (id <= 0)
             {
-                return NotFound("Timeslot id must be higher than zero");
+                return NotFound("Timeframe id must be higher than zero");
             }
-            Timeslot timeslot = _context.Timeslot.FirstOrDefault(p => p.Id == id);
+            Timeframe result = _context.Timeframe.FirstOrDefault(x => x.Id == id);
 
-            if (timeslot == null)
+            if (result == null)
             {
-                return NotFound("Timeslot not found");
+                return NotFound("Timeframe not found");
             }
-            return Ok(timeslot);
+            return Ok(result);
         }
 
-        // POST api/timeslot
+        // POST api/timeframe
         [HttpPost("")]
-        public async Task<ActionResult<Timeslot>> Post([FromBody] Timeslot timeslot)
+        public async Task<ActionResult<Timeframe>> Post([FromBody] Timeframe model)
         {
-            if (timeslot == null)
+            if (model == null)
             {
-                return NotFound("Timeslot data is not supplied");
+                return NotFound("Timeframe data is not supplied");
             }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _context.Timeslot.AddAsync(timeslot);
+            await _context.Timeframe.AddAsync(model);
             await _context.SaveChangesAsync();
-            // return CreatedAtAction(nameof(Gettimeslot), new { id = timeslot.Id }, timeslot);
-            return Ok(timeslot);
+            // return CreatedAtAction(nameof(Gettimeframe), new { id = timeframe.Id }, timeframe);
+            return Ok(model);
         }
 
-        // PUT api/timeslot/5
+        // PUT api/timeframe/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put([FromBody] Timeslot timeslot)
+        public async Task<ActionResult> Put([FromBody] Timeframe model)
         {
-            if (timeslot == null)
+            if (model == null)
             {
-                return NotFound("Timeslot data is not supplied");
+                return NotFound("Timeframe data is not supplied");
             }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            Timeslot selectedTimeslot = _context.Timeslot.FirstOrDefault(p => p.Id == timeslot.Id);
-            if (selectedTimeslot == null)
+            Timeframe result = _context.Timeframe.FirstOrDefault(x => x.Id == model.Id);
+            if (result == null)
             {
-                return NotFound("Timeslot does not exist in the database");
+                return NotFound("Timeframe does not exist in the database");
             }
-            selectedTimeslot.Timeframe = timeslot.Timeframe;
-            _context.Attach(selectedTimeslot).State = EntityState.Modified;
+            result.TimeGroup = model.TimeGroup;
+            _context.Attach(result).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return Ok(selectedTimeslot);
+            return Ok(result);
         }
 
-        // DELETE api/timeslot/5
+        // DELETE api/timeframe/5
         [HttpDelete("{id}")]
         public async Task<JObject> Delete(int id)
         {
@@ -118,19 +118,19 @@ namespace bookballAPI.Controllers
                     new JProperty("message", "No id supplied")
                 };
             }
-            Timeslot timeslot = _context.Timeslot.FirstOrDefault(p => p.Id == id);
-            if (timeslot == null)
+            Timeframe result = _context.Timeframe.FirstOrDefault(x => x.Id == id);
+            if (result == null)
             {
                 return new JObject {
                     new JProperty("success", false),
-                    new JProperty("message", "Timeslot does not exist in the database")
+                    new JProperty("message", "Timeframe does not exist in the database")
                 };
             }
-            _context.Timeslot.Remove(timeslot);
+            _context.Timeframe.Remove(result);
             await _context.SaveChangesAsync();
             return new JObject {
                 new JProperty("success", true),
-                new JProperty("message", "Timeslot does not exist in the database")
+                new JProperty("message", "Timeframe does not exist in the database")
             };
         }
     }

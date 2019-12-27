@@ -12,6 +12,7 @@ export class PitchsComponent implements OnInit {
   loading = false;
   selectedCity = null;
   selectedDistrict = null;
+  pitchId: number | string;
   paging: PagingModel = {
     page: 1,
     size: 100
@@ -19,7 +20,6 @@ export class PitchsComponent implements OnInit {
   public listPitch: any[];
 
   isShowBooking = false;
-  isOkLoading = false;
 
   constructor(
     private pitchService: PitchService
@@ -34,15 +34,22 @@ export class PitchsComponent implements OnInit {
     console.log('pitchs data', res);
   }
 
-  showModal(): void {
+  showModal(item: any): void {
     this.isShowBooking = true;
+    this.pitchId = item.id;
   }
 
-  handleOk(): void {
-    this.isOkLoading = true;
-    setTimeout(() => {
-      this.isShowBooking = false;
-      this.isOkLoading = false;
-    }, 1000);
+  closeBookingView(value: any) {
+    this.pitchId = null;
+    this.isShowBooking = false;
+    console.log('event from booking view', value);
   }
+
+  // handleOk(): void {
+  //   this.isOkLoading = true;
+  //   setTimeout(() => {
+  //     this.isShowBooking = false;
+  //     this.isOkLoading = false;
+  //   }, 1000);
+  // }
 }
