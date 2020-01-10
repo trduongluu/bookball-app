@@ -1,0 +1,207 @@
+<div class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="text-center d-lg-none w-100">
+    <button class="navbar-toggler dropdown-toggle" data-target="#navbar-second" data-toggle="collapse" type="button">
+      <i class="icon-menu7 mr-2"></i>
+    </button>
+  </div>
+  <div class="navbar-collapse collapse p-0" id="navbar-second">
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <a class="navbar-nav-link" href="javascript:;" [ngClass]="{ 'active show': openTab === 1 }"
+          (click)="openTab = 1">
+          <i class="icon-magazine mr-2"></i>
+          Cơ bản
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="navbar-nav-link" href="javascript:;" [ngClass]="{ 'active show': openTab === 2 }"
+          (click)="openTab = 2">
+          <i class="icon-certificate mr-2"></i>Lịch thanh toán
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content w-100 overflow-auto">
+  <div class="tab-pane fade mt-2" [ngClass]="{ 'active show': openTab === 1 }">
+    <form class="form-horizontal" [formGroup]="myForm" novalidate>
+      <div class="card">
+        <div class="card-body">
+          <!-- Content area -->
+          <fieldset>
+            <legend class="font-weight-semibold text-uppercase font-size-sm">
+              Thông tin cơ bản
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ngày bắt đầu<span class="text-danger"><b> *</b></span></label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="startDate"></input-date>
+                <render-error [data]="myForm.get('startDate')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày kết thúc<span class="text-danger"><b> *</b></span></label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="endDate"></input-date>
+                <render-error [data]="myForm.get('endDate')"></render-error>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Phân loại </label>
+                <input-select class="form-control" formControlName="handoverClassification" [items]="handoverClass"
+                  [placeholder]="'Lựa chọn'">
+                </input-select>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Trạng thái</label>
+                <input-select class="form-control" formControlName="statusId" [items]="listStatus"
+                  [placeholder]="'Lựa chọn'">
+                  <render-error [data]="myForm.get('statusId')"></render-error>
+                </input-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Sản phẩm<span class="text-danger"><b> *</b></span></label>
+                <input-text class="form-control" placeholder="Sản phẩm" formControlName="productName">
+                </input-text>
+                <render-error [data]="myForm.get('productName')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Nội dung</label>
+                <input-text class="form-control" placeholder="Nội dung" formControlName="content">
+                </input-text>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="font-weight-semibold text-uppercase font-size-sm">
+              Chi tiết
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Tên dự án <span class="text-danger"> * </span></label>
+                <input-select class="form-control" formControlName="projId" [items]="listProject"
+                  [placeholder]="'Lựa chọn'" (onChange)="getlistPackageBids($event)">
+                </input-select>
+                <render-error [data]="myForm.get('projId')"></render-error>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Gói thầu<span class="text-danger"> * </span></label>
+                <input-select class="form-control" formControlName="packageBidId" [items]="listPackageBids"
+                  [placeholder]="'Lựa chọn'" (onChange)="getlistContracts($event)">
+                </input-select>
+                <render-error [data]="myForm.get('packageBidId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Tên hợp đồng <span class="text-danger"> * </span></label>
+                <input-select class="form-control" formControlName="contractsId" [items]="listContracts"
+                  [placeholder]="'Lựa chọn'">
+                </input-select>
+                <render-error [data]="myForm.get('contractsId')"></render-error>
+              </div>
+              <!-- <div class="form-group col-md-6">
+                <label>Số khung hợp đồng</label>
+                <input-text class="form-control" placeholder="Số khung hợp đồng" formControlName="contractCodeBase">
+                </input-text>
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Khối lượng</label>
+                <input-float formControlName="mass" class="form-control" [step]="1000000" [min]="0"
+                  [placeholder]="'0.00'">
+                </input-float>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Phần trăm</label>
+                <input-float formControlName="percentMass" class="form-control" [max]="100" [step]="5" [min]="0"
+                  [placeholder]="'0.00'">
+                </input-float>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ước thanh toán</label>
+                <input-float formControlName="estimatedValue" class="form-control" [step]="1000000" [min]="0"
+                  [placeholder]="'0.00'">
+                </input-float>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày ước TT <span class="text-danger"> * </span></label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="estimatedDate"></input-date>
+                <render-error [data]="myForm.get('estimatedDate')"></render-error>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Hình thức TT</label>
+                <input-select class="form-control" formControlName="payId" [items]="listpaymentType"
+                  [placeholder]="'Lựa chọn'">
+                </input-select>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Điều khoản TT</label>
+                <input-select class="form-control" formControlName="termPayId" [items]="listermsOfPayment"
+                  [placeholder]="'Lựa chọn'">
+                </input-select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Số hóa đơn</label>
+                <input-text class="form-control" placeholder="Số hóa đơn" formControlName="billNumber">
+                </input-text>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày hóa đơn</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="billDate"></input-date>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="font-weight-semibold text-uppercase font-size-sm">
+              Nhiều hơn
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-4">
+                <label>Thứ tự </label>
+                <input-number [min]="0" class="form-control" [placeholder]="0" formControlName="index"></input-number>
+              </div>
+              <div class="form-group col-md-4 control-inline" *ngIf="!isView">
+                <label>Hiển thị</label>
+                <input-switch class="control-content" formControlName="allowDisplay"></input-switch>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="form-group col-md-12">
+                <label>Ghi chú</label>
+                <input-textarea class="form-control" rows="5" formControlName="note"></input-textarea>
+              </div>
+            </div>
+          </fieldset>
+          <!-- /content area -->
+          <div class="text-right mt-4">
+            <button class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submit(true)" [hidden]="isView">
+              <i nz-icon="" nztype="close-circle" class="anticon anticon-close-circle mr-1"
+                ng-reflect-nz-type="close-circle"></i>
+              {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+            <button class="btn btn-primary" [disabled]="isLoading" (click)="submit(false)" [hidden]="isView"><i
+                class="anticon mr-1 anticon-plus-circle" nz-icon="" nztheme="outline" nztype="plus-circle"
+                ng-reflect-nz-type="plus-circle" ng-reflect-nz-theme="outline"></i>
+              {{isLoading ? 'Đang tải...':'Lưu'}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tab-pane fade mt-2" [ngClass]="{ 'active show': openTab === 2 }">
+    <app-payment-schedule [handoverId]="handoverId" [contractId]="contratId" [projectId]="projectId"
+      [isViewContracts]="isView">
+    </app-payment-schedule>
+  </div>
+</div>

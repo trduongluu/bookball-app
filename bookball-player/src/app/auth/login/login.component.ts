@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent extends BaseUserService implements OnInit {
 
   formModel = {
-    username: '',
+    userName: '',
     password: ''
   };
 
@@ -40,7 +40,7 @@ export class LoginComponent extends BaseUserService implements OnInit {
         localStorage.setItem('token', res.token);
         console.log('token', res.token);
         this.router.navigateByUrl('/page/pitchs');
-        this.message.success(`Welcome ${this.formModel.username}, have a good run.`);
+        this.message.success(`Welcome ${this.formModel.userName}, have a good run.`);
       }, err => {
         if (err.status === 400) {
           this.message.error('Incorrect username or password.');

@@ -1,0 +1,17 @@
+.nav-link {
+  color: #292828cc;
+
+  &.active {
+    background-color: #cccc;
+    color: #000000;
+  }
+}
+
+// ::ng-deep .listproj {
+//   display: inline-block;
+//   height: 200px;
+// }
+// .scrollview {
+//   height: 50%;
+//   overflow-y: scroll;
+// }

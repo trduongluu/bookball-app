@@ -1,0 +1,118 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Nguồn lực kế hoạch</span></h4>
+    </div>
+    <div class="header-elements">
+      <button type="button" class="btn btn-primary" (click)="openDataModal()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+      <button (click)="deleteMulti()" class="ml-2" nz-button  [disabled]="exTableService.getitemSelected(listOfData).length===0"
+        nzType="danger"><i nz-icon nzType="close-circle"></i>Xóa</button>
+    </div>
+  </div>
+</div>
+
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#search-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="search-list">
+        <form *ngIf="myForm" [formGroup]="myForm" class="w-100" (ngSubmit)="getData()" novalidate>
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <input-text-search class="form-control" placeholder="Nhập từ khóa tìm kiếm" formControlName="txtSearch"
+                (onClear)="getData()">
+              </input-text-search>
+            </div>
+            <!-- <div class="col-md-2 form-group">
+              <input-select [items]="lstStatus" class="form-control" placeholder="Chọn trạng thái"
+                formControlName="status" (onChange)="getData()"></input-select>
+            </div> -->
+          </div>
+          <button type="submit" [hidden]="true">Tìm kiếm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-0 margin-bottom-10">
+  <div class="table-responsive">
+    <nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+      nzSize="small" [nzScroll]="{ x: true }">
+      <thead>
+        <tr>
+          <th nzWidth="62px"nzShowCheckbox [nzChecked]="exTableService.isSelectAll(listOfData)"
+          (nzCheckedChange)="exTableService.changeSelected($event, listOfData)" nzLeft="0px"
+          [nzIndeterminate]="exTableService.getitemSelected(listOfData).length>0 && exTableService.getitemSelected(listOfData).length<listOfData.length"></th>
+            <th class="text-center">Họ và tên</th>
+          <th class="text-center">Vai trò</th>
+          <th class="text-center">Chức vụ</th>
+          <th class="text-center">Phần trăm</th>
+          <th  class="text-center">Bắt đầu</th>
+          <th  class="text-center">Kết thúc</th>
+          <th class="action text-center">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody  *ngFor="let project of data">
+        <tr class="title">
+          <td nzShowCheckbox [nzChecked]="exTableService.isSelectAll(project.projResource)"
+            [nzIndeterminate]="exTableService.getitemSelected(project.projResource).length>0 && exTableService.getitemSelected(project.projResource).length<project.projResource.length"
+            (nzCheckedChange)="exTableService.changeSelected($event, project?.projResource);project.isShow=true">
+          </td>
+          <td colspan="12" (click)="project.isShow=!project.isShow">
+            <span> Dự án: {{project.projName}}</span>
+        </tr>
+        <tr *ngFor="let item of project.projResource">
+          <td nzShowCheckbox [(nzChecked)]="item.selected" (nzCheckedChange)="refreshStatus()"></td>
+          <td>{{item.empName}}</td>
+          <td>{{item.jobName}}</td>
+          <td>{{item.poiName}}</td>
+          <td class="text-center">
+            <div class="progress" [class.zero]="item.percentResource===0">
+              <div class="progress-bar" [ngClass]="setClassPercent(item.percentResource)"
+                [ngStyle]="{width:item.percentResource+'%'}">
+                <span>{{item.percentResource}}%</span>
+              </div>
+            </div></td>
+          <td  class="text-center">{{item.beginDate |dateFormat}}</td>
+          <td  class="text-center">{{item.endDate | dateFormat}}</td>
+          <td class="text-center">
+            <div class="list-icons list-icons-extended text-center">
+              <a class="list-icons-item" href="javascript:;" (click)="openDataModal(item.id, true)">
+                <span nz-tooltip nzTitle="Xem">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(item.id)">
+                <span nz-tooltip nzTitle="Sửa">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(item)">
+                <span nz-tooltip nzTitle="Xóa">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+</div>
+
+<nz-modal nzClassName="dialog-lg" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    {{isView ? 'Xem nguồn lực' : id ? 'Sửa nguồn lực' : 'Thêm nguồn lực'}}
+  </ng-template>
+  <ng-template #modalContent>
+    <app-project-resource-data [id]="id" [isView]="isView" (cusOnClose)="closeDataModal($event)"
+      (onAddData)="addData($event)">
+    </app-project-resource-data>
+  </ng-template>
+</nz-modal>

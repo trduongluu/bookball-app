@@ -1,0 +1,92 @@
+<div class="row" [sortablejs]="controlValue" [sortablejsOptions]="options" *ngIf="templateType === 1">
+  <div class="position-relative {{class}}" *ngFor="let item of controlValue;let i = index">
+    <div class="image-preview" id="image-preview-{{controlId}}{{i}}">
+      <label for="image-upload-{{controlId}}{{i}}" id="image-label-{{controlId}}{{i}}" class="image-label"></label>
+      <input type="file" id="image-upload-{{controlId}}{{i}}" (change)="readURL($event)" class="image-upload" [attr.index]="i"
+        multiple />
+    </div>
+    <i nz-popconfirm nzPopconfirmTitle="Bạn có chắc chắn muốn xóa dữ liệu này không?" (nzOnConfirm)="remove(i)"
+      nzPopconfirmPlacement="top" class="icon-cancel-circle2 remove"></i>
+  </div>
+
+  <div class="position-relative {{class}} add-item" *ngIf="!disabled && (controlValue.length < size || size === 0)">
+    <div class="image-preview" id="image-preview-{{controlId}}{{controlValue.length}}">
+      <i class="lbl-add icon-upload4"></i>
+      <input type="file" id="image-upload-{{controlId}}{{controlValue.length}}" (change)="readURL($event)" class="image-upload"
+        [attr.index]="controlValue.length" multiple />
+    </div>
+  </div>
+</div>
+
+<div class="file-template-table" *ngIf="templateType === 2">
+  <nz-table [nzData]="[{id:1}]" [nzLoading]="false" [nzBordered]="true" [nzFrontPagination]="false" nzSize="small"
+    [nzScroll]="{ x: true }">
+    <thead>
+      <tr>
+        <th class="stt">STT</th>
+        <th></th>
+        <th>Tên file</th>
+        <th>Kiểu file</th>
+        <th>Độ lớn</th>
+        <th class="action text-center" *ngIf="!disabled"></th>
+      </tr>
+    </thead>
+    <tbody [sortablejs]="controlValue" [sortablejsOptions]="options">
+      <tr *ngFor="let item of controlValue;let i = index">
+        <td class="text-center">{{i + 1}}</td>
+        <td>
+          <div class="image-preview" id="image-preview-{{controlId}}{{i}}">
+          </div>
+          <input type="file" id="image-upload-{{controlId}}{{i}}" (change)="readURL($event)" class="d-none" [attr.index]="i"
+            multiple />
+        </td>
+        <td>
+          {{item.name}}
+        </td>
+        <td>
+          {{item.extension}}
+        </td>
+        <td>
+          {{item.size / 1024000 | number: '1.0-2'}} M
+        </td>
+        <td class="text-center" *ngIf="!disabled">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item text-primary" href="javascript:;">
+              <label for="image-upload-{{controlId}}{{i}}">
+                <span nz-tooltip nzTitle="Sửa">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </label>
+            </a>
+            <a nz-popconfirm nzPopconfirmTitle="Bạn có chắc chắn muốn xóa dữ liệu này không?" (nzOnConfirm)="remove(i)"
+              nzPopconfirmPlacement="top" class="list-icons-item text-danger" href="javascript:;">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!disabled">
+      <tr>
+        <td class="text-center pt-1" colspan="6">
+          <label for="image-upload-{{controlId}}{{controlValue.length}}">Thêm file</label>
+          <input type="file" id="image-upload-{{controlId}}{{controlValue.length}}" class="d-none" (change)="readURL($event)"
+            [attr.index]="controlValue.length" multiple />
+        </td>
+      </tr>
+    </tfoot>
+  </nz-table>
+
+</div>
+
+<div class="file-template-sigle card-img-actions d-inline-block mb-1 w-100" *ngIf="templateType === 3">
+  <div class="position-relative {{class}}" *ngFor="let item of controlValue;let i = index">
+    <div class="image-preview" id="image-preview-{{controlId}}{{i}}">
+      <label for="image-upload-{{controlId}}{{i}}" id="image-label-{{controlId}}{{i}}" class="image-label"></label>
+      <input type="file" id="image-upload-{{controlId}}{{i}}" (change)="readURL($event)" class="image-upload" [attr.index]="i"
+        multiple />
+    </div>    
+  </div>
+</div>

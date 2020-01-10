@@ -1,0 +1,10 @@
+<nz-modal [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="null"
+  [nzMaskClosable]="false" nzWidth="70%" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    {{id ? 'Edit' : 'Create'}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-my-temp-data [id]="id" (cusOnClose)="closeDataModal($event)"></app-my-temp-data>
+  </ng-template>
+</nz-modal>

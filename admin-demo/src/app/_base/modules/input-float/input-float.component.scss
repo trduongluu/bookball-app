@@ -1,0 +1,31 @@
+input-float {
+  width: 100%;
+  display: block;
+
+  .input-group {
+    .input-group-append {
+      display: block;
+      margin-left: -1px;
+      border-radius: 0.1875rem;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      background-color: #fafafa;
+      border: 1px solid #ddd;
+
+      padding: 0px;
+      width: 20px;
+      .actions {
+        text-align: center;
+        height: 15px;
+        line-height: 15px;
+        &:hover {
+          cursor: pointer;
+          background-color: #dbd8d8;
+        }
+        i {
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}

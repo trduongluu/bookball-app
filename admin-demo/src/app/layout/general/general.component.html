@@ -1,0 +1,173 @@
+<div class="page-header page-header-light border-bottom-0">
+    <div class="page-header-content header-elements-md-inline">
+      <div class="page-title d-flex">
+        <h4 *ngIf="setting"><span class="font-weight-semibold">{{setting.list.title}}</span></h4>
+      </div>
+
+      <div class="header-elements" *ngIf="setting">
+        <button type="button" class="btn btn-primary" (click)="addDialog()"><i class="mr-2" nz-icon nzType="plus-circle"
+            nzTheme="outline"></i>
+          {{setting.list.button.add.title}}</button>
+        <button type="button" class="btn btn-danger"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
+          {{setting.list.button.delete.title}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content pt-0">
+    <div class="header-elements-inline" *ngIf="setting && setting.list.search">
+      <div class="navbar-expand-md w-100" *ngIf="setting && setting.list.search.form">
+        <div class="padding-left-15 text-right d-md-none w-100 row">
+          <button class="navbar-toggler" data-target="#search-list" data-toggle="collapse" type="button">
+            <i nz-icon nzType="menu" nzTheme="outline"></i>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="search-list">
+          <form class="w-100" novalidate>
+            <ng-container *ngTemplateOutlet="renderForm; context:{ $implicit: setting.list.search.form }"></ng-container>
+            <button type="submit"
+              [hidden]="setting.list.search.buttonSearch.hidden">{{setting.list.search.buttonSearch.title}}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <hr class="mt-0 margin-bottom-10">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th class="action">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3</td>
+            <td>James</td>
+            <td>Alexander</td>
+            <td class="text-center">
+              <div class="list-icons list-icons-extended text-center">
+                <a class="list-icons-item" href="javascript:;" (click)="viewDialog(1)">
+                  <span nz-tooltip nzTitle="Xem">
+                    <i nz-icon nzType="eye" nzTheme="outline"></i>
+                  </span>
+                </a>
+                <a class="list-icons-item text-primary" href="javascript:;" (click)="editDialog(1)">
+                  <span nz-tooltip nzTitle="Sửa">
+                    <i nz-icon nzType="form" nzTheme="outline"></i>
+                  </span>
+                </a>
+                <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+                  <span nz-tooltip nzTitle="Xóa">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                  </span>
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-paging [data]="paging"></app-paging>
+  </div>
+
+  <nz-modal *ngIf="setting" class="template" [(nzVisible)]="showDialog" [nzMaskClosable]="false"
+    (nzOnCancel)="closeDialog()" [nzWidth]="setting.add.width"
+    [nzTitle]="paramsDialog.mode === 1? setting.add.title : paramsDialog.mode === 2? setting.add.title : setting.view.title"
+    [nzFooter]="null">
+    <app-general-data [template]="renderForm" [setting]="setting.add" [params]="paramsDialog"
+      (nzOnCancel)="closeDialog()" (nzOnOk)="submitDialog($event)">
+    </app-general-data>
+  </nz-modal>
+
+  <ng-template #renderForm let-settingFormList>
+    <ng-container *ngFor="let item of settingFormList">
+      <ng-container [ngSwitch]="item.type">
+        <ng-container *ngSwitchCase="'row'">
+          <ng-container *ngIf="item.legend; else elseTemplateLegend">
+            <fieldset>
+              <legend class="font-weight-semibold" [innerHTML]="item.legend"></legend>
+              <div class="row">
+                <ng-container *ngTemplateOutlet="renderForm; context:{ $implicit: item.child }"></ng-container>
+              </div>
+            </fieldset>
+          </ng-container>
+          <ng-template #elseTemplateLegend>
+            <div class="row">
+              <ng-container *ngTemplateOutlet="renderForm; context:{ $implicit: item.child }"></ng-container>
+            </div>
+          </ng-template>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <ng-container *ngIf="item.control; else elseTemplateControl">
+            <div class="{{item.type}}">
+              <ng-container [ngSwitch]="item.control.type">
+                <ng-container *ngSwitchCase="1">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-number [min]="0" class="form-control" [placeholder]="item.control.placeholder"></input-number>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-text class="form-control" [placeholder]="item.control.placeholder"></input-text>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="3">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-date class="form-control" [placeholder]="item.control.placeholder"></input-date>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="4">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-month class="form-control" [placeholder]="item.control.placeholder"></input-month>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="5">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-year class="form-control" [placeholder]="item.control.placeholder"></input-year>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="6">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-date-time class="form-control" [placeholder]="item.control.placeholder"></input-date-time>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="7">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-time class="form-control" [placeholder]="item.control.placeholder"></input-time>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="8">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-float class="form-control" [placeholder]="item.control.placeholder"></input-float>
+                  </div>
+                </ng-container>
+                <ng-container *ngSwitchCase="9">
+                  <div class="form-group">
+                    <label>{{item.control.label}}</label>
+                    <input-select class="form-control" [items]="[{id:1, name: 'item 1'},{id:2, name: 'item 2'}]"
+                      [placeholder]="item.control.placeholder"></input-select>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+          <ng-template #elseTemplateControl>
+            <div class="{{item.type}}">
+              <ng-container *ngTemplateOutlet="renderForm; context:{ $implicit: item.child }"></ng-container>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-template>

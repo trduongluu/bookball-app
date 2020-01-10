@@ -1,0 +1,83 @@
+<!-- Content area -->
+<form class="form-horizontal" [formGroup]="myForm" novalidate>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label class="control-label">Họ và tên<span class="text-danger">
+          <b> *</b>
+        </span> </label>
+      <input-select class="form-control control-content" placeholder="Lựa chọn" formControlName="empId" [items]="listEmployee">
+      </input-select>
+      <render-error [data]="myForm.get('empId')"></render-error>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Vai trò <span class="text-danger"> * </span></label>
+      <input-select class="form-control control-content" placeholder="Lựa chọn" formControlName="roleName" [items]="listJobPosition">
+      </input-select>
+      <render-error [data]="myForm.get('roleName')"></render-error>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label class="control-label">Chức vụ </label>
+      <input-select class="form-control control-content" placeholder="Lựa chọn" formControlName="posId" [items]="listPosition">
+      </input-select>
+      <!-- <render-error [data]="myForm.get('posId')"></render-error> -->
+    </div>
+    <div class="form-group col-md-6">
+      <label>Phần trăm </label>
+      <input-number class="form-control control-content" [min]="0" [max]="100" placeholder="0.00"
+        formControlName="percentResource">
+      </input-number>
+    </div>
+   
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Dự án <span class="text-danger"> * </span></label>
+      <input-select class="form-control control-content" placeholder="Dự án " formControlName="projId" [items]="listProject">
+      </input-select>
+      <render-error [data]="myForm.get('projId')"></render-error>
+    </div>
+    <div class="form-group col-md-6">
+      <label>Ngày bắt đầu <span class="text-danger"> * </span></label>
+      <!-- <input-date class="form-control control-content" placeholder="Ngày bắt đầu " formControlName="beginDate">
+      </input-date> -->
+      <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="beginDate"></input-date>
+      <render-error [data]="myForm.get('beginDate')"></render-error>
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Ngày kết thúc <span class="text-danger"> * </span></label>
+      <input-date class="form-control control-content" placeholder="Ngày kết thúc " formControlName="endDate">
+      </input-date>
+      <render-error [data]="myForm.get('endDate')"></render-error>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label>Người liên quan </label>
+      <input-select-multiple [items]="listEmployee" formControlName="relatedList" placeholder="Lựa chọn"></input-select-multiple>
+      <!-- <render-error [data]="myForm.get('relatedList')"></render-error> -->
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="form-group col-md-12">
+      <label>Ghi chú</label>
+      <input-textarea class="form-control control-content" placeholder="Nhập chi chú" formControlName="note" rows="5"></input-textarea>
+      <render-error [data]="myForm.get('note')"></render-error>
+    </div>
+  </div>
+
+  <div class="text-right mt-4">
+    <button class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submit()" [hidden]="isView">
+      <i nz-icon nzType="close-circle" class="mr-1" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+    <button class="btn btn-primary" [disabled]="isLoading" (click)="submit(false)" [hidden]="isView"><i
+        class="mr-1" nz-icon nzType="plus-circle" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button>
+  </div>
+</form>
+<!-- /content area -->

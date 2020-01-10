@@ -8,7 +8,7 @@
             <h5 class="card-title text-center">Sign In</h5>
             <form #form="ngForm" class="form-signin" autocomplete="off" (ngSubmit)="onSubmit(form)">
               <div class="form-label-group">
-                <input type="text" #username="ngModel" [(ngModel)]="formModel.username" id="inputUsername"
+                <input type="text" #username="ngModel" [(ngModel)]="formModel.userName" id="inputUsername"
                   name="username" class="form-control" placeholder="Username" required autofocus>
                 <label for="inputUsername">Username</label>
               </div>
@@ -25,7 +25,7 @@
               </div>
 
               <button class="btn btn-lg bg-prime btn-block text-uppercase" type="submit"
-                [disabled]="!formModel.username || !formModel.password">Sign in</button>
+                [disabled]="!formModel.userName || !formModel.password">Sign in</button>
               <div class="center mb-3 mt-2">
                 <span>Don't have an account yet?
                   <a [routerLink]="['/auth/register']" routerLinkActive="router-link-active">Register.</a>

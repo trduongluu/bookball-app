@@ -1,0 +1,6 @@
+{
+    "apiServer": {
+        "physical": "http://localhost:5000"
+    },
+    "deploy": "debugger"
+}

@@ -1,0 +1,187 @@
+{
+	"tag": "template",
+	"list":{
+		"title": "Danh Sách Dữ Liệu",
+		"button":{
+			"add": {
+				"title": "Thêm"
+			},
+			"delete": {
+				"title": "Xóa",
+				"confirm": "Bạn có chắc chắn muốn xóa dữ liệu đã chọn không?"
+			}			
+		},		
+		"search":{
+			"buttonSearch":{
+				"title": "Tìm kiếm",
+				"hidden": true
+			},
+			"form":[
+				{
+					"type": "row",
+					"legend": null,
+					"child":[
+						{
+							"type": "col-md-4",
+							"control":{
+								"type": 2,
+								"label": "Tên nhân viên",
+								"placeholder": "Nhập tên",
+								"name": "data.name"	
+							}
+						},
+						{
+							"type": "col-md-4",
+							"control":{
+								"type": 1,
+								"label": "Tuổi nhân viên",
+								"placeholder": "Nhập tuổi",
+								"name": "data.age"	
+							}
+						}
+					]					
+				}
+			]			
+		},
+		"table":{
+			"action":{
+				"edit": {
+					"title": "Sửa"				
+				},
+				"delete": {
+					"title": "Xóa",
+					"confirm": "Bạn có chắc chắn muốn xóa dữ liệu này không?"
+				}
+			},
+			"data":[
+				{
+					"title": "Mã nhân viên",
+					"data": "id",
+					"fomat": null
+				},
+				{
+					"title": "Tên nhân viên",
+					"data": "data.name",
+					"fomat": null
+				},
+				{
+					"title": "Tuổi nhân viên",
+					"data": "data.name",
+					"fomat": null
+				}
+			],
+			"loading":{
+				"isloading": "Đang tải...",
+				"dataEmpty": "Không tìm thấy dữ liệu"
+			}
+		}		
+	},
+	"add":{
+		"title": "Thêm Dữ Liệu",
+		"width": 768,
+		"form":[
+			{
+				"type": "row",
+				"legend": null,
+				"child":[
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 1,
+							"label": "Tuổi nhân viên",
+							"placeholder": "Nhập tuổi",
+							"name": "data.age"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 2,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 3,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 4,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 5,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 6,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 7,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 8,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 9,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					},
+					{
+						"type": "col-md-4",
+						"control":{
+							"type": 10,
+							"label": "Tên nhân viên",
+							"placeholder": "Nhập tên",
+							"name": "data.name"	
+						}
+					}					
+				]					
+			}
+		]
+	},
+	"edit": {
+		"title": "Sửa dữ liệu"
+	},
+	"view": {
+		"title": "Xem Dữ liệu"
+	}
+}

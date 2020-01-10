@@ -1,0 +1,259 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">hợp đồng</span></h4>
+    </div>
+    <div class="header-elements">
+      <button type="button" class="btn btn-primary" (click)="openDataModal()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>Thêm hồ sơ</button>
+      <button type="button" class="btn btn-danger" [disabled]="exTableService.getitemSelected().length===0"
+        (click)="deleteChoices()"><i class="mr-2" nz-icon nzType="file-excel" nzTheme="outline"></i>
+        Xóa </button>
+    </div>
+  </div>
+</div>
+
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#search-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="search-list">
+        <form *ngIf="myForm" [formGroup]="myForm" class="w-100" (ngSubmit)="getData()" novalidate>
+          <div class="row ">
+            <div class="col-md-3 form-group">
+              <input-text-search class="form-control"
+                placeholder="Nhập Mã HĐ, Mã nhân viên, Tên, Số điện thoại tìm kiếm" formControlName="txtSearch"
+                (onClear)="getData()">
+              </input-text-search>
+            </div>
+            <div class="col-md-2 form-group">
+              <input-select [items]="lstType" class="form-control" placeholder="Chọn loại hợp đồng"
+                formControlName="status" (onChange)="getData()"></input-select>
+            </div>
+            <div class="col-md-2 form-group">
+              <input-select [items]="lstOffice" class="form-control" placeholder="Chọn Đơn vị" formControlName="status"
+                (onChange)="getData()"></input-select>
+            </div>
+          </div>
+          <button type="submit" [hidden]="true">Tìm kiếm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-0 margin-bottom-10">
+
+
+  <nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+    nzSize="small" [nzScroll]="{ x: true }">
+    <thead>
+      <tr>
+        <th nzWidth="62px" nzShowCheckbox [nzChecked]="exTableService.isSelectAll(listOfData)"
+          (nzCheckedChange)="exTableService.changeSelected($event, listOfData)"></th>
+        <th>Mã hợp đồng</th>
+        <th>Tên hợp đồng</th>
+        <th>Mã nhân viên</th>
+        <th>Tên nhân viên</th>
+        <th>Loại hợp đồng</th>
+        <th>Ngày ký</th>
+        <th>Thời hạn</th>
+        <th class="text-center">Trạng thái</th>
+        <th class="action text-center">Thao tác</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td nzShowCheckbox></td>
+        <td>HD001</td>
+        <td>Hợp đồng lao động</td>
+        <td>C1003</td>
+        <td>Hà Tuấn Anh</td>
+        <td>Có thời hạn</td>
+        <td>6/10/2019</td>
+        <td>10/10/2021</td>
+        <td>
+          <span class="badge bg-success-400">hoạt động</span>
+        </td>
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item" href="javascript:;" (click)="openDataModal(1, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(1)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td nzShowCheckbox></td>
+        <td>HD002</td>
+        <td>Hợp đồng lao động</td>
+        <td>C1004</td>
+        <td>Lê Thị Xuân</td>
+        <td>
+          Có thời hạn
+        </td>
+        <td>
+          11/11/2019
+        </td>
+        <td>11/11/2021</td>
+        <td>
+          <span class="badge bg-success-400">hoạt động</span>
+        </td>
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item" href="javascript:;" (click)="openDataModal(1, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(1)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td nzShowCheckbox></td>
+        <td>HD003</td>
+        <td>Hợp đồng lao động</td>
+        <td>C1005</td>
+        <td>Phạm Xuân Đỉnh</td>
+        <td>
+          Vô thời hạn
+        </td>
+        <td>
+          11/6/2015
+        </td>
+        <td></td>
+        <td>
+          <span class="badge bg-success-400">hoạt động</span>
+        </td>
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item" href="javascript:;" (click)="openDataModal(1, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(1)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td nzShowCheckbox></td>
+        <td>HD006</td>
+        <td>Hợp đồng lao động</td>
+        <td>C1007</td>
+        <td>Lâm Chiêu Anh</td>
+        <td>
+          Vô thời hạn
+        </td>
+        <td>
+          11/11/2005
+        </td>
+        <td></td>
+        <td>
+          <span class="badge bg-danger">chấm dứt</span>
+        </td>
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item" href="javascript:;" (click)="openDataModal(1, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(1)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td nzShowCheckbox></td>
+        <td>HD009</td>
+        <td>Hợp đồng lao động</td>
+        <td>C1008</td>
+        <td>Lê Trọng Tấn</td>
+        <td>Vô thời hạn</td>
+        <td>
+          1/1/2002
+        </td>
+        <td>
+          1/1/2012
+        </td>
+        <td>
+          <span class="badge bg-success-400">hoạt động</span>
+        </td>
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item" href="javascript:;" (click)="openDataModal(1, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(1)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(1)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+  <app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+</div>
+
+<nz-modal nzClassName="dialog-full" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" nzWidth="70%" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    {{isView ? 'Xem hợp đồng' : id ? 'Sửa hợp đồng' : 'Thêm hợp đồng'}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-contract-data [id]="id" [isView]="isView" (cusOnClose)="closeDataModal($event)"></app-contract-data>
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,131 @@
+<div class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="text-center d-lg-none w-100">
+    <button class="navbar-toggler dropdown-toggle" data-target="#navbar-second" data-toggle="collapse" type="button">
+      <i class="icon-menu7 mr-2"></i> </button></div>
+  <div class="navbar-collapse collapse p-0" id="navbar-second">
+    <ul class="nav navbar-nav">
+      <li class="nav-item">
+        <a class="navbar-nav-link" href="javascript:;" [ngClass]="{'active show': openTab === 1}" (click)="openTab = 1">
+          <i class="icon-magazine mr-2"></i>
+          Cơ bản </a></li>
+      <li class="nav-item">
+        <a class="navbar-nav-link" href="javascript:;" [ngClass]="{'active show': openTab === 2}" (click)="openTab = 2">
+          <i class="icon-certificate mr-2"></i>Tài liệu </a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content w-100 overflow-auto">
+  <div class="tab-pane fade mt-2" [ngClass]="{'active show': openTab === 1}">
+    <form class="form-horizontal" *ngIf="myForm" [formGroup]="myForm" novalidate>
+      <div class="card">
+        <div class="card-body">
+          <!-- Content area -->
+          <fieldset>
+            <legend class="font-weight-semibold text-uppercase font-size-sm"> Thông tin cơ bản
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Tên dự án <span class="text-danger"> * </span></label>
+                <input-select class="form-control" formControlName="projId" [items]="listProject"
+                  [placeholder]="'Lựa chọn'" (onChange)="getPackageBids($event)">
+                </input-select>
+                <render-error [data]="myForm.get('projId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Gói thầu<span class="text-danger"> * </span></label>
+                <input-select class="form-control" formControlName="packageBidsId" [items]="listPackageBids"
+                  [placeholder]="'Lựa chọn'">
+                </input-select>
+                <render-error [data]="myForm.get('packageBidsId')"></render-error>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ngày nộp HSMT</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="dateOfBidSubmission">
+                </input-date>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày trình</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="submissionDate"></input-date>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ngày thẩm tra</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="dateOfVerification">
+                </input-date>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày thông qua</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="datePassed"></input-date>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ngày duyệt</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="dateOfApproval"></input-date>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Số quyết định</label>
+                <input-text class="form-control" placeholder="Số quyết định" formControlName="decisionNumber">
+                </input-text>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Ngày kí</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="signedOn"></input-date>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày phát hành</label>
+                <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="releaseDate"></input-date>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Người liên quan</label>
+                <input-select-multiple [items]="listEmployee" formControlName="listEmpId" placeholder="Lựa chọn">
+                </input-select-multiple>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-4 control-inline">
+                <label>Thứ tự</label>
+                <input-number [min]="0" class="form-control control-content" placeholder="1" formControlName="index"
+                  min="1">
+                </input-number>
+              </div>
+              <div class="form-group col-md-4 control-inline">
+                <label>Hiển thị</label>
+                <input-switch class="control-content" formControlName="allowDisplay"></input-switch>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label>Ghi chú</label>
+                <input-textarea class="form-control" rows="5" formControlName="note"></input-textarea>
+              </div>
+            </div>
+          </fieldset>
+          <!-- /content area -->
+          <div class="text-right mt-4">
+            <button class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submit(true)" [hidden]="isView">
+              <i nz-icon="" nztype="close-circle" class="anticon anticon-close-circle mr-1"
+                ng-reflect-nz-type="close-circle"></i>
+              {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+            <button class="btn btn-primary" [disabled]="isLoading" (click)="submit(false)" [hidden]="isView"><i
+                class="anticon mr-1 anticon-plus-circle" nz-icon="" nztheme="outline" nztype="plus-circle"
+                ng-reflect-nz-type="plus-circle" ng-reflect-nz-theme="outline"></i>
+              {{isLoading ? 'Đang tải...':'Lưu'}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="tab-pane fade mt-2" [ngClass]="{'active show': openTab === 2}">
+    <app-project-document [biddingDocumentId]="id" [packageBidId]="packageBidsId" [projGeneralId]="projGeneralId"
+      [isView]="isView"></app-project-document>
+  </div>
+</div>

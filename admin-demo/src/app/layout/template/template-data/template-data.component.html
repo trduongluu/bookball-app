@@ -1,0 +1,35 @@
+<!-- Content area -->
+<form [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+
+  <div class="row pb-3" formGroupName="data">
+    <div class="col-md-4">
+      <label class="control-label">Tên dữ liệu</label>
+      <span class="text-danger">
+        <b> *</b>
+      </span>
+      <input-text class="form-control" placeholder="Tên dữ liệu" formControlName="name"></input-text>
+      <render-error [data]="myForm.get('data.companyCode')"></render-error>
+    </div>
+  </div>
+  <div class="row pb-3" formGroupName="data">
+    <div class="col-md-4">
+      <label class="control-label">avata</label>
+      <input-text class="form-control" placeholder="loại hình giao dịch" formControlName="avata">
+      </input-text>
+    </div>
+  </div>
+  <div class="row pb-3" formGroupName="data">
+    <div class="col-md-4">
+      <label class="control-label">files</label>
+      <input-text class="form-control" placeholder="Kiểu loại" formControlName="files">
+      </input-text>
+    </div>
+  </div>
+
+  <div class="text-right mt-4">
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading"
+      [hidden]="isView">{{ isLoading ? 'Đang tải...' : 'Thêm dữ liệu' }}<i
+        class="icon-arrow-right14 position-right"></i></button>
+  </div>
+</form>
+<!-- /content area -->

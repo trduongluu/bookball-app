@@ -1,0 +1,31 @@
+.temp1{
+    &.table-footer {
+        padding: 0px;
+        background: none;
+        bottom: 0;
+        margin: 0px;
+        &:after{
+            display: none;
+        }
+    }
+}
+
+.temp2{
+    display: inline-block;
+        width: 100%;
+        .jump-page{
+            margin-right: 10px;
+        }
+        .lbl-page{
+            margin-top: 7px;
+            margin-right: 5px;
+        }
+        .in-page{
+            width: 45px;
+            float: left;
+            padding: 7px;
+        }
+        .pagination{
+            float: left;
+        }  
+}

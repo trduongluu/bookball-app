@@ -1,0 +1,72 @@
+<legend class="font-weight-semibold text-uppercase font-size-sm"> Danh sách tài liệu
+</legend>
+<div class="text-right mb-2">
+  <button class="btn text-primary size-14" (click)="openModal()" [disabled]="isDisable()"><i class="icon-plus22"></i>
+    Thêm tài liệu
+  </button>
+</div>
+
+<nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+  nzSize="small" [nzScroll]="{ x: true }">
+  <thead>
+    <tr>
+      <!-- <th nzWidth="62px" nzShowCheckbox [nzChecked]="exTableService.isSelectAll(listOfData)"
+        (nzCheckedChange)="exTableService.changeSelected($event, listOfData)"></th> -->
+      <th class="text-center">Tên</th>
+      <th class="text-center">Dung lượng</th>
+      <th class="text-center">Phiên bản</th>
+      <th class="text-center">Ngày</th>
+      <th class="text-center">Tệp trong</th>
+      <th class="text-center">Tệp ngoài</th>
+      <th class="text-center"> Ghi chú</th>
+      <th class="action text-center">Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let item of listOfData">
+      <!-- <td nzShowCheckbox [(nzChecked)]="item.selected"> -->
+      <td class="text-center">{{item.fileData.fileName}}</td>
+      <td class="text-center">{{item.fileData.capacity}}</td>
+      <td class="text-center">{{item.fileData.version}}</td>
+      <td class="text-center">{{item.fileData.uploadDate | date:'dd/MM/yyyy'}}</td>
+      <td class="text-center">{{item.fileData.linkIn}}</td>
+      <td class="text-center">{{item.fileData.linkOut}}</td>
+      <td class="text-center">{{item.fileData.description}}</td>
+      <td class="text-center">
+        <div class="list-icons list-icons-extended text-center">
+          <a class="list-icons-item view" href="{{item.fileData}}" [class.disabled]="isView">
+            <span nz-tooltip nzTitle="Download">
+              <i nz-icon nzType="download" class="anticon anticon-download"></i>
+            </span>
+          </a>
+          <a class="list-icons-item text-primary" (click)="openModal(item)" [class.disabled]="isView">
+            <span nz-tooltip nzTitle="Sửa">
+              <i nz-icon nzType="form" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a class="list-icons-item text-danger" (click)="deleteItem(item.id)" [class.disabled]="isView">
+            <span nz-tooltip nzTitle="Xóa">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </span>
+          </a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+
+<nz-modal nzClassName="dialog-lg" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    Thêm mới tài liệu
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-project-document-data [projGeneralId]="projGeneralId" [packageBidId]="packageBidId"
+      [biddingDocumentId]="biddingDocumentId" [contractId]="contractId" [projWorkId]="projWorkId" [issueId]="issueId"
+      [item]="item" (cusOnClose)="closeDataModal($event)" (onAddData)="addData($event)">
+    </app-project-document-data>
+  </ng-template>
+</nz-modal>

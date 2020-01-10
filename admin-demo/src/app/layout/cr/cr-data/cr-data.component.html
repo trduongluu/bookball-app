@@ -1,0 +1,109 @@
+<!-- Content area -->
+<form class="form-horizontal" *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="submitForm()">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Dự án <span class="text-danger"> * </span></label>
+      <input-select [items]="listProject" class="form-control" placeholder="Lựa chọn" formControlName="projId">
+      </input-select>
+    </div>
+    <div class="form-group col-md-12">
+      <label>Phân loại <span class="text-danger"> * </span></label>
+      <input-select [items]="lstclassifyCR" class="form-control" placeholder="Phân loại" formControlName="crtypeId">
+      </input-select>
+      <render-error [data]="myForm.get('crtypeId')"></render-error>
+    </div>
+  </div>
+  <ng-container [ngSwitch]="myForm.get('crtypeId').value">
+    <ng-container *ngSwitchCase="1">
+      <div class="row">
+
+        <div class="form-group col-md-12">
+          <label>Phạm vi mới</label>
+          <input-textarea class="form-control " placeholder="Phạm vi mới" formControlName="oldValue">
+          </input-textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Phạm vi cũ</label>
+          <input-textarea class="form-control " placeholder="Phạm vi cũ" formControlName="newValue">
+          </input-textarea>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="2">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Ngày cũ</label>
+          <input-date class="form-control " placeholder="dd/MM/yyyy" formControlName="oldValue">
+          </input-date>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Ngày mới</label>
+          <input-date class="form-control " placeholder="dd/MM/yyyy" formControlName="newValue">
+          </input-date>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="3">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Chi phí cũ</label>
+          <input-float class="form-control " placeholder="0.01" formControlName="oldValue">
+          </input-float>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Chi phí mới</label>
+          <input-float class="form-control " placeholder="0.01" formControlName="newValue">
+          </input-float>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="4">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label>Quản trị dự án cũ</label>
+          <input-text class="form-control " placeholder="dự án cũ" formControlName="oldValue">
+          </input-text>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Quản trị dự án mới</label>
+          <input-text class="form-control " placeholder="dự án mới" formControlName="newValue">
+          </input-text>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="5">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Nội dung cũ</label>
+          <input-textarea class="form-control" placeholder="" formControlName="oldValue">
+          </input-textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>Nội dung mới</label>
+          <input-textarea class="form-control" placeholder="" formControlName="newValue">
+          </input-textarea>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+
+    </ng-container>
+  </ng-container>
+
+  <div class="text-right">
+    <button type="submit" class="btn btn-save bg-blue-800" (click)="submit()">
+      <b><i class="fa fa-save"></i></b> &nbsp; Lưu
+    </button>
+    <!-- <a class="btn bg-blue-800 btn-labeled legitRipple ml-5" (click)="myForm.reset()"><b><i
+class="icon-refresh"></i></b> Refesh</a> -->
+  </div>
+</form>
+<!-- /content area -->

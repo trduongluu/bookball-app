@@ -1,0 +1,4 @@
+<nz-time-picker [(ngModel)]="controlValue" [nzPlaceHolder]="disabled ? '' : placeholder" [nzFormat]="format"
+  [nzDisabled]="disabled" [nzClearText]="allowClear?'clear':null" (ngModelChange)="onChange()" (focusin)="onBlur()"
+  (focusout)="onUnBlur()">
+</nz-time-picker>

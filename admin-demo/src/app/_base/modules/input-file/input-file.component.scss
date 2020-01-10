@@ -1,0 +1,83 @@
+$file_color_boder_error: #eb394f;
+
+input-file {
+  width: 100%;
+  display: block;
+
+  .file-wapper {
+    display: inline;
+  }
+
+  .image-preview {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    cursor: pointer;
+    background-color: #dcdcdc;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+    }
+
+    .lbl-add {
+      position: absolute;
+      top: calc(50% - 15px);
+      left: 50%;
+      transform: translate(-50%);
+      font-size: 30px;
+      color: #676767;
+    }
+  }
+
+  .remove {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    z-index: 20;
+    cursor: pointer;
+  }
+
+  &.ng-touched.ng-invalid {
+    .image-preview {
+      border: solid 1px $file_color_boder_error !important;
+    }
+  }
+
+  .file-template-table {
+    .image-preview {
+      width: 90px;
+      height: 50px;
+      margin-bottom: 0px;
+    }
+    .list-icons-item {
+      label {
+        margin: 0px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    }
+
+    tfoot {
+      td {
+        border-top: solid 1px #e8e8e8;
+      }
+    }
+  }
+
+  .file-template-sigle{
+    .image-preview{
+      margin-bottom: 0px;
+      height: 180px;
+      border-radius: 3px;
+    }
+  }
+}

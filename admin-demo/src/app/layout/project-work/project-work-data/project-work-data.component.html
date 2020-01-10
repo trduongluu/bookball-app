@@ -1,0 +1,202 @@
+<section>
+  <div class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="text-center d-lg-none w-100">
+      <button class="navbar-toggler dropdown-toggle" data-target="#navbar-second" data-toggle="collapse" type="button">
+        <i class="icon-menu7 mr-2"></i> </button></div>
+    <div class="navbar-collapse collapse p-0" id="navbar-second">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <a class="navbar-nav-link" href="javascript:;" [ngClass]="{'active show': openTab === 1}"
+            (click)="openTab = 1">
+            <i class="icon-magazine mr-2"></i>
+            Cơ bản </a></li>
+        <li class="nav-item">
+          <a class="navbar-nav-link" href="javascript:;" [ngClass]="{'active show': openTab === 2}"
+            (click)="openTab = 2">
+            <i class="icon-certificate mr-2"></i>Tài liệu </a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tab-content w-100 overflow-auto">
+    <div class="tab-pane fade mt-2" [ngClass]="{'active show': openTab === 1}">
+      <form focusInvalidInput class="form-horizontal" *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="submit()"
+        novalidate>
+
+        <div class="card">
+          <div class="card-body">
+            <!-- Content area -->
+            <!-- <fieldset> -->
+            <legend class="font-weight-semibold text-uppercase font-size-sm"> Thông tin cơ bản
+            </legend>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Tên công việc<span class="text-danger"><b> *</b></span>
+                </label>
+                <input class="form-control" placeholder="Tên công việc" formControlName="workName" id="workName"
+                  autofocus="true">
+                <!-- </input-text> -->
+                <render-error [data]="myForm.get('workName')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Phân loại <span class="text-danger"><b>*</b></span>
+                </label>
+                <input-select [items]="listTypeWorks" class="form-control" placeholder="Lựa chọn"
+                  formControlName="classifyWorks">
+                </input-select>
+                <render-error [data]="myForm.get('classifyWorks')"></render-error>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Trạng thái <span class="text-danger"><b> *</b></span></label>
+                <input-select class="form-control" formControlName="statusId" [items]="listStatus"
+                  (onChange)="updateStatus()" [placeholder]="'Lựa chọn'"></input-select>
+                <render-error [data]="myForm.get('statusId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Tiến độ<span class="text-danger"><b> *</b></span>
+                </label>
+                <input-float class="form-control" formControlName="workCompleted" [placeholder]="'0%'" [step]="1"
+                  [min]="0" [max]="100"></input-float>
+                <render-error [data]="myForm.get('workCompleted')"></render-error>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Người phụ trách<span class="text-danger"><b> *</b></span>
+                </label>
+                <input-select [items]="listEmployee" class="form-control" placeholder="Lựa chọn"
+                  formControlName="empId">
+                </input-select>
+                <render-error [data]="myForm.get('empId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ưu tiên<span class="text-danger"><b> *</b></span></label>
+                <input-select [items]="listPriority" class="form-control" placeholder="Lựa chọn"
+                  formControlName="priority">
+                </input-select>
+                <render-error [data]="myForm.get('priority')"></render-error>
+              </div>
+
+            </div>
+
+
+            <div class="row">
+
+              <div class="form-group col-md-6">
+                <label>Ngày bắt đầu</label>
+                <input-date class="form-control" formControlName="beginDate" placeholder="dd/mm/yyyy"  (onChange)="updateValidate();showDate()"></input-date>
+                <render-error [data]="myForm.get('beginDate')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Ngày kết thúc</label>
+                <input-date class="form-control" formControlName="endDate" (onChange)="updateValidate();showDate()" placeholder="dd/mm/yyyy"></input-date>
+                <render-error [data]="myForm.get('endDate')"></render-error>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="form-group col-md-6">
+                <label>Hoàn thành</label>
+                <input-date class="form-control" formControlName="completeDate" placeholder="dd/mm/yyyy" [disabled]="true" ></input-date>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Giờ kế hoạch</label>
+                <input-float formControlName="timePlan" class="form-control" [step]="1" [min]="0"
+                  [placeholder]="'0.00'">
+                </input-float>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Giờ thực tế</label>
+                <input-float formControlName="timeReality" class="form-control" [step]="1" [min]="0"
+                  [placeholder]="'0.00'">
+                </input-float>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="form-group col-md-12">
+                <label>Nội dung </label>
+                <input-textarea formControlName="content" class="form-control" rows="5">
+                </input-textarea>
+                <render-error [data]="myForm.get('content')"></render-error>
+              </div>
+            </div>
+            <!-- </fieldset> -->
+            <!-- <fieldset> -->
+            <legend class="font-weight-semibold text-uppercase font-size-sm"> Mở rộng
+            </legend>
+            <div class="row ">
+
+              <div class="form-group col-md-12">
+                <label>Người phối hợp</label>
+                <input-select-multiple [items]="listEmployee" placeholder="Lựa chọn" formControlName="coordinationList">
+                </input-select-multiple>
+              </div>
+
+            </div>
+            <div class="row ">
+
+              <div class="form-group col-md-6">
+                <label>Dự án <span class="text-danger">*</span></label>
+                <input-select [items]="listProject" class="form-control" placeholder="Lựa chọn"  (onChange)="updateValidate();getProjWork()"
+                  formControlName="projGeneralId">
+                </input-select>
+                <render-error [data]="myForm.get('projGeneralId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Công việc cha </label>
+                <input-select [items]="listProjWork" class="form-control" placeholder="Lựa chọn"
+                  formControlName="perrentId">
+                </input-select>
+              </div>
+            </div>
+            <div class="row ">
+              <div class="form-group col-md-6">
+                <label>Mục tiêu<span class="text-danger">*</span></label>
+                <input-select [items]="listTarget" class="form-control" placeholder="Lựa chọn"
+                  formControlName="targetId">
+                </input-select>
+                <render-error [data]="myForm.get('targetId')"></render-error>
+              </div>
+              <div class="form-group col-md-6">
+                <label>Liên hệ</label>
+                <input-text class="form-control" placeholder="Nhập liên hệ" formControlName="contact">
+                </input-text>
+              </div>
+            </div>
+
+            <div class="row ">
+              <div class="form-group col-md-12">
+                <label>Ghi chú </label>
+                <input-textarea class="form-control" rows="5" formControlName="note"></input-textarea>
+                <render-error [data]="myForm.get('note')"></render-error>
+              </div>
+            </div>
+            <!-- </fieldset> -->
+            <!-- /content area -->
+          </div>
+        </div>
+        <div class="text-right mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="isLoading"
+            [hidden]="isView">{{isLoading ? 'Đang tải...':'Lưu'}}<i
+              class="icon-arrow-right14 position-right"></i></button>
+        </div>
+      </form>
+    </div>
+    <div class="tab-pane fade mt-2" [ngClass]="{'active show': openTab === 2}">
+      <div class="card">
+        <div class="card-body">
+          <!-- Content area -->
+          <fieldset>
+
+            <app-project-document [projWorkId]="id" [projGeneralId]="projGeneralId" [isView]="isView">
+            </app-project-document>
+          </fieldset>
+          <!-- /content area -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

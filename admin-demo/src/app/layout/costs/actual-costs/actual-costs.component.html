@@ -1,0 +1,134 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Chi phí thực tế</span></h4>
+    </div>
+
+    <div class="header-elements">
+      <button type="button" class="btn btn-primary" (click)="openDataModal()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+      <button (click)="deleteMulti()" class="ml-2" nz-button [disabled]="exTableService.getitemSelected(listOfData).length===0"
+        nzType="danger"><i nz-icon nzType="close-circle"></i>Xóa</button>
+    </div>
+  </div>
+</div>
+
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#search-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="search-list">
+        <form [formGroup]="myForm" class="w-100" (ngSubmit)="getData()" novalidate>
+          <div class="row ">
+            <div class="col-md-3 form-group">
+              <input-text-search class="form-control" placeholder="Nhập tên chi phí, số chứng từ"
+                formControlName="searchText" (onClear)="getData()">
+              </input-text-search>
+            </div>
+            <div class="col-md-2 form-group">
+              <input-select [items]="listProject" class="form-control" placeholder="Dự án"
+                formControlName="searchProject" (onChange)="getData()">
+              </input-select>
+            </div>
+            <div class="col-md-1">
+              <input type="submit" class="btn btn-primary" value="Tìm kiếm">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    </div>
+    <hr class="mt-0 margin-bottom-10">
+    <nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+        nzSize="small" [nzScroll]="{ x: true }">
+        <thead>
+            <tr>
+                <th nzWidth="62px" nzShowCheckbox nzShowCheckbox [nzChecked]="exTableService.isSelectAll(listOfData)"
+                    (nzCheckedChange)="exTableService.changeSelected($event, listOfData)" nzLeft="0px"
+                    [nzIndeterminate]="exTableService.getitemSelected(listOfData).length>0 && exTableService.getitemSelected(listOfData).length<listOfData.length">
+                </th>
+                <th class="text-center" colspan="2">Số chứng từ</th>
+                <th class="text-center">Ngày chứng từ</th>
+                <th class="text-center">Loại chi phí</th>
+                <th class="text-center">Tên chi phí</th>
+                <th class="text-center">Số tiền Thực tế</th>
+                <th class="text-center">Số tiền kế hoạch(VND)</th>
+                <th class="text-center">Độ chênh lệch (VND)</th>
+                <th class="text-center">Loại tiền</th>
+                <th class="text-center">Tỷ giá</th>
+                <th class="action text-center">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody *ngFor="let project of data">
+            <tr class="title">
+                <td nzShowCheckbox [nzChecked]="exTableService.isSelectAll(project.actualCosts)"
+                    [nzIndeterminate]="exTableService.getitemSelected(project.actualCosts).length>0 && exTableService.getitemSelected(project.actualCosts).length<project.actualCosts.length"
+                    (nzCheckedChange)="exTableService.changeSelected($event, project?.actualCosts);project.isShow=true">
+                </td>
+                <td colspan="12" (click)="project.isShow=!project.isShow">Dự án: {{project.projName}} </td>
+            </tr>
+            <tr *ngFor="let item of project?.actualCosts" [hidden]="!project.isShow">
+                <td></td>
+                <td nzShowCheckbox [(nzChecked)]="item.selected" (nzCheckedChange)="refreshStatus()" nzLeft="0px"
+                    width="60px">
+                <td>{{item.vouchersNumber}}</td>
+                <td class="text-center">{{item.data.vouchersDate | dateFormat}}</td>
+                <td>{{item.expItem?.data.expensesItemName}}</td>
+                <td> {{item.data.costName}} </td>
+                <td class="text-center">{{item.data.amountOfMoney | numberFormat}}</td>
+                <td class="text-center">{{item.data.moneyOfExpectedCosts| numberFormat}}</td>
+                <td class="text-center"  [class.text-danger]="item.data.difference<0">{{(item.data.difference | numberFormat)}}</td>
+                <td class="text-center">{{item.data.currency}}</td>
+                <td class="text-center">{{item.data.exchangeRate}}</td>
+
+        <td class="text-center">
+          <div class="list-icons list-icons-extended text-center">
+            <a class="list-icons-item view" (click)="openDataModal(item.id, true)">
+              <span nz-tooltip nzTitle="Xem">
+                <i nz-icon nzType="eye" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(item.id)">
+              <span nz-tooltip nzTitle="Sửa">
+                <i nz-icon nzType="form" nzTheme="outline"></i>
+              </span>
+            </a>
+            <a class="list-icons-item text-danger" (click)="deleteDialog(item.id)">
+              <span nz-tooltip nzTitle="Xóa">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="6" class="text-center font-weight-semibold">Tổng</td>
+        <td class="text-center font-weight-semibold">{{project.sum | numberFormat}}</td>
+        <td class="text-center font-weight-semibold">{{project.sumExpected | numberFormat}}</td>
+        <td class="text-center font-weight-semibold">{{project.sumDifference | numberFormat}}</td>
+        <td  class="text-center font-weight-semibold">VND</td>
+        <td colspan="2"></td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+</div>
+
+<nz-modal nzClassName="dialog-lg" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    {{id? (isView ===true?'Chi tiết chi phí' :' Cập nhật chi phí'):' Thêm mới chi phí'}}
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-actual-costs-data [id]="id" [isView]="isView" (cusOnClose)="closeDataModal($event)"
+      (onAddData)="addData($event)">
+    </app-actual-costs-data>
+
+  </ng-template>
+</nz-modal>

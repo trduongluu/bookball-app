@@ -1,0 +1,42 @@
+<!-- Content area -->
+<form [formGroup]="myForm" novalidate>
+  <div class="row">
+    <div class="form-group col-md-4 control-inline" formGroupName="data">
+      <label>Tên loại vấn đề <span class="text-danger"> * </span></label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="Tên loại vấn đề"
+        formControlName="issueTypeName">
+      </input-text>
+      <render-error [data]="myForm.get('data.issueTypeName')"></render-error>
+    </div>
+
+    <div class="form-group col-md-4 control-inline" formGroupName="data">
+      <label>Thứ tự</label>
+      <input-number [min]="0" class="form-control control-content" placeholder="Thứ tự"
+        formControlName="issueTypeIndex">
+      </input-number>
+      <render-error [data]="myForm.get('data.issueTypeIndex')"></render-error>
+    </div>
+
+    <div class="form-group col-md-4 control-inline" formGroupName="dataDb">
+      <label>Hiển thị</label>
+      <input-switch class="control-content" formControlName="status"></input-switch>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-12 control-inline" formGroupName="data">
+      <label> Ghi chú</label>
+      <textarea class="form-control control-content" placeholder="" formControlName="note" rows="7"></textarea>
+    </div>
+  </div>
+
+  <div class="text-right mt-4">
+    <button type="submit" class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submitForm()" [hidden]="isView">
+      <i nz-icon nzType="close-circle" class="mr-1" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading" (click)="submitForm(false)"
+      [hidden]="isView"><i class="mr-1" nz-icon nzType="plus-circle" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button>
+  </div>
+</form>
+<!-- /content area -->

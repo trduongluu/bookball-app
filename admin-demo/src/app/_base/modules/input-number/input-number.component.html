@@ -1,0 +1,12 @@
+<div class="input-group" (focusin)="onBlur()" (focusout)="onUnBlur()">
+  <input type="text" [class]="class" [(ngModel)]="controlValue" [textMask]="{mask: maskFomat}" [disabled]="disabled"
+    [readonly]="readonly" [hidden]="hidden" [placeholder]="disabled ? '' : placeholder" (change)="onChange()" (keyup)="onChange()">
+  <div class="input-group-append" *ngIf="!disabled">
+    <div class="actions" (click)="pushValue()">
+      <i class="fas fa-angle-up"></i>
+    </div>
+    <div class="actions" (click)="minusValue()">
+      <i class="fas fa-angle-down"></i>
+    </div>
+  </div>
+</div>

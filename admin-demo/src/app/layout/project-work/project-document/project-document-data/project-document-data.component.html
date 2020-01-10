@@ -1,0 +1,68 @@
+<form *ngIf="myForm" [formGroup]="myForm" class="form-horizontal" (ngSubmit)="submit()">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label>File </label>
+          <input-file formControlName="file" class="col-md-4" (onChange)="updateFile()"
+            (eventRemove)="updateFile($event)"></input-file>
+          <render-error [data]="myForm.get('fileData.fileData')"></render-error>
+        </div>
+      </div>
+      <div class="row" formGroupName="fileData">
+        <div class="form-group col-md-6">
+          <label>Tệp trong </label>
+          <input-select class="form-control" formControlName="linkIn" [items]="data" placeholder="Lựa chọn">
+          </input-select>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Tệp ngoài </label>
+          <input-text class="form-control" formControlName="linkOut" placeholder="Nhập tệp ngoài"></input-text>
+        </div>
+      </div>
+      <div class="row" formGroupName="fileData">
+        <div class="form-group col-md-6">
+          <label>Tên <span class="text-danger">*</span> </label>
+          <input-text class="form-control" formControlName="fileName" placeholder="Nhập tên file"></input-text>
+          <render-error [data]="myForm.get('fileData.fileName')"></render-error>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Dung lượng </label>
+          <input-number class="form-control" formControlName="capacity"></input-number>
+        </div>
+      </div>
+      <div class="row" formGroupName="fileData">
+        <div class="form-group col-md-6">
+          <label>Phiên bản </label>
+          <input-float class="form-control" [min]="0" [step]="1" formControlName="version" placeholder="1.0">
+          </input-float>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Ngày tạo </label>
+          <input-date class="form-control" formControlName="uploadDate"></input-date>
+        </div>
+      </div>
+      <div class="row" formGroupName="fileData">
+        <div class="form-group col-md-6">
+          <label>Lưu trữ </label>
+          <input-select class="form-control" formControlName="storageCabinId" [items]="listCabin"></input-select>
+        </div>
+        <div class="form-group col-md-6">
+          <label>Từ khóa </label>
+          <input-text class="form-control" formControlName="key"></input-text>
+        </div>
+      </div>
+      <div class="row" formGroupName="fileData">
+        <div class="form-group col-md-12">
+          <label> Ghi chú </label>
+          <input-textarea class="form-control" formControlName="description"></input-textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="text-right mt-4">
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading"
+      [hidden]="isView">{{isLoading ? 'Đang tải...':'Lưu'}}<i
+        class="icon-arrow-right14 position-right"></i></button>
+  </div>
+</form>

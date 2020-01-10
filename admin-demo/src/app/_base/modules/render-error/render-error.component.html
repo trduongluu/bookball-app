@@ -1,0 +1,5 @@
+<div *ngIf="myControl && myControl.dirty" [class]="className">
+  <span class="help-block text-danger" *ngFor="let item of changeToArray(this.myControl)">
+    {{item.value}}
+  </span>
+</div>

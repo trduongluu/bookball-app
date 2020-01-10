@@ -1,0 +1,10 @@
+<nz-select [nzShowSearch]="allowSearch" [nzAllowClear]="allowClear" [hidden]="hidden" [nzDisabled]="disabled"
+  nzMode="multiple" [(ngModel)]="controlValue" [nzClearIcon]="selectIconClose"
+  [nzPlaceHolder]="!disabled ? placeholder : ''" (ngModelChange)="onChange()" (focusin)="onBlur()"
+  (focusout)="onUnBlur()" [nzMaxTagCount]="max">
+  <nz-option [nzLabel]="item.name" [nzValue]="item.id" [nzDisabled]="item.disabled" *ngFor="let item of items">
+  </nz-option>
+</nz-select>
+<ng-template #selectIconClose>
+  <i nz-icon nzType="close-circle" nzTheme="fill" (click)="onClear()"></i>
+</ng-template>

@@ -1,0 +1,68 @@
+<legend class="font-weight-semibold text-uppercase font-size-sm"> Danh sách lịch
+</legend>
+<div class="text-right mb-2">
+  <button class="btn text-primary size-14" (click)="openDataModal()" [disabled]="!contractId || isViewContracts"><i
+      class="icon-plus22"></i>
+    Thêm lịch TT
+  </button>
+</div>
+
+<nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+  nzSize="small" [nzScroll]="{ x: true }">
+  <thead>
+    <tr>
+      <th class="text-center">Lần thanh toán</th>
+      <th class="text-center">Số ngày</th>
+      <th class="text-center">Ngày hẹn</th>
+      <th class="text-center">Số tiền</th>
+      <th class="text-center">Diễn giải</th>
+      <th class="text-center">Mã sản phẩm</th>
+      <th class="action text-center">Thao tác</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let item of listOfData">
+      <!-- <td nzShowCheckbox [(nzChecked)]="item.selected"> -->
+      <td class="text-center">{{item.countOfPayment}}</td>
+      <td class="text-center">{{item.numberOfDay}}</td>
+      <td class="text-center">{{item.appointmentDate | date:'dd/MM/yyyy'}}</td>
+      <td class="text-center">{{item.amountOfMoney | numberFormat}}</td>
+      <td class="text-center">{{item.explain}}</td>
+      <td class="text-center">{{item.productCode}}</td>
+      <td class="text-center">
+        <div class="list-icons list-icons-extended text-center">
+          <a class="list-icons-item view" (click)="openModal(item, true)">
+            <span nz-tooltip nzTitle="Xem">
+              <i nz-icon nzType="eye" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a class="list-icons-item text-primary" (click)="openModal(item)">
+            <span nz-tooltip nzTitle="Sửa">
+              <i nz-icon nzType="form" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a class="list-icons-item text-danger" (click)="deleteItem(item.id)">
+            <span nz-tooltip nzTitle="Xóa">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </span>
+          </a>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+
+<nz-modal nzClassName="dialog-lg" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false; getData()">
+  <ng-template #modalTitle>
+    Thêm mới lịch thanh toán
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-payment-schedule-data [isView]="isView" [item]="item" [projectId]="projectId" [contractId]="contractId"
+      [handoverId]="handoverId" (cusOnClose)="closeDataModal($event)" (onAddData)="addData($event)">
+    </app-payment-schedule-data>
+  </ng-template>
+</nz-modal>

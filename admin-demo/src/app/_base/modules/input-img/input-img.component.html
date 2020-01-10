@@ -1,0 +1,11 @@
+<div [class]="class">
+  <div class="col-md-{{size}} position-relative" [hidden]="item.url === '' && i !== indexShow"
+    *ngFor="let item of controlValue;let i = index">
+    <div class="image-preview" id="image-preview-{{i}}" style="background-color: #e6e0e0">
+      <label for="image-upload" id="image-label-{{i}}" class="image-label"></label>
+      <input type="file" id="image-upload-{{i}}" (change)="readURL($event)" class="image-upload" [attr.index]="i"
+        multiple />
+    </div>
+    <i *ngIf="item.url !== ''" class="icon-cancel-circle2 remove" (click)="remove(i);"></i>
+  </div>
+</div>

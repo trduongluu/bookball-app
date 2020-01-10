@@ -1,0 +1,109 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Loại công việc</span></h4>
+    </div>
+    <div class="header-elements">
+      <button type="button" class="btn btn-primary" (click)="openDataModal()"><i class="mr-2" nz-icon
+          nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+      <button (click)="deleteMulti()" class="ml-2" nz-button [disabled]="listIdCheckedNumber.length === 0"
+        nzType="danger"><i nz-icon nzType="close-circle"></i>Xóa</button>
+    </div>
+  </div>
+</div>
+
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button class="navbar-toggler" data-target="#search-list" data-toggle="collapse" type="button">
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="search-list">
+        <form *ngIf="myForm" [formGroup]="myForm" class="w-100" (ngSubmit)="getData()" novalidate>
+          <div class="row">
+            <div class="col-md-3 form-group">
+              <input-text-search class="form-control" placeholder="Nhập từ khóa tìm kiếm" formControlName="txtSearch"
+                (onClear)="getData()">
+              </input-text-search>
+            </div>
+            <div class="col-md-2 form-group">
+              <input-select [items]="lstStatus" class="form-control" placeholder="Chọn trạng thái"
+                formControlName="status" (onChange)="getData()"></input-select>
+            </div>
+          </div>
+          <button type="submit" [hidden]="true">Tìm kiếm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-0 margin-bottom-10">
+  <div class="table-responsive">
+    <nz-table #basicTable [nzData]="listOfData" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+      nzSize="small" [nzScroll]="{ x: true }">
+      <thead>
+        <tr>
+          <th nzWidth="62px" nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+            (nzCheckedChange)="checkAll($event)"></th>
+          <th class="text-center">Tên loại</th>
+          <th class="text-center">Tỉ trọng thời gian</th>
+          <th class="text-center">Trọng số</th>
+          <th class="text-center">Tỉ trọng chi phí</th>
+          <th class="text-center">Thời gian tạo</th>
+          <th class="text-center">Trạng thái</th>
+          <th class="action text-center">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of listOfData">
+          <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.id]" (nzCheckedChange)="refreshStatus()"></td>
+          <td class="text-center">{{item.data.workTypeName}}</td>
+          <td class="text-center">{{item.data.ratioTime}}</td>
+          <td class="text-center">{{item.data.weight}}</td>
+          <td class="text-center">{{item.data.ratioCost}}</td>
+          <td class="text-center">{{item.dataDb.createdDate | date:'dd/MM/yyyy'}}</td>
+          <td class="text-center">
+            <nz-switch nz-popconfirm
+              [nzPopconfirmTitle]="'Bạn có chắc chắn muốn ' + (!item.dataDb.status ? 'hiện' : 'ẩn') + ' không?'"
+              [(ngModel)]="item.isHidden" (nzOnConfirm)="updateStatus(item, item.dataDb.status)" [nzControl]="true">
+            </nz-switch>
+          </td>
+          <td class="text-center">
+            <div class="list-icons list-icons-extended text-center">
+              <a class="list-icons-item" href="javascript:;" (click)="openDataModal(item.id, true)">
+                <span nz-tooltip nzTitle="Xem">
+                  <i nz-icon nzType="eye" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-primary" href="javascript:;" (click)="openDataModal(item.id)">
+                <span nz-tooltip nzTitle="Sửa">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </a>
+              <a class="list-icons-item text-danger" href="javascript:;" (click)="deleteDialog(item)">
+                <span nz-tooltip nzTitle="Xóa">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </span>
+              </a>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <div class="style-paging">
+    <app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+  </div>
+</div>
+
+<nz-modal nzClassName="dialog-lg" [(nzVisible)]="isShowModalData" [nzTitle]="modalTitle" [nzContent]="modalContent"
+  [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+    {{isView ? 'Xem loại công việc' : id ? 'Sửa loại công việc' : 'Thêm loại công việc'}}
+  </ng-template>
+  <ng-template #modalContent>
+    <app-work-type-data [id]="id" [isView]="isView" (cusOnClose)="closeDataModal($event)" (onAddData)="addData($event)">
+    </app-work-type-data>
+  </ng-template>
+</nz-modal>

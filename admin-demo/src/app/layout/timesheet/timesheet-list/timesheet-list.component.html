@@ -1,0 +1,174 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Quản lý TimeSheet</span></h4>
+    </div>
+    <div class="header-elements">
+      <a routerLink="/timesheet/add" class="btn btn-primary">
+        <i class="mr-2" nz-icon
+        nzType="plus-circle" nzTheme="outline"></i>
+        Cập nhập</a>
+    </div>
+  </div>
+</div>
+<div class="content pt-0">
+  <div class="header-elements-inline">
+    <div class="navbar-expand-md w-100">
+      <div class="padding-left-15 text-right d-md-none w-100 row">
+        <button
+          class="navbar-toggler"
+          data-target="#search-list"
+          data-toggle="collapse"
+          type="button"
+        >
+          <i nz-icon nzType="menu" nzTheme="outline"></i>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="search-list">
+        <form
+          [formGroup]="myForm"
+          class="w-100"
+          *ngIf="myForm"
+          (ngSubmit)="getData()"
+          novalidate
+        >
+          <div class="row">
+            <div class=" col-md-3 form-group">
+              <input-text-search
+                class="form-control "
+                placeholder="Nhập từ khóa tìm kiếm"
+                formControlName="searchText"
+              ></input-text-search>
+            </div>
+            <div class="col-md-2 form-group">
+              <input-date
+                class="form-control"
+                placeholder="Tìm kiếm ngày"
+                formControlName="searchDate"
+                (onChange)="getData()"
+              ></input-date>
+            </div>
+            <!-- <div class=" col-md-3 form-group">
+
+               <input-select *ngIf="listProj" [items]="listProj" class="form-control" placeholder="Trạng thái"
+                  formControlName="searchProj" (onChange)="getData()"></input-select>
+            </div> -->
+          </div>
+          <button type="submit" [hidden]="true">Tìm kiếm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr class="mt-0 margin-bottom-10" />
+  <div class="table-responsive">
+    <nz-table
+      #basicTable
+      [nzData]="alldata"
+      [nzLoading]="isLoading"
+      [nzBordered]="true"
+      [nzFrontPagination]="false"
+      nzSize="small"
+      [nzScroll]="{ x: true }"
+    >
+      <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th class="text-center">Chủ đề</th>
+          <th class="text-center">Ngày</th>
+          <th class="text-center">Bắt đầu</th>
+          <th class="text-center">Kết thúc</th>
+          <th class="text-center">T2-02</th>
+          <th class="text-center">T3-03</th>
+          <th class="text-center">T4-04</th>
+          <th class="text-center">T5-05</th>
+          <th class="text-center">T6-06</th>
+          <th class="text-center">T7-07</th>
+          <th class="text-center">CN-08</th>
+          <!-- <th class="text-center">Thao tác</th> -->
+        </tr>
+      </thead>
+      <tbody *ngFor="let project of data;">
+        <tr class="title">
+          <!-- <td nzShowCheckbox [nzChecked]="exTableService.isSelectAll(project?.timesheet)"
+              (nzCheckedChange)="exTableService.changeSelected($event, project?.timesheet);project.isShow=true">
+          </td> -->
+      <td colspan="20"  (click)="project.isShow=!project.isShow">Dự án: {{project.projName}} </td>
+        </tr>
+        <tr *ngFor="let item of project?.timeSheet" [hidden]="!project.isShow">
+          <td class="text-center">
+            {{ item.projworkId }}
+            <!--#-->
+          </td>
+          <td>
+            {{ item.projwork.workName }}
+            <!--Chủ đề-->
+          </td>
+          <td class="text-center">
+            {{ item.day }}
+            <!-- {{item.dateNumber}} -->
+            <!--Ngày-->
+          </td>
+          <td class="text-center">
+            {{ item.startDay | date: "dd/MM/yyyy" }}
+            <!--Bắt đầu-->
+          </td>
+          <td class="text-center">
+            {{ item.endDate | date: "dd/MM/yyyy" }}
+            <!--Kết thúc-->
+          </td>
+          <td class="text-center">
+            {{ item.t2 }}
+            <!--T2-02-->
+          </td>
+          <td class="text-center">
+            {{ item.t3 }}
+            <!--T3-03-->
+          </td>
+          <td class="text-center">
+            {{ item.t4 }}
+            <!--T4-04-->
+          </td>
+          <td class="text-center">
+            {{ item.t5 }}
+            <!--T5-05-->
+          </td>
+
+          <td class="text-center">
+            {{ item.t6 }}
+            <!--T6-06-->
+          </td>
+          <td class="text-center">
+            {{ item.t7 }}
+            <!--T7-07-->
+          </td>
+          <td class="text-center">
+            {{ item.cn }}
+            <!--CN-08-->
+          </td>
+          <!-- <td class="text-center">
+            <div class="list-icons list-icons-extended text-center">
+              <a
+                class="list-icons-item text-primary"
+                href="javascript:;"
+                [routerLink]="[link,'edit',item.id]"
+              >
+                <span nz-tooltip nzTitle="Cập nhập">
+                  <i nz-icon nzType="form" nzTheme="outline"></i>
+                </span>
+              </a>
+
+            </div>
+          </td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <!-- <div class="text-right mt-4">
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading"
+            [hidden]="isView">{{isLoading ? 'Đang tải...':'Lưu'}}<i
+                class="icon-arrow-right14 position-right"></i></button>
+    </div> -->
+
+  <app-paging [data]="paging" (onChange)="getData($event)"></app-paging>
+</div>

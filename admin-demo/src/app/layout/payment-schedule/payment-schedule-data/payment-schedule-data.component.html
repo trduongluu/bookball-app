@@ -1,0 +1,99 @@
+<form class="form-horizontal" [formGroup]="myForm" novalidate>
+  <div class="card">
+    <div class="card-body">
+      <!-- Content area -->
+      <fieldset>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Lần thanh toán</label>
+            <input-float formControlName="countOfPayment" class="form-control" [step]="1" [min]="0" [placeholder]="'0'">
+            </input-float>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Số ngày</label>
+            <input-float formControlName="numberOfDay" class="form-control" [step]="1" [min]="0" [placeholder]="'0'">
+            </input-float>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Ngày hẹn</label>
+            <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="appointmentDate"></input-date>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Số tiền</label>
+            <input-float formControlName="amountOfMoney" class="form-control" [step]="1000000" [min]="0"
+              [placeholder]="'0.00'">
+            </input-float>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Phạt (ngày)</label>
+            <input-float formControlName="numberOfPenaltyDays" class="form-control" [step]="1" [min]="0"
+              [placeholder]="'0'">
+            </input-float>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Ngày phạt</label>
+            <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="penaltyDate"></input-date>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>% phạt</label>
+            <input-number [min]="0" [step]="1" class="form-control" [placeholder]="0" formControlName="penaltyRate">
+            </input-number>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Ngày thưởng</label>
+            <input-float formControlName="rewardDate" class="form-control" [step]="1" [min]="0" [placeholder]="'0.00'">
+            </input-float>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Thưởng (ngày)</label>
+            <input-date class="form-control" placeholder="dd/mm/yyyy" formControlName="rewardDate"></input-date>
+          </div>
+          <div class="form-group col-md-6">
+            <label>% thưởng</label>
+            <input-number [min]="0" [step]="1" class="form-control" [placeholder]="0" formControlName="bonusRatio">
+            </input-number>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Diễn giải<span class="text-danger"><b> *</b></span>
+            </label>
+            <input-text class="form-control" placeholder="Diễn giải" formControlName="explain">
+            </input-text>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Mã sản phẩm<span class="text-danger"><b> *</b></span>
+            </label>
+            <input-text class="form-control" placeholder="Mã sản phẩm" formControlName="productCode">
+            </input-text>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label>Ghi chú </label>
+            <input-textarea class="form-control" rows="5" formControlName="note"></input-textarea>
+          </div>
+        </div>
+      </fieldset>
+      <!-- /content area -->
+    </div>
+  </div>
+  <div class="text-right mt-4">
+    <button class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submit(true)" [hidden]="isView">
+      <i nz-icon="" nztype="close-circle" class="anticon anticon-close-circle mr-1"
+        ng-reflect-nz-type="close-circle"></i>
+      {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+    <button class="btn btn-primary" [disabled]="isLoading" (click)="submit(false)" [hidden]="isView"><i
+        class="anticon mr-1 anticon-plus-circle" nz-icon="" nztheme="outline" nztype="plus-circle"
+        ng-reflect-nz-type="plus-circle" ng-reflect-nz-theme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button>
+  </div>
+</form>

@@ -1,0 +1,154 @@
+<!-- Content area -->
+<form [formGroup]="myForm" class="form-horizontal" novalidate>
+  <div class="row" formGroupName="data">
+    <div class="form-group col-md-6 ">
+      <label class="control-label">Mã đối tác<span class="text-danger"><b> *</b></span> </label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="Mã quy ước đối tác"
+        formControlName="partCode">
+      </input-text>
+      <render-error [data]="myForm.get('data.partCode')"></render-error>
+    </div>
+
+    <div class="form-group col-md-6 ">
+      <label>Tên đối tác<span class="text-danger"> * </span></label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="Tên đối tác"
+        formControlName="partnerNameVn">
+      </input-text>
+      <render-error [data]="myForm.get('data.partnerNameVn')"></render-error>
+    </div>
+  </div>
+
+  <div class="row" formGroupName="data">
+    <div class="form-group col-md-6 ">
+      <label>Nhân viên</label>
+      <input-select class="form-control" formControlName="empId" [items]="listEmp" [placeholder]="'Lựa chọn'">
+      </input-select>
+      <render-error [data]="myForm.get('data.empId')"></render-error>
+    </div>
+    <div class="form-group col-md-6 ">
+      <label>Nhóm<span class="text-danger"> * </span></label>
+      <input-select class="form-control" formControlName="idPartGroup" [items]="listPartGroup"
+        [placeholder]="'Lựa chọn'">
+      </input-select>
+      <render-error [data]="myForm.get('data.idPartGroup')"></render-error>
+    </div>
+  </div>
+
+  <div class="row" formGroupName="data">
+    <div class="form-group col-md-6 ">
+      <label>Mã số thuế</label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="Mã số thuế "
+        formControlName="taxCode">
+      </input-text>
+      <render-error [data]="myForm.get('data.taxCode')"></render-error>
+    </div>
+    <div class="form-group col-md-6 ">
+      <label>Ngày thành lập</label>
+      <input-date class="form-control" formControlName="dateEstablish"></input-date>
+    </div>
+  </div>
+
+  <div class="row" formGroupName="data">
+    <div class="form-group col-md-6 ">
+      <label>Phân loại</label>
+      <input-select class="form-control" formControlName="classify" [items]="listType" [placeholder]="'Lựa chọn'">
+      </input-select>
+      <render-error [data]="myForm.get('data.classify')"></render-error>
+    </div>
+    <div class="form-group col-md-6 ">
+      <label>Giới tính</label>
+      <input-select class="form-control" formControlName="sex" [items]="listGender" [placeholder]="'Lựa chọn'">
+      </input-select>
+      <render-error [data]="myForm.get('data.sex')"></render-error>
+    </div>
+  </div>
+
+  <div class="row" formGroupName="data">
+    <div class="form-group col-md-6 ">
+      <label>Số ĐKKD</label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="Số đăng kí kinh doanh"
+        formControlName="soDKKD">
+      </input-text>
+      <render-error [data]="myForm.get('data.soDKKD')"></render-error>
+    </div>
+  </div>
+
+  <fieldset>
+    <legend class="font-weight-semibold text-uppercase font-size-sm"> Liên hệ
+    </legend>
+    <div class="row" formGroupName="data">
+      <div class="form-group col-md-6 ">
+        <label>Họ tên</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Họ tên người/tổ chức"
+          formControlName="contact">
+        </input-text>
+        <render-error [data]="myForm.get('data.contact')"></render-error>
+      </div>
+      <div class="form-group col-md-6 ">
+        <label>Ngày sinh</label>
+        <input-date class="form-control" formControlName="birthday"></input-date>
+      </div>
+    </div>
+    <div class="row" formGroupName="data">
+      <div class="form-group col-md-6 ">
+        <label>Email</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Email" formControlName="email">
+        </input-text>
+        <render-error [data]="myForm.get('data.email')"></render-error>
+      </div>
+
+      <div class="form-group col-md-6 ">
+        <label>Di động</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Di động" formControlName="mobile">
+        </input-text>
+        <render-error [data]="myForm.get('data.mobile')"></render-error>
+      </div>
+    </div>
+
+    <div class="row" formGroupName="data">
+      <div class="form-group col-md-6 ">
+        <label>Website</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Website"
+          formControlName="website">
+        </input-text>
+        <render-error [data]="myForm.get('data.website')"></render-error>
+      </div>
+      <div class="form-group col-md-6 ">
+        <label>Địa chỉ</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Địa chỉ"
+          formControlName="address">
+        </input-text>
+        <render-error [data]="myForm.get('data.address')"></render-error>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-md-6 " formGroupName="data">
+        <label>Fax</label>
+        <input-text class="form-control control-content" maxlength="255" placeholder="Fax" formControlName="fax">
+        </input-text>
+        <render-error [data]="myForm.get('data.fax')"></render-error>
+      </div>
+      <div class="form-group col-md-6 " formGroupName="dataDb" *ngIf="!isView">
+        <label>Hiển thị</label>
+        <input-switch class="control-content" formControlName="status"></input-switch>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12 " formGroupName="data">
+        <label>Ghi chú</label>
+        <textarea class="form-control control-content" placeholder="" formControlName="note" rows="7"></textarea>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="text-right mt-4">
+    <button type="submit" class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submitForm()" [hidden]="isView">
+      <i nz-icon nzType="close-circle" class="mr-1" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading" (click)="submitForm(false)"
+      [hidden]="isView"><i class="mr-1" nz-icon nzType="plus-circle" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button>
+  </div>
+</form>
+<!-- /content area -->

@@ -1,0 +1,39 @@
+<!-- Content area -->
+<form class="form-horizontal" [formGroup]="myForm" novalidate>
+  <div class="row">
+    <div class="form-group col-md-6" formGroupName="data">
+      <label class="control-inline">Pitch id<span class="text-danger"> * </span></label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="N" formControlName="pitchId">
+      </input-text>
+      <render-error [data]="myForm.get('data.pitchId')"></render-error>
+    </div>
+    <div class="form-group col-md-6" formGroupName="data">
+      <label class="control-inline">Name<span class="text-danger"> * </span></label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="N" formControlName="name">
+      </input-text>
+      <render-error [data]="myForm.get('data.name')"></render-error>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group col-md-6" formGroupName="data">
+      <label class="control-inline">Field Type<span class="text-danger"> * </span></label>
+      <input-text class="form-control control-content" maxlength="255" placeholder="N" formControlName="fieldType">
+      </input-text>
+      <render-error [data]="myForm.get('data.fieldType')"></render-error>
+    </div>
+  </div>
+
+  <div class="text-right mt-4">
+    <button type="submit" class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submitForm()" [hidden]="isView">
+      <i nz-icon nzType="close-circle" class="mr-1" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu đóng'}} </button>
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading" (click)="submitForm(false)"
+      [hidden]="isView"><i class="mr-1" nz-icon nzType="plus-circle" nzTheme="outline"></i>
+      {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button>
+    <!-- <button type="submit" class="btn btn-primary" [disabled]="isLoading"
+      [hidden]="isView">{{isLoading ? 'Đang tải...': id ? 'Lưu dữ liệu' : 'Thêm dữ liệu'}}<i
+        class="icon-arrow-right14 position-right"></i></button> -->
+  </div>
+</form>
+<!-- /content area -->

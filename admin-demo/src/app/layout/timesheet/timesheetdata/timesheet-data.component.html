@@ -1,0 +1,183 @@
+<div class="page-header page-header-light border-bottom-0">
+  <div class="page-header-content header-elements-md-inline">
+    <div class="page-title d-flex">
+      <h4><span class="font-weight-semibold">Cập nhập timesheet</span></h4>
+    </div>
+    <div class="header-elements">
+      <button
+        type="button"
+        class="btn btn-success"
+        (click)="newTimeSheet()"
+        *ngIf="openTimesheetDetail"
+      >
+        <i class="mr-2" nz-icon nzType="plus-circle" nzTheme="outline"></i>Thêm
+        công việc
+      </button>
+      <button type="button" class="btn btn-primary">
+        <i class="mr-2" nz-icon nzType="plus-circle" nzTheme="outline"></i>Lưu
+      </button>
+      <button class="ml-2" nz-button nzType="danger">
+        <i nz-icon nzType="close-circle"></i>Hủy
+      </button>
+    </div>
+  </div>
+  <div class="content pt-0">
+    <div class="header-elements-inline">
+      <div class="navbar-expand-md w-100">
+        <div class="padding-left-15 text-right d-md-none w-100 row">
+          <button
+            class="navbar-toggler"
+            data-target="#search-list"
+            data-toggle="collapse"
+            type="button"
+          >
+            <i nz-icon nzType="menu" nzTheme="outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <form class="form-horizontal" [formGroup]="myForm" novalidate>
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group col-md-3">
+            <label>Ngày bắt đầu <span class="text-danger"> * </span></label>
+            <input-date
+              placeholder="Tìm kiếm ngày"
+              formControlName="searchDate"
+              [disabledDate]="disabledDate"
+              (onChange)="updateData($event)"
+              [ngClass]="{ active: openTimesheetDetail }"
+            ></input-date>
+          </div>
+
+          <div class="row" *ngIf="openTimesheetDetail">
+            <div class="table-responsive">
+              <nz-table
+                [nzData]="[{ id: 0 }]"
+                [nzLoading]="isLoading"
+                [nzBordered]="true"
+                [nzFrontPagination]="false"
+                nzSize="small"
+                [nzScroll]="{ x: true }"
+              >
+                <thead>
+                  <tr>
+                    <th class="text-center">Dự án</th>
+                    <th class="text-center">Công việc</th>
+                    <th class="text-center" *ngFor="let item of listDate">
+                      {{ getNameDayOfWeek(item.dayOfWeek) }} <br />
+                      {{ item.name }}
+                    </th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody formArrayName="timesheets">
+                  <ng-container
+                    *ngFor="let item of getTimeSheet().controls; let i = index"
+                  >
+                    <tr [formGroupName]="i">
+                      <td class="text-center">
+                        <input-select
+                          class="form-control"
+                          (onChange)="logValue($event)"
+                          formControlName="Projid"
+                          [items]="listPorjGen"
+                          [placeholder]="'Lựa chọn'"
+                        >
+                        </input-select>
+                      </td>
+                      <td class="text-center">
+                        <input-select
+                          class="form-control"
+                          formControlName="ProjworkId"
+                          [items]="listProjwork"
+                          [placeholder]="'Lựa chọn'"
+                        >
+                        </input-select>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t2"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t3"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t4"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t5"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t6"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="t7"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <input-number
+                          class="form-control"
+                          formControlName="cn"
+                          [placeholder]="'0'"
+                        ></input-number>
+                      </td>
+                      <td class="text-center">
+                        <div class="list-icons list-icons-extended text-center">
+                          <a
+                            class="list-icons-item text-primary"
+                            href="javascript:;"
+                          >
+                            <span nz-tooltip nzTitle="Cập nhập">
+                              <i nz-icon nzType="form" nzTheme="outline"></i>
+                            </span>
+                          </a>
+                          <a
+                            class="list-icons-item text-danger"
+                            (click)="deleteTimeSheet(i)"
+                          >
+                            <span nz-tooltip nzTitle="Xóa">
+                              <i nz-icon nzType="delete" nzTheme="outline"></i>
+                            </span>
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </nz-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- <div class="text-right mt-4">
+  <button type="submit" (click)="submit()" class="btn btn-primary" [disabled]="isLoading"
+    >{{isLoading ? 'Đang tải...':'Cập nhật timesheet'}}<i
+      class="icon-arrow-right14 position-right"></i></button>
+</div> -->

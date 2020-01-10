@@ -1,0 +1,8 @@
+::ng-deep input-file{
+    width: calc(100% - 125px) !important;
+}
+.disabled{
+    cursor: not-allowed !important;
+    pointer-events: none;
+  
+}

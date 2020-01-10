@@ -1,0 +1,3 @@
+<input nz-input type="text" [class]="class" [placeholder]="disabled ? '' : placeholder"
+[(ngModel)]="controlValue" (change)="onChange()" [disabled]="disabled" [readonly]="readonly" [maxlength]="maxlength"
+[hidden]="hidden" (focusin)="onBlur()" (focusout)="onUnBlur()"/>

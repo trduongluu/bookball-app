@@ -1,0 +1,958 @@
+<div class="d-md-flex align-items-md-start">
+
+  <!-- Left sidebar component -->
+  <div *ngIf="isView==true"
+    class="sidebar sidebar-light bg-transparent sidebar-component sidebar-component-left wmin-300 border-0 shadow-0 sidebar-expand-md">
+    <div class="card data-avatar ng-untouched ng-pristine">
+      <div class="card-body text-center">
+        <h6 class="font-weight:600">Dự án: Tên Dự án</h6>
+      </div>
+    </div>
+    <!-- Sidebar content -->
+    <div class="sidebar-content">
+
+      <!-- Navigation -->
+      <div class="card">
+
+
+        <div class="card-body p-0">
+          <ul class="nav nav-sidebar mb-2">
+            <li class="nav-item-header">Mục lục</li>
+            <li class="nav-item">
+              <a href="#profile" class="nav-link active" data-toggle="tab">
+                <i class="icon-user"></i>
+                Thông tin chung
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#inbox" class="nav-link" data-toggle="tab">
+                <i class="icon-pie-chart2"></i>
+                Công việc
+
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#schedule" class="nav-link" data-toggle="tab">
+                <i class="icon-file-text2"></i>
+                CR
+
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="#issue" class="nav-link" data-toggle="tab">
+                <i class="icon-drawer"></i>
+                Vấn đề dự án
+
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#cost" class="nav-link" data-toggle="tab">
+                <i class="icon-drawer"></i>
+                Chi phí
+
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#power" class="nav-link" data-toggle="tab">
+                <i class="icon-drawer"></i>
+                Hồ Sơ
+
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#power2" class="nav-link" data-toggle="tab">
+                <i class="icon-drawer"></i>
+                Nguồn lực
+
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /navigation -->
+
+    </div>
+    <!-- /sidebar content -->
+
+  </div>
+  <!-- /left sidebar component -->
+  <div class="tab-content w-100 overflow-auto">
+    <div class="tab-pane fade active show" id="profile">
+      <form class="form-horizontal" *ngIf="myForm" [formGroup]="myForm" (ngSubmit)="submit()">
+
+        <!-- Sales stats -->
+        <div class="card">
+
+          <nz-tabset>
+
+            <nz-tab nzTitle="Thông tin chung">
+              <div class="container">
+                <nz-collapse [nzBordered]="false" nzAccordion>
+                  <nz-collapse-panel *ngFor="let panel of panelss" [nzHeader]="panel.name" [nzActive]="panel.active">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Loại dự án<span class="text-danger"><b>
+                              *</b></span></label>
+                        <input-select class="form-control" [items]="lstProjectType" placeholder="Lựa chọn"
+                          formControlName="projTypeId" required>
+                        </input-select>
+                        <render-error [data]="myForm.get('projTypeId')"></render-error>
+
+
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label style="font-weight: 600;">Mã dự án<span class="text-danger"><b> *</b></span></label>
+                        <input-text class="form-control" formControlName="projCode" placeholder="Nhập mã dự án"
+                          type="text">
+                        </input-text>
+                        <render-error [data]="myForm.get('projCode')"></render-error>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label style="font-weight: 600;">Tên dự án <span style="color:red">*</span></label>
+                        <input class="form-control" formControlName="projName" placeholder="Nhập tên dự án" />
+                        <render-error [data]="myForm.get('projName')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label style="font-weight: 600;">Trạng thái<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select class="form-control" (onChange)="updateStatus()" [items]="listStatus"
+                          placeholder="Lựa trạng thái" formControlName="statusId">
+                        </input-select>
+                        <render-error [data]="myForm.get('statusId')"></render-error>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group form_datetime col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Ngày bắt đầu<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-date size="16" type="text" formControlName="beginDate" placeholder="Chọn ngày" readonly
+                          (onChange)="createProjCode()" class="form_datetime form-control"></input-date>
+                        <render-error [data]="myForm.get('beginDate')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Ngày kết thúc<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-date size="16" type="text" (onChange)="resetValidateDate('endDate');" formControlName="
+                          endDate" placeholder="Chọn ngày" readonly class="form_datetime form-control"></input-date>
+                        <render-error [data]="myForm.get('endDate')"></render-error>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <!-- 
+
+                      <div class="form-group col-md-6">
+                        <label style="font-weight: 600;">% Hoàn thành</label>
+                        <input-text class="form-control" formControlName="projPercent"></input-text>
+                      </div> -->
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Hoàn thành</label>
+                        <input-date size="16" type="text" formControlName="completedDate" placeholder="Nhập ngày"
+                          readonly class="form_datetime form-control">
+                        </input-date>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Trưởng dự án</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="pmName">
+                        </input-select>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Tiến độ</label>
+                        <input-float class="form-control" placeholder="Nhập tiến độ" [step]="1" [min]="0" [max]="100"
+                          formControlName="projPercent">
+                        </input-float>
+                      </div>
+
+                      <div class="col-md-4 ">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label style="font-weight: 600;">Thông báo</label>
+                          </div>
+                          <div class="col-md-6">
+                            <input-check-box class="col-md-6" type="checkbox"></input-check-box>
+                          </div>
+
+
+                        </div>
+
+                      </div>
+                    </div>
+
+
+                    <div class="row">
+                      <div class="form-group col-md-12">
+                        <label class="control-label" style="font-weight: 600;">Nội dung</label>
+                        <input-textarea cols="43" rows="3" [placeholder]="'Nhập ghi chú'" formControlName="content"
+                          class="form-control"></input-textarea>
+                      </div>
+                    </div>
+
+                  </nz-collapse-panel>
+                  <nz-collapse-panel *ngFor="let panel of panels1" [nzHeader]="panel.name" [nzActive]="panel.active">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Nhóm khách hàng<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select class="form-control" (onChange)="updateProject2()" placeholder="Lựa chọn"
+                          [items]="lstPartnerGroup" formControlName="customerGroupId">
+                        </input-select>
+                        <render-error [data]="myForm.get('customerGroupId')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Khách hàng<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstPartners2"
+                          formControlName="customerId" (onChange)="changedata();createProjCode()">
+
+                        </input-select>
+                        <render-error [data]="myForm.get('customerId')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Loại hình kinh doanh<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select [items]="lstBiz" formControlName="bizModId" class="form-control"
+                          (onChange)="createProjCode()"></input-select>
+                        <render-error [data]="myForm.get('bizModId')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Sản phẩm<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select class="form-control" formControlName="prodId" [items]="lstProduct"
+                          (onChange)="createProjCode()">
+                        </input-select>
+                        <render-error [data]="myForm.get('prodId')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600">Dịch vụ<span
+                            style="font-weight: bold; color:red">*</span></label>
+                        <input-select [items]="lstService" formControlName="servId" class="form-control"
+                          (onChange)="createProjCode()">
+                        </input-select>
+                        <render-error [data]="myForm.get('servId')"></render-error>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Người đại diện</label>
+                        <input-text class="form-control" readonly="readonly" formControlName="learderName">
+                        </input-text>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Ưu tiên</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstPriority"
+                          formControlName="projPriority">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Mục tiêu</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="listTarget"
+                          formControlName="targetId">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Nhóm</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstProjGroup"
+                          formControlName="projgroupId">
+                        </input-select>
+
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Hình thức đầu tư</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstInvest"
+                          formControlName="investsId">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Lĩnh vực</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstBidding"
+                          formControlName="biddingId">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Hình thức quản lý</label>
+                        <input-select class="form-control" [items]="lstMana" formControlName="mntFormId"
+                          placeholder="Lựa chọn">
+                        </input-select>
+                      </div>
+                    </div>
+                  </nz-collapse-panel>
+                  <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.name" [nzActive]="panel.active">
+                    <div class="row">
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Giám đốc dự án</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="directorProject" type="text" role="combobox" list=""></input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Giám đốc kinh doanh</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="cmo">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Điều phối dự án</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="coordinatorProject">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Quản lý khách hàng</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="amProject">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Trợ lý</label>
+                        <input-select class="form-control" [items]="lstEmp" placeholder="Lựa chọn"
+                          formControlName="empId">
+
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Thành viên</label>
+                        <input-select-multiple nzMode="multiple" [items]="lstEmp" nzPlaceHolder="Lựa chọn"
+                          formControlName="projectMembers">
+
+                        </input-select-multiple>
+                        <!-- <input-select class="form-control" placeholder="Lựa chọn" [items]="lstEmp" nzMode="multiple"
+                          formControlName="projectMembers">
+                        </input-select> -->
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Đơn vị triển khai</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstpb"
+                          formControlName="depId">
+                        </input-select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;"> Đơn vị phối hợp</label>
+                        <input-select-multiple nzMode="multiple" [items]="lstpb" nzPlaceHolder="Lựa chọn"
+                          formControlName="coordinatorDep">
+                        </input-select-multiple>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Nhóm đối tác</label>
+                        <input-select class="form-control" (onChange)="updateProject()" placeholder="Lựa chọn"
+                          [items]="lstPartnerGroup" formControlName="partGroupId">
+                        </input-select>
+
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label class="control-label" style="font-weight: 600;">Đối tác</label>
+                        <input-select class="form-control" placeholder="Lựa chọn" [items]="lstPartners"
+                          formControlName="partnerId">
+
+                        </input-select>
+
+                      </div>
+                    </div>
+                  </nz-collapse-panel>
+                  <!-- Khách hàng -->
+
+                  <nz-collapse-panel *ngFor=" let panel of panels2" [nzHeader]="panel.name" [nzActive]="panel.active">
+                    <div class="container">
+                      <div class="row">
+
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Loại ngân sách</label>
+                          <input-select class="form-control" placeholder="Lựa chọn" [items]="lstBudget"
+                            formControlName="budgetId">
+                          </input-select>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Loại tiền</label>
+                          <input-select class="form-control" placeholder="Lựa chọn" formControlName="currency"
+                            [items]="listCurrency">
+                          </input-select>
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Tỷ giá</label>
+                          <!-- <input type=number step=0.00 value=0.00 class="form-control" /> -->
+                          <input-number [step]="1" placeholder="1" class="form-control" formControlName="exchangeRate">
+                          </input-number>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách dự toán</label>
+                          <input-float [step]="1000" type="number" placeholder="0.0" class="form-control"
+                            formControlName="estimatedBudget"></input-float>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách đề xuất</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control"
+                            formControlName="proposedBudget"></input-float>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách kế hoạch</label>
+                          <input-float [step]="1000" [min]="0" placeholder="0.0" class="form-control"
+                            formControlName="planBudget">
+                          </input-float>
+
+                        </div>
+
+
+
+
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách thay đổi</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control" formControlName="crbudget">
+                          </input-float>
+
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách NCKT</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control"
+                            formControlName="feasibilityStadyBudget"></input-float>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Ngân sách NCKT CR</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control inputsize"
+                            formControlName="feasibilityCrbudget"></input-float>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Chi phí thực hiện</label>
+                          <input-text placeholder="0.0" readonly="readonly" class="form-control"
+                            formControlName="totalCostContract"></input-text>
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Còn phải chi ngân sách</label>
+                          <input-text placeholder="0.0" class="form-control" readonly="readonly"
+                            formControlName="budgetRemaining"></input-text>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Tổng tiền hợp đồng</label>
+                          <input-number placeholder="0.0" class="form-control" readonly="readonly"
+                            formControlName="totalContractAmount"></input-number>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Tổng chi hợp đồng</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control"
+                            formControlName="totalContractPayment"></input-float>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Còn phải chi hợp đồng</label>
+                          <input-text placeholder="0.0" class="form-control" readonly="readonly"
+                            formControlName="totalContractRemaining"></input-text>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Tổng chi hoạt động</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control"
+                            formControlName="totalOperatingExpenses"></input-float>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Chi phí đã đăng kí</label>
+                          <input-text placeholder="0.0" class="form-control" readonly="readonly"
+                            formControlName="costBooks">
+                          </input-text>
+
+                        </div>
+                        <div class="form-group col-md-6" style="font-weight: 600;">
+                          <label class="control-label" style="font-weight: 600;">Doanh số kế hoạch</label>
+                          <input-float [step]="1000" placeholder="0.0" class="form-control" formControlName="salesPlan">
+                          </input-float>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </nz-collapse-panel>
+                </nz-collapse>
+              </div>
+            </nz-tab>
+
+
+            <nz-tab nzTitle="Mở rộng">
+
+              <div class="container">
+                <div class="form-group col-md-12">
+                  <label class="control-label" style="font-weight: 600;">Ghi chú</label>
+                  <input-text type="text" class="form-control" formControlName="note"></input-text>
+                </div>
+                <div class="form-group col-md-12">
+                  <label class="control-label" style="font-weight: 600;">Ghi nhớ của tôi</label>
+                  <input-textarea type="text" class="form-control" formControlName="memory"></input-textarea>
+                </div>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+          <!-- Thao tác người dùng -->
+          <br />
+
+
+        </div>
+      </form>
+      <!-- /sales stats -->
+      <div class="text-right mt-4">
+        <button type="submit" class="btn btn-primary mr-3" [disabled]="isLoading" (click)="submit()" [hidden]="isView">
+          <i nz-icon="" nztype="close-circle" class="anticon" ng-reflect-nz-type="close-circle"></i>
+          {{isLoading ? 'Đang tải...':'Lưu dữ liệu'}} </button>
+        <!-- <button type="submit" class="btn btn-primary" [disabled]="isLoading" (click)="submit(false)"
+          [hidden]="isView"><i class="anticon mr-1 anticon-plus-circle" nz-icon="" nztheme="outline"
+            nztype="plus-circle" ng-reflect-nz-type="plus-circle" ng-reflect-nz-theme="outline"></inout>
+          {{isLoading ? 'Đang tải...':'Lưu thêm'}}</button> -->
+      </div>
+      <!-- <div class="text-right">
+        <button type="submit" class="btn btn-save bg-blue-800" (click)="submit()">
+          <b><i class="fa fa-save"></i></b> &nbsp; Lưu
+        </button>
+
+      </div> -->
+    </div>
+
+    <div class="tab-pane fade" id="inbox">
+
+      <!-- My inbox -->
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h5 class="card-title">Công việc</h5>
+          <div class="header-elements">
+            <div class="list-icons">
+              <button type="button" (click)="showModalPwork()" class="btn btn-primary"><i class="mr-2" nz-icon
+                  nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <nz-table #basicTable [nzData]="data" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+            nzSize="small" [nzScroll]="{ x: true }">
+            <thead>
+              <tr>
+                <th class="text-center">Mã công việc</th>
+                <th class="text-center">Tên công việc</th>
+                <th class="text-center">Bắt đầu </th>
+                <th class="text-center">Kết thúc</th>
+                <th class="text-center">Trạng thái</th>
+                <th class="text-center">Tiến độ</th>
+                <th class="text-center">Giờ kế hoạch</th>
+                <th class="text-center">Giờ thực tế</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of data">
+                <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                <td class="text-center">{{item.id}}</td>
+                <td>{{item.workName}}</td>
+                <td class="text-center">{{item.beginDate | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{item.endDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.status?.data.statusName}}</td>
+                <td class="text-center">
+                  {{item.workCompleted}} %
+                </td>
+                <td class="text-center">{{item.timePlan}}</td>
+                <td class="text-center">{{item.timeReality}}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+      <!-- /my inbox -->
+
+    </div>
+    <div class="tab-pane fade" id="schedule">
+
+      <!-- Available hours -->
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h6 class="card-title">Thông tin CR</h6>
+          <div class="header-elements">
+            <div class="list-icons">
+              <button type="button" (click)="showModalCR()" class="btn btn-primary"><i class="mr-2" nz-icon
+                  nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="panel panel-flat">
+            <div class="panel-body">
+              <nz-table [nzData]="dataCR" [nzLoading]="isLoading" [nzBordered]="true" [nzFrontPagination]="false"
+                nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th>Phân loại</th>
+                    <th>Thông tin cũ</th>
+                    <th>Thông tin mới</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataCR">
+                    <td class="text-center">{{item.crtype?.data?.cRname}}</td>
+                    <td class="text-center">{{item.oldValue}}</td>
+                    <td class="text-center">{{item.newValue}}</td>
+                  </tr>
+                </tbody>
+
+              </nz-table>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /available hours -->
+
+
+
+
+    </div>
+
+
+
+
+    <div class="tab-pane fade" id="issue">
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h5 class="card-title">Vấn đề dự án</h5>
+          <div class="header-elements">
+            <div class="list-icons">
+              <button type="button" (click)="showModalIssue()" class="btn btn-primary"><i class="mr-2" nz-icon
+                  nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <nz-table #basicTable [nzData]="dataIs" [nzLoading]="isLoading" [nzBordered]="true"
+            [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+            <thead>
+              <tr>
+
+                <th class="text-center">Tên vấn đề</th>
+                <th class="text-center">Nội dung</th>
+                <th class="text-center">Ngày bắt đầu </th>
+                <th class="text-center">Ngày kết thúc</th>
+                <th class="text-center">Trạng thái</th>
+                <th class="text-center">Tiến độ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataIs">
+                <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                <td>{{item.issueName}}</td>
+                <td class="text-center">{{item.content}}</td>
+                <td class="text-center">{{item.beginDate | date:'dd/MM/yyyy'}}</td>
+                <td class="text-center">{{item.endDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.status?.data.statusName}}</td>
+                <td class="text-center">
+                  <div class="progress">
+                    <div class="progress-bar"
+                      [ngClass]="{'bg-danger': item.percentCompleted <= 20,'bg-orange-300': item.percentCompleted > 20 && item.percentCompleted < 60, 'bg-success-300': item.percentCompleted >= 60}"
+                      [ngStyle]="{width:item.workCompleted+'%'}">
+                      <span> {{item.percentCompleted}} %</span>
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="cost">
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h5 class="card-title">Chi phí</h5>
+          <div class="header-elements">
+            <div class="list-icons">
+              <button type="button" (click)="showModalIssue()" class="btn btn-primary"><i class="mr-2" nz-icon
+                  nzType="plus-circle" nzTheme="outline"></i>Thêm</button>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <nz-tabset>
+            <nz-tab nzTitle="Chi phí thực kế hoạch">
+              <nz-table #basicTable [nzData]="dataEC" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Loại chi phí</th>
+                    <th class="text-center">Tên chi phí</th>
+                    <th class="text-center">Số tiền kế hoạch</th>
+                    <th class="text-center">Loại tiền</th>
+                    <th class="text-center">Ngày lập</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataEC">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.expItem?.data?.expensesItemName}}</td>
+                    <td class="text-center">{{item.data.costName}}</td>
+                    <td class="text-center">{{item.data.amountOfMoney | numberFormat}}</td>
+                    <td class="text-center">{{item.data.currency}}</td>
+                    <td class="text-center">{{item.dataDb.createdDate | date:'dd/MM/yyyy'}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="Chi phí thực tế">
+              <nz-table #basicTable [nzData]="dataAC" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Số chứng từ</th>
+                    <th class="text-center">Ngày chứng từ</th>
+                    <th class="text-center">Loại chi phí</th>
+                    <th class="text-center">Tên chi phí</th>
+                    <th class="text-center">Số tiền thực tế</th>
+                    <th class="text-center">Loại tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataAC">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.vouchersNumber}}</td>
+                    <td class="text-center">{{item.data.vouchersDate | dateFormat}}</td>
+                    <td class="text-center">{{item.expItem?.data.expensesItemName}}</td>
+                    <td class="text-center">{{item.data.costName}}</td>
+                    <td>{{item.data.amountOfMoney | numberFormat}}</td>
+                    <td class="text-center">{{item.data.currency}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="Đối chiếu chi phí">
+
+              <nz-table #basicTable [nzData]="dataCC" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Số chứng từ</th>
+                    <th class="text-center">Ngày vào sổ</th>
+                    <th class="text-center">Ngày chứng từ</th>
+                    <th class="text-center">Loại tiền</th>
+                    <th class="text-center">Nội dung</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataCC">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.vouchersNumber}}</td>
+                    <td class="text-center">{{item.data.datePosted | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">{{item.data.vouchersDate | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">{{item.data.currency}}</td>
+                    <td class="text-center">{{item.data.note}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="Doanh thu">
+              <nz-table #basicTable [nzData]="dataRevenues" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Số chứng từ</th>
+                    <th class="text-center">Ngày chứng từ</th>
+                    <th class="text-center">Nội dung</th>
+                    <th class="text-center">Số tiền</th>
+                    <th class="text-center">Phân loại</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataRevenues">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.vouchersNumber}}</td>
+                    <td class="text-center">{{item.data.vouchersDate | date:'dd/MM/yyyy'}}</td>
+                    <td class="text-center">{{item.data.content}}</td>
+                    <td class="text-center">{{item.data.amountOfMoney | numberFormat}}</td>
+                    <td class="text-center">{{item.data?.classification}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+          </nz-tabset>
+
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="power">
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h5 class="card-title">Hồ Sơ</h5>
+          <div class="header-elements">
+
+          </div>
+        </div>
+
+        <div class="card-body">
+          <nz-tabset>
+            <nz-tab nzTitle="Hợp đồng">
+              <nz-table #basicTable [nzData]="lstContracts" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Tên hợp đồng</th>
+                    <th class="text-center">Số hợp đồng</th>
+                    <th class="text-center">Tên gói thầu</th>
+                    <th class="text-center">Ngày quyết định</th>
+                    <th class="text-center">Ngày hết hạn</th>
+                    <th class="text-center">GT hợp đồng</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of lstContracts">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.contractName}}</td>
+                    <td>{{item.contractCode}}</td>
+                    <td>{{item.packageBids?.packageBidName}}</td>
+                    <td class="text-center">{{item.dateOfSignedDecision | dateFormat}}</td>
+                    <td class="text-center">{{item.expiryDate | dateFormat}}</td>
+                    <td class="text-center">{{item.contractValue | numberFormat}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+            <nz-tab nzTitle="Gói thầu">
+              <nz-table #basicTable [nzData]="dataBids" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Mã gói thầu</th>
+                    <th class="text-center">Tên gói thầu</th>
+                    <th class="text-center">Giá dự toán</th>
+                    <th class="text-center">Giá gói thầu</th>
+                    <th class="text-center">Giá trúng thầu</th>
+                    <th class="text-center">Giá hợp đồng</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of dataBids">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.id}}</td>
+                    <td>{{item.packageBidName}}</td>
+                    <td class="text-center">{{item.estimatedPrice | numberFormat}}</td>
+                    <td class="text-center">{{item.bidPrice |numberFormat}}</td>
+                    <td class="text-center">{{item.bestBid | numberFormat}}</td>
+                    <td class="text-center">{{item.contractPrice | numberFormat}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+
+
+          </nz-tabset>
+
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="power2">
+      <div class="card">
+        <div class="card-header header-elements-inline">
+          <h5 class="card-title">Hồ Sơ</h5>
+          <div class="header-elements">
+
+          </div>
+        </div>
+
+        <div class="card-body">
+          <nz-tabset>
+
+            <nz-tab nzTitle="Nguồn lực kế hoạch">
+              <nz-table #basicTable [nzData]="lstprojres" [nzLoading]="isLoading" [nzBordered]="true"
+                [nzFrontPagination]="false" nzSize="small" [nzScroll]="{ x: true }">
+                <thead>
+                  <tr>
+
+                    <th class="text-center">Họ và tên</th>
+                    <th class="text-center">Vai trò</th>
+                    <th class="text-center">Chức vụ</th>
+                    <th class="text-center">Phần trăm</th>
+                    <th class="text-center">Bắt đầu</th>
+                    <th class="text-center">Kết thúc</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of lstprojres">
+                    <!-- <td nzShowCheckbox [(nzChecked)]="item.selected" width="60px"> -->
+                    <td>{{item.empName}}</td>
+                    <td>{{item.jobName}}</td>
+                    <td>{{item.poiName}}</td>
+                    <td class="text-center">{{item.percentResource}}</td>
+                    <td class="text-center">{{item.beginDate |dateFormat}}</td>
+                    <td class="text-center">{{item.endDate | dateFormat}}</td>
+                  </tr>
+                </tbody>
+              </nz-table>
+            </nz-tab>
+
+
+          </nz-tabset>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Right content -->
+
+  <!-- /right content -->
+
+</div>
+<!-- <nz-modal nzClassName="{{isView?'dialog-full':'dialog-lg'}}" [(nzVisible)]="crdata" [nzTitle]="modalTitle"
+  [nzContent]="modalContent" [nzFooter]="null" [nzMaskClosable]="false" (nzOnCancel)="isShowModalData = false">
+  <ng-template #modalTitle>
+
+  </ng-template>
+
+  <ng-template #modalContent>
+    <app-cr-data [id]="id" [isView]="isView">
+    </app-cr-data>
+  </ng-template>
+</nz-modal> -->
+
+<nz-modal nzClassName="dialog-lg" [nzContent]="modalProj" [nzFooter]="null" [nzMaskClosable]="false"
+  [(nzVisible)]="isVisibleProjWork" (nzOnCancel)="this.isVisibleProjWork = false">
+  <ng-template #modalProj>
+    <app-project-work-data [projGenId]="id" (cusOnClose)="closeDataModal($event)">
+    </app-project-work-data>
+  </ng-template>
+</nz-modal>
+
+<nz-modal nzClassName="dialog-lg" [nzContent]="modalCR" [nzFooter]="null" [nzMaskClosable]="false"
+  [(nzVisible)]="isVisibleCR" (nzOnCancel)="cancelCR()">
+  <ng-template #modalCR>
+    <app-cr-data [projGenId]="id" (cusOnClose)="closeDataModal($event)"></app-cr-data>
+
+  </ng-template>
+</nz-modal>
+<nz-modal nzClassName="dialog-lg" [nzContent]="modalIs" [nzFooter]="null" [nzMaskClosable]="false"
+  [(nzVisible)]="isVisibleIssue" (nzOnCancel)="cancelIssue()">
+  <ng-template #modalIs>
+    <app-issue-data [projGenId]="id" (cusOnClose)="closeDataModal($event)"></app-issue-data>
+
+
+  </ng-template>
+</nz-modal>

@@ -1,0 +1,203 @@
+<!-- Main sidebar -->
+<div class="sidebar sidebar-main sidebar-expand-md">
+
+  <!-- Sidebar mobile toggler -->
+  <div class="sidebar-mobile-toggler text-center">
+    <a href="#" class="sidebar-mobile-main-toggle">
+      <i class="icon-arrow-left8"></i>
+    </a>
+    Navigation
+    <a href="#" class="sidebar-mobile-expand">
+      <i class="icon-screen-full"></i>
+      <i class="icon-screen-normal"></i>
+    </a>
+  </div>
+  <!-- /sidebar mobile toggler -->
+
+
+  <!-- Sidebar content -->
+  <div class="sidebar-content">
+
+    <!-- Main navigation -->
+    <div class="card card-sidebar-mobile">
+      <ul class="nav nav-sidebar" data-nav-type="accordion">
+
+        <!-- Main -->
+        <li class="nav-item-header">
+          <div class="text-uppercase font-size-xs line-height-xs">Chức năng</div> <i class="icon-menu" title="Main"></i>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+            <i class="icon-home4"></i>
+            <span>
+              Trang chủ
+            </span>
+          </a>
+        </li>
+
+        <li class="nav-item nav-item-submenu">
+          <a href="#" routerLinkActive="active" class="nav-link"><i class="icon-stack"></i> <span>Danh mục</span></a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link">Quản lý</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a [routerLink]="['/pitch']" routerLinkActive="active" class="nav-link">Pitcher</a></li>
+                <li class="nav-item">
+                  <a [routerLink]="['/field']" routerLinkActive="active" class="nav-link">Field</a></li>
+                <li class="nav-item">
+                  <a [routerLink]="['/booking']" routerLinkActive="active" class="nav-link">Booking</a></li>
+                <li class="nav-item">
+                  <a [routerLink]="['/users']" routerLinkActive="active" class="nav-link">Users</a></li>
+
+                <!-- <li class="nav-item">
+                  <a [routerLink]="['/project-group']" routerLinkActive="active" class="nav-link">Nhóm dự án</a></li>
+                <li class="nav-item"><a [routerLink]="['/project-type']" routerLinkActive="active" class="nav-link">
+                    Loại dự án </a></li>
+                <li class="nav-item"><a [routerLink]="['/target-detail']" routerLinkActive="active" class="nav-link">Mục
+                    tiêu</a></li>
+                <li class="nav-item"><a [routerLink]="['/project-profile-detail']" routerLinkActive="active"
+                    class="nav-link">Hồ sơ dự án</a></li>
+                <li class="nav-item"><a [routerLink]="['/management-form']" routerLinkActive="active"
+                    class="nav-link">Hình thức quản lý</a></li>
+                <li class="nav-item"><a [routerLink]="['/invests']" routerLinkActive="active" class="nav-link">Hình thức
+                    đầu tư</a></li>
+                <li class="nav-item"><a [routerLink]="['/bidding']" routerLinkActive="active" class="nav-link">Lĩnh vực
+                    đấu thầu</a></li>
+                <li class="nav-item"><a [routerLink]="['/contractor']" routerLinkActive="active" class="nav-link">Hình
+                    thức chọn lựa nhà thầu</a></li>
+                <li class="nav-item"><a [routerLink]="['/bidding-model']" routerLinkActive="active"
+                    class="nav-link">Phương thức đấu thầu</a></li>
+                <li class="nav-item"><a [routerLink]="['/work-type']" routerLinkActive="active" class="nav-link">Loại
+                    công việc</a></li>
+                <li class="nav-item"><a [routerLink]="['/issue-type']" routerLinkActive="active" class="nav-link">Loại
+                    vấn đề</a></li>
+                <li class="nav-item"><a [routerLink]="['/issue-causes']" routerLinkActive="active"
+                    class="nav-link">Nguyên nhân vấn đề</a></li>
+                <li class="nav-item"><a [routerLink]="['/contract-form']" routerLinkActive="active"
+                    class="nav-link">Hình thức hợp đồng</a></li>
+                <li class="nav-item"><a [routerLink]="['/partner']" routerLinkActive="active" class="nav-link">Đối
+                    tác</a></li>
+                <li class="nav-item"><a [routerLink]="['/partner-group']" routerLinkActive="active"
+                    class="nav-link">Nhóm đối tác</a></li>
+                <li class="nav-item"><a [routerLink]="['/product-services']" routerLinkActive="active"
+                    class="nav-link">Sản phẩm/dịch vụ</a></li>
+                <li class="nav-item"><a [routerLink]="['/biz-model']" routerLinkActive="active" class="nav-link">Loại
+                    hình kinh doanh</a></li> -->
+              </ul>
+            </li>
+
+            <!-- <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link">Tài chính</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item"><a [routerLink]="['/expenses-item']" routerLinkActive="active"
+                    class="nav-link">Khoản
+                    mục chi phí</a></li>
+                <li class="nav-item"><a [routerLink]="['/expenses-item-group']" routerLinkActive="active"
+                    class="nav-link">Nhóm khoản mục chi phí</a></li>
+                <li class="nav-item"><a [routerLink]="['/terms-of-payment']" routerLinkActive="active"
+                    class="nav-link">Điều
+                    khoản thanh toán</a></li>
+                <li class="nav-item"><a [routerLink]="['/payment-type']" routerLinkActive="active" class="nav-link">Hình
+                    thức thanh toán</a></li>
+              </ul>
+            </li>
+            <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link">Khác</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item"><a [routerLink]="['/storage-cabinets']" routerLinkActive="active"
+                    class="nav-link">Tủ lưu trữ</a></li>
+                <li class="nav-item"><a [routerLink]="['/field-of-activity']" routerLinkActive="active"
+                    class="nav-link">Lĩnh vực hoạt động</a></li>
+                <li class="nav-item"><a [routerLink]="['/status']" routerLinkActive="active" class="nav-link">Trạng
+                    thái</a>
+                </li>
+              </ul>
+            </li> -->
+          </ul>
+        </li>
+
+        <!-- <li class="nav-item nav-item-submenu">
+          <a href="#" routerLinkActive="active" class="nav-link"><i class="icon-city"></i> <span>Dự án</span></a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a [routerLink]="['/project-general']" routerLinkActive="active" class="nav-link">Danh sách dự án</a>
+            </li>
+
+            <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link">Công việc</a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item"><a [routerLink]="['/project-work']" routerLinkActive="active" class="nav-link">Chi
+                    tiết công
+                    việc</a></li>
+                <li class="nav-item"><a [routerLink]="['/timesheet']" routerLinkActive="active" class="nav-link">
+                    TimeSheet </a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a [routerLink]="['/cr']" routerLinkActive="active" class="nav-link">
+                Quản lý thay đổi </a></li>
+            <li class="nav-item"><a [routerLink]="['/issue']" routerLinkActive="active" class="nav-link">
+                Các vấn đề của dự án </a></li>
+            <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link"> <span>Nguồn lực dự
+                  án</span></a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item"><a [routerLink]="['/project-resource']" routerLinkActive="active" class="nav-link">
+                    Kế hoạch </a></li>
+                <li class="nav-item"><a [routerLink]="['/project-resource']" routerLinkActive="active" class="nav-link">
+                    Thực tế </a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/package-bids']" routerLinkActive="active" class="nav-link">Gói thầu</a>
+            </li>
+            <li class="nav-item">
+              <a [routerLink]="['/bidding-document']" routerLinkActive="active" class="nav-link">Hồ sơ mời thầu</a>
+            </li>
+            <li class="nav-item nav-item-submenu">
+              <a href="#" routerLinkActive="active" class="nav-link"> <span>Hợp đồng</span></a>
+              <ul class="nav nav-group-sub">
+                <li class="nav-item">
+                  <a [routerLink]="['/contracts']" routerLinkActive="active" class="nav-link">Danh sách hợp đồng</a>
+                </li>
+                <li class="nav-item">
+                  <a [routerLink]="['/hanover-progress']" routerLinkActive="active" class="nav-link">Tiến độ bàn
+                    giao</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item nav-item-submenu">
+          <a href="#" routerLinkActive="active" class="nav-link"> <i class="icon-coin-dollar"></i><span>Chi
+              phí</span></a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item"><a [routerLink]="['/costs/expected']" routerLinkActive="active" class="nav-link">Chi
+                phí kế hoạch</a></li>
+            <li class="nav-item"><a [routerLink]="['/costs/actual']" routerLinkActive="active" class="nav-link">Chi phí
+                thực tế</a></li>
+            <li class="nav-item"><a [routerLink]="['/costs/collate']" routerLinkActive="active" class="nav-link">Đối
+                chiếu chi phí</a></li>
+            <li class="nav-item"><a [routerLink]="['/costs/revenues']" routerLinkActive="active" class="nav-link">Doanh
+                thu</a></li>
+          </ul>
+        </li> -->
+        <!-- <li class="nav-item nav-item-submenu">
+          <a href="#" routerLinkActive="active" class="nav-link"><i class="icon-magazine"></i> <span>Tài
+              liệu</span></a>
+          <ul class="nav nav-group-sub">
+            <li class="nav-item">
+              <a [routerLink]="['/other-document']" routerLinkActive="active" class="nav-link">Tài liệu khác</a>
+            </li>
+          </ul>
+        </li> -->
+        <!-- /Main -->
+      </ul>
+    </div>
+    <!-- /main navigation -->
+
+  </div>
+  <!-- /sidebar content -->
+
+</div>
+<!-- /main sidebar -->
